@@ -5,7 +5,7 @@
 # Site
 title: jk's Blog
 subtitle: No Start No End
-description:
+description: No Start No End
 author: Zhang Jikai
 language: zh-Hans
 timezone:
@@ -18,7 +18,7 @@ permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 sitemap:
-    path: sitemap.xml
+  path: sitemap.xml
 
 # Directory
 source_dir: source
@@ -64,7 +64,7 @@ per_page: 10
 pagination_dir: page
 
 duoshuo_shortname: 
-avatar: /img/my.jpg
+avatar: /images/avatar/avatar.png
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/

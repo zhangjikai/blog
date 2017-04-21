@@ -210,7 +210,7 @@
               {% if theme.post_wordcount.wordcount and theme.post_wordcount.min2read %}
                 <span class="post-meta-divider">|</span>
               {% endif %}
-              
+
               {% if theme.post_wordcount.wordcount %}
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
@@ -238,7 +238,7 @@
                   {{ min2read(post.content) }}
                 </span>
               {% endif %}
-            
+
           {% endif %}
 
           {% if post.description and (not theme.excerpt_description or not is_index) %}
