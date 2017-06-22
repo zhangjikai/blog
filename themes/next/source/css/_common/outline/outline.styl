@@ -20,6 +20,10 @@ html, body { height: 100%; }
   padding: 100px 0 70px;
   width: $content-desktop;
 
+  +desktop() {
+    .container & { width: $content-desktop-large; }
+  }
+
   +desktop-large() {
     .container & { width: $content-desktop-large; }
   }
@@ -32,6 +36,9 @@ html, body { height: 100%; }
   margin: 0 auto;
   width: $content-desktop;
 
+  +desktop() {
+    .container & { width: $content-desktop-large; }
+  }
   +desktop-large() {
     .container & { width: $content-desktop-large; }
   }
@@ -51,6 +58,10 @@ html, body { height: 100%; }
   box-sizing: border-box;
   margin: 20px auto;
   width: $content-desktop;
+
+  +desktop() {
+    .container & { width: $content-desktop-large; }
+  }
 
   +desktop-large() {
     .container & { width: $content-desktop-large; }
