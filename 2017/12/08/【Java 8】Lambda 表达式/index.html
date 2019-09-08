@@ -1,0 +1,1223 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Lambda,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="定义Lambda(λ) 表达式是一种在 被调用的位置 或者 作为参数传递给函数的位置 定义匿名函数对象 的简便方法。下面是关于 Lambda 表达式的几个点：  匿名（Anonymous） - 不像其他普通方法那样具有名字 函数（Function） -  Lambda 表达式不像普通方法那样属于某个特定的类，它是独立于类存在的。但是和方法一样，Lambda 表达式有参数列表、函数主体和返回值，还可">
+<meta name="keywords" content="Java,Lambda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Java 8】Lambda 表达式">
+<meta property="og:url" content="http://blog.zhangjikai.com/2017/12/08/【Java 8】Lambda 表达式/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="定义Lambda(λ) 表达式是一种在 被调用的位置 或者 作为参数传递给函数的位置 定义匿名函数对象 的简便方法。下面是关于 Lambda 表达式的几个点：  匿名（Anonymous） - 不像其他普通方法那样具有名字 函数（Function） -  Lambda 表达式不像普通方法那样属于某个特定的类，它是独立于类存在的。但是和方法一样，Lambda 表达式有参数列表、函数主体和返回值，还可">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/lambda/形式.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/lambda/demo.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/lambda/类型检查.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/lambda/function.png">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Java 8】Lambda 表达式">
+<meta name="twitter:description" content="定义Lambda(λ) 表达式是一种在 被调用的位置 或者 作为参数传递给函数的位置 定义匿名函数对象 的简便方法。下面是关于 Lambda 表达式的几个点：  匿名（Anonymous） - 不像其他普通方法那样具有名字 函数（Function） -  Lambda 表达式不像普通方法那样属于某个特定的类，它是独立于类存在的。但是和方法一样，Lambda 表达式有参数列表、函数主体和返回值，还可">
+<meta name="twitter:image" content="http://blog.zhangjikai.com/images/lambda/形式.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2017/12/08/【Java 8】Lambda 表达式/">
+
+
+
+
+
+  <title> 【Java 8】Lambda 表达式 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2017/12/08/【Java 8】Lambda 表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【Java 8】Lambda 表达式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-08T21:07:58+08:00">
+                2017-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-8/" itemprop="url" rel="index">
+                    <span itemprop="name">Java 8</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/08/【Java 8】Lambda 表达式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/08/【Java 8】Lambda 表达式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  4,936
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  24
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Lambda(λ) 表达式是一种在 <em>被调用的位置</em> 或者 <em>作为参数传递给函数的位置</em> <strong>定义匿名函数对象</strong> 的简便方法。下面是关于 Lambda 表达式的几个点：</p>
+<ul>
+<li>匿名（Anonymous） - 不像其他普通方法那样具有名字</li>
+<li>函数（Function） -  Lambda 表达式不像普通方法那样属于某个特定的类，它是独立于类存在的。但是和方法一样，Lambda 表达式有参数列表、函数主体和返回值，还可能有可以抛出的异常列表。</li>
+<li>传递（Passed around）- Lambda 表达式可以作为参数传递给方法或者存储在变量中。</li>
+<li>简洁（Concise）- 无需像匿名类那样写很多的模板代码。</li>
+</ul>
+<a id="more"></a>
+<p>下面是一个示例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Calculator c = (a, b) -&gt; a + b;</span><br><span class="line">        System.out.println(c.cal(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line">        c = (a, b) -&gt; a * b;</span><br><span class="line">        System.out.println(c.cal(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Lambda-形式"><a href="#Lambda-形式" class="headerlink" title="Lambda 形式"></a>Lambda 形式</h2><p>Lambda 表达式的基本形式如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(argument list) -&gt; code</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个例子：</p>
+<p><img src="/images/lambda/形式.png" alt></p>
+<p>如上所示： Lambda 表达式包含三个部分：</p>
+<ul>
+<li>参数列表（A list of parameters） - 上图中为 <code>(Apple a1, Apple a2)</code></li>
+<li>箭头（An arrow） - 把参数列表和 Lambda 主体分隔开</li>
+<li>Lambda 主体（The body of the lambda） - 上图中为 <code>a1.getWeight().compareTo(a2.getWeight())</code>，该 Lambda 主体会返回 compareTo 的结果。</li>
+</ul>
+<p>Lambda 函数的主体可以是表达式（expression）或者语句（statement），所以 Lambda 函数返回值有下面两种情况：</p>
+<ul>
+<li>如果 Lambda 主体为表达式，那么 Lambda 函数的返回值就是表达式的计算值</li>
+<li>如果 Lambda 主体为语句，那么 Lambda 返回值就是语句的返回值</li>
+</ul>
+<p>关于语句和表达式的区别，可以参考 <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/expressions.html" target="_blank" rel="noopener">这篇文章</a>，这里简单说一下：假设有一条语句 <code>int c = a + b;</code>，那么表达式就是指 <code>c = a + b</code>，即不包含 <code>int</code> 和 <code>;</code>，每个表达式都会有一个计算值（void 也算一种特殊的计算值）。</p>
+<p>所以细分一下，Lambda 表达式有两种形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(parameters) -&gt; expression</span><br></pre></td></tr></table></figure></p>
+<p>和（使用大括号）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(parameters) -&gt; &#123;statements&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是 Lambda 表达式的几个例子：</p>
+<p><img src="/images/lambda/demo.png" alt></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">使用场景</th>
+<th style="text-align:left">使用示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean 表达式</td>
+<td style="text-align:left"><code>(List&lt;String&gt; list) -&gt; list.isEmpty()</code></td>
+</tr>
+<tr>
+<td style="text-align:left">创建对象</td>
+<td style="text-align:left"><code>() -&gt; new Apple(10)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Consuming from an object</td>
+<td style="text-align:left"><code>(Apple a) -&gt; { System.out.println(a.getWeight()); }</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Select/extract from an object</td>
+<td style="text-align:left"><code>(String s) -&gt; s.length()</code></td>
+</tr>
+<tr>
+<td style="text-align:left">合并两个值</td>
+<td style="text-align:left"><code>(int a, int b) -&gt; a * b</code></td>
+</tr>
+<tr>
+<td style="text-align:left">比较两个对象</td>
+<td style="text-align:left"><code>(Apple a1, Apple a2) -&gt; a1.getWeight().compareTo(a2.getWeight())</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h2><p>我们可以在函数式接口 （Functional interface）中使用 Lambda 表达式。简单来说，函数式接口就是只定义一个抽象方法的接口（接口中可以包含额外的 default 方法）。例如 Comparator 和 Runnable 都是函数式接口：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">interface</span> <span class="title">Comparator</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(T o1, T o2)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们一般在接口定义中加上 <code>@FunctionalInterface</code> 注解来声明该接口是一个函数式接口。例如下面的形式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当一个接口通过 <code>FunctionalInterface</code> 被声明为函数式接口时，编译器将会检查接口的合法性，如果接口不合法，会报编译错误。</p>
+<p>现在考虑一个问题，Lambda 表达式是如何匹配函数式接口的呢？假设我们有一个如下定义的函数式接口：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是使用 lambda 表达式以及匿名类来创建 Calculator 对象的示例代码。在下面的代码中对象 c 和 c2 的实现是等价的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Calculator c = (<span class="keyword">int</span> a, <span class="keyword">int</span> b) -&gt; a + b;</span><br><span class="line"></span><br><span class="line">    Calculator c2 = <span class="keyword">new</span> Calculator() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> a + b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从上面的例子中，我们可以看到 <strong>Lambda 表达式</strong> 是和函数式接口中的 <strong>抽象方法</strong> 进行匹配的，其中 Lambda 表达式中参数匹配 cal 方法的参数，Lambda body 的内容作为抽象方法的具体实现，Lambda body 的计算值作为方法的返回值。这也是为什么要求函数式接口只能有一个抽象方法的原因。</p>
+<p>函数式接口中抽象方法的签名（signature）描述了 Lambda 表达式的签名，因为 Lambda 表达式并没有名字，所以这里的签名只关注三个方面：<strong>方法参数</strong> 、<strong>返回值</strong> 以及 <strong>异常声明</strong>。我们将抽象方法所描述的 Lambda 形式称为函数描述符（function descriptor）。在 Calculator 类中，cal 方法对应的函数描述符为 <code>(int, int) -&gt; int</code>，即接受两个 int 类型作为参数，表达式的计算值为 int 类型。所以下面的 Lambda 表达式都是合法的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">int</span> a, <span class="keyword">int</span> b) -&gt; a</span><br><span class="line">(<span class="keyword">int</span> a, <span class="keyword">int</span> b) -&gt; a + b</span><br><span class="line">(<span class="keyword">int</span> a, <span class="keyword">int</span> b) -&gt; <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>如果 Lambda 表达式抛出一个可检查异常，那么对应的抽象方法所声明的 throws 语句也要与之匹配。看下面的一个例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ThrowExceptionInterface</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LambdaTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">throwException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 这里编译时会报 Unhandled Exception：java.io.Exception</span></span><br><span class="line">        ThrowExceptionInterface t = (<span class="keyword">int</span> a, <span class="keyword">int</span> b) -&gt; &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException();</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其实也很好理解，Lambda body 中的内容会作为抽象方法的具体实现，在方法中抛出了异常但是方法声明中却没有相关的异常声明，编译器肯定要报错的。</p>
+<p>另外还有一个特殊的 void 兼容规则。如果抽象方法的返回值为 void，即对应的函数描述符为 <code>(T) -&gt; void</code>，那么对于 body 为 <strong>语句表达式（statement expression）</strong> 的 Lambda 表达式，只要求参数列表匹配即可。看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">VoidInterface</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LambdaTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">voidTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 这里 a++ 返回一个 int，但是和 void 兼容</span></span><br><span class="line">        VoidInterface v = (<span class="keyword">int</span> a) -&gt; a++;</span><br><span class="line">        <span class="comment">// 下面的代码会报错，因为 a-1 不是一个语句表达式</span></span><br><span class="line">        v = (<span class="keyword">int</span> a) -&gt; a-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里说一下语句表达式:</p>
+<blockquote>
+<p>The term “statement expression” or “expression statement” refers to expressions that are also allowed to be used as a statement.</p>
+</blockquote>
+<p>语法表达式有下面四类：</p>
+<ul>
+<li>Assignment expressions</li>
+<li>Any use of ++ or –</li>
+<li>Method invocations</li>
+<li>Object creation expressions</li>
+</ul>
+<h3 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h3><p>Lambda 表达式本身并不包含它是实现哪个函数式接口的信息，编译器会根据 Lambda 表达式所处的上下文（context）环境来推断 Lambda 表达式的目标类型（target type），例如对于下面的代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Calculator c = (<span class="keyword">int</span> a, <span class="keyword">int</span> b) -&gt; a + b;</span><br></pre></td></tr></table></figure></p>
+<p>Lambda 表达式会赋值给 Calculator 对象，那么该 Lambda 表达式对应的目标类型就是 Calculator 接口，该接口中的 cal 方法对应的函数描述符为 <code>(int, int) -&gt; int</code>，这个和 <code>(int a, int b) -&gt; a + b</code> 可以匹配，这样就完成了类型检查。下图是一个完整的例子：</p>
+<p><img src="/images/lambda/类型检查.png" alt></p>
+<h3 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h3><p>在上面我们提到编译器会根据上下文环境推断出与 Lambda 表达式对应的函数式接口，这意味着编译器同样可以根据接口中抽象方法的函数函数描述符推断出 Lambda 表达式的签名，这样编译器就可以知道 Lambda 表达式的参数类型，这样就可以省略 Lambda 表达式中的参数类型，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Calculator c = (a, b) -&gt; a + b;</span><br><span class="line"><span class="comment">// 当只有一个参数时，可以省略掉 ()</span></span><br><span class="line">VoidInterface v = a -&gt; a++;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Java-8-中的函数式接口"><a href="#Java-8-中的函数式接口" class="headerlink" title="Java 8 中的函数式接口"></a>Java 8 中的函数式接口</h2><p>在 Java 8 中定义了一些函数式接口，位于 <code>java.util.function</code> 包下，下面是这些接口的总览：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">+--- BiConsumer.java</span><br><span class="line">+--- BiFunction.java</span><br><span class="line">+--- BinaryOperator.java</span><br><span class="line">+--- BiPredicate.java</span><br><span class="line">+--- BooleanSupplier.java</span><br><span class="line">+--- Consumer.java</span><br><span class="line">+--- DoubleBinaryOperator.java</span><br><span class="line">+--- DoubleConsumer.java</span><br><span class="line">+--- DoubleFunction.java</span><br><span class="line">+--- DoublePredicate.java</span><br><span class="line">+--- DoubleSupplier.java</span><br><span class="line">+--- DoubleToIntFunction.java</span><br><span class="line">+--- DoubleToLongFunction.java</span><br><span class="line">+--- DoubleUnaryOperator.java</span><br><span class="line">+--- Function.java</span><br><span class="line">+--- IntBinaryOperator.java</span><br><span class="line">+--- IntConsumer.java</span><br><span class="line">+--- IntFunction.java</span><br><span class="line">+--- IntPredicate.java</span><br><span class="line">+--- IntSupplier.java</span><br><span class="line">+--- IntToDoubleFunction.java</span><br><span class="line">+--- IntToLongFunction.java</span><br><span class="line">+--- IntUnaryOperator.java</span><br><span class="line">+--- LongBinaryOperator.java</span><br><span class="line">+--- LongConsumer.java</span><br><span class="line">+--- LongFunction.java</span><br><span class="line">+--- LongPredicate.java</span><br><span class="line">+--- LongSupplier.java</span><br><span class="line">+--- LongToDoubleFunction.java</span><br><span class="line">+--- LongToIntFunction.java</span><br><span class="line">+--- LongUnaryOperator.java</span><br><span class="line">+--- ObjDoubleConsumer.java</span><br><span class="line">+--- ObjIntConsumer.java</span><br><span class="line">+--- ObjLongConsumer.java</span><br><span class="line">+--- Predicate.java</span><br><span class="line">+--- Supplier.java</span><br><span class="line">+--- ToDoubleBiFunction.java</span><br><span class="line">+--- ToDoubleFunction.java</span><br><span class="line">+--- ToIntBiFunction.java</span><br><span class="line">+--- ToIntFunction.java</span><br><span class="line">+--- ToLongBiFunction.java</span><br><span class="line">+--- ToLongFunction.java</span><br><span class="line">+--- UnaryOperator.java</span><br></pre></td></tr></table></figure></p>
+<h3 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a>Predicate</h3><p>用来测试对象是否满足某种条件。该接口定义了一个 test 方法，接受一个泛型对象（T），并返回测试结果（boolean），函数描述符为 <code>T -&gt; boolean</code>。下面是一个使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">judge</span><span class="params">(T t, Predicate&lt;T&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p.test(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPredicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String text = <span class="string">"111"</span>;</span><br><span class="line">    System.out.println(judge(text, s -&gt; s != <span class="keyword">null</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是 Predicate 接口的实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents a predicate (boolean-valued function) of one argument.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Evaluates this predicate on the given argument.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> t the input argument</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if the input argument matches the predicate,</span></span><br><span class="line"><span class="comment">     * otherwise false</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T t)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a composed predicate that represents a short-circuiting logical</span></span><br><span class="line"><span class="comment">     * AND of this predicate and another.  When evaluating the composed</span></span><br><span class="line"><span class="comment">     * predicate, if this predicate is false, then the other</span></span><br><span class="line"><span class="comment">     * predicate is not evaluated.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Predicate&lt;T&gt; <span class="title">and</span><span class="params">(Predicate&lt;? <span class="keyword">super</span> T&gt; other)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (t) -&gt; test(t) &amp;&amp; other.test(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a predicate that represents the logical negation of this</span></span><br><span class="line"><span class="comment">     * predicate.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Predicate&lt;T&gt; <span class="title">negate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (t) -&gt; !test(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a composed predicate that represents a short-circuiting logical</span></span><br><span class="line"><span class="comment">     * OR of this predicate and another.  When evaluating the composed</span></span><br><span class="line"><span class="comment">     * predicate, if this predicate is true, then the other</span></span><br><span class="line"><span class="comment">     * predicate is not evaluated.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Predicate&lt;T&gt; <span class="title">or</span><span class="params">(Predicate&lt;? <span class="keyword">super</span> T&gt; other)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (t) -&gt; test(t) || other.test(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a predicate that tests if two arguments are equal according</span></span><br><span class="line"><span class="comment">     * to &#123;<span class="doctag">@link</span> Objects#equals(Object, Object)&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> &lt;T&gt; <span class="function">Predicate&lt;T&gt; <span class="title">isEqual</span><span class="params">(Object targetRef)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">null</span> == targetRef)</span><br><span class="line">                ? Objects::isNull</span><br><span class="line">                : object -&gt; targetRef.equals(object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们看到在 Predicate 类中，除了 test 方法，还定义了三个 default 方法，<code>and</code>, <code>or</code> 和 <code>negate</code>，它们分别对应逻辑运算中的与（&amp;&amp;）、或（||）、非（!）操作。通过这三个方法，我们可以构造更复杂的 predicate 表达式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPredicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String text = <span class="string">"111"</span>;</span><br><span class="line">    Predicate&lt;String&gt; a = s - &gt; s != <span class="keyword">null</span>;</span><br><span class="line">    Predicate&lt;String&gt; b = s - &gt; s.length() &gt; <span class="number">3</span>;</span><br><span class="line">    System.out.println(judge(text, a.and(b)));</span><br><span class="line">    System.out.println(judge(text, a.negate()));</span><br><span class="line">    System.out.println(judge(text, a.or(b)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对应的输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">false</span><br><span class="line">false</span><br><span class="line">true</span><br></pre></td></tr></table></figure></p>
+<p>另外 and 和 or 方法是按照在表达式链中的位置，从左向右确定优先级的。因此 <code>a.or(b).and(c)</code> 可以看作 <code>(a || b) &amp;&amp; c</code>。</p>
+<h3 id="BiPredicate"><a href="#BiPredicate" class="headerlink" title="BiPredicate"></a>BiPredicate</h3><p>BiPredicate 针对两个参数对象（T, U）进行测试，函数描述符为 <code>(T, U) -&gt; boolean</code>。下面是该接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents a predicate (boolean-valued function) of two arguments.  This is</span></span><br><span class="line"><span class="comment"> * the two-arity specialization of &#123;<span class="doctag">@link</span> Predicate&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiPredicate</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T t, U u)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> BiPredicate&lt;T, U&gt; <span class="title">and</span><span class="params">(BiPredicate&lt;? <span class="keyword">super</span> T, ? <span class="keyword">super</span> U&gt; other)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (T t, U u) -&gt; test(t, u) &amp;&amp; other.test(t, u);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> BiPredicate&lt;T, U&gt; <span class="title">negate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (T t, U u) -&gt; !test(t, u);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> BiPredicate&lt;T, U&gt; <span class="title">or</span><span class="params">(BiPredicate&lt;? <span class="keyword">super</span> T, ? <span class="keyword">super</span> U&gt; other)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (T t, U u) -&gt; test(t, u) || other.test(t, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testBiPredicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BiPredicate&lt;Integer, Integer&gt; b = (x, y) -&gt; x &gt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">boolean</span> r = b.test(<span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line">    System.out.println(r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h3><p>Consumer（消费者），针对对象进行某种操作（消费对象）。该接口定义了一个 accept 方法，会将该方法作用于目标对象，函数描述符为 <code>T -&gt; void</code>。下面是使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">consume</span><span class="params">(T t, Consumer&lt;T&gt; c)</span> </span>&#123;</span><br><span class="line">    c.accept(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testConsume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String text = <span class="string">"1234"</span>;</span><br><span class="line">    consume(text, s -&gt; System.out.println(s.substring(<span class="number">2</span>)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是 Consumer 类的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents an operation that accepts a single input argument and returns no</span></span><br><span class="line"><span class="comment"> * result. Unlike most other functional interfaces, Consumer is expected</span></span><br><span class="line"><span class="comment"> * to operate via side-effects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Performs this operation on the given argument.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> t the input argument</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(T t)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a composed  Consumer that performs, in sequence, this</span></span><br><span class="line"><span class="comment">     * operation followed by the after operation. If performing either</span></span><br><span class="line"><span class="comment">     * operation throws an exception, it is relayed to the caller of the</span></span><br><span class="line"><span class="comment">     * composed operation.  If performing this operation throws an exception,</span></span><br><span class="line"><span class="comment">     * the after operation will not be performed.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Consumer&lt;T&gt; <span class="title">andThen</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> T&gt; after)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(after);</span><br><span class="line">        <span class="keyword">return</span> (T t) -&gt; &#123; accept(t); after.accept(t); &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Consumer 中定义了一个 andThen 的 default 方法，通过该方法我们可以对目标对象进行链式（chain）处理，下面是一个示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testConsume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    Consumer &lt;StringBuilder&gt; a = s -&gt; s.append(<span class="string">"abcd"</span>);</span><br><span class="line">    Consumer &lt;StringBuilder&gt; b = s -&gt; s.reverse();</span><br><span class="line">    Consumer &lt;StringBuilder&gt; c = s -&gt; s.append(<span class="string">"1234"</span>);</span><br><span class="line">    consume(builder, a.andThen(b).andThen(c));</span><br><span class="line">    System.out.println(builder.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dcba1234</span><br></pre></td></tr></table></figure></p>
+<h3 id="BiConsumer"><a href="#BiConsumer" class="headerlink" title="BiConsumer"></a>BiConsumer</h3><p>BiConsumer 针对两个对象（T, U）进行操作，对应的函数描述符为 <code>(T, U) -&gt; void</code>。下面是该接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents an operation that accepts two input arguments and returns no</span></span><br><span class="line"><span class="comment"> * result.  This is the two-arity specialization of  Consumer.</span></span><br><span class="line"><span class="comment"> * Unlike most other functional interfaces, BiConsumer is expected</span></span><br><span class="line"><span class="comment"> * to operate via side-effects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiConsumer</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(T t, U u)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> BiConsumer&lt;T, U&gt; <span class="title">andThen</span><span class="params">(BiConsumer&lt;? <span class="keyword">super</span> T, ? <span class="keyword">super</span> U&gt; after)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(after);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (l, r) -&gt; &#123;</span><br><span class="line">            accept(l, r);</span><br><span class="line">            after.accept(l, r);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testBiConsumer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BiConsumer&lt;String, String&gt; b = (x, y) -&gt; System.out.println(x + y);</span><br><span class="line">    b.accept(<span class="string">"111"</span>, <span class="string">"222"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Supplier"><a href="#Supplier" class="headerlink" title="Supplier"></a>Supplier</h3><p>Supplier（供应商），返回一个泛型对象（生产对象）。该接口中定义了一个 get 方法，没有方法参数，返回值是一个泛型对象，函数描述符为 <code>() -&gt; T</code>。下面是一个使用示例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">supplier</span><span class="params">(Supplier&lt;T&gt; s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSupplier</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String text = supplier(() -&gt; <span class="string">"1111"</span>);</span><br><span class="line">    System.out.println(text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是 Supplier 接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents a supplier of results.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Supplier</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Gets a result.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">T <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p>Function 接口就相当于 <code>y=f(x)</code> 中的函数 f，接收一个 x（argument）返回计算值 y（result）。该接口定义了一个 apply 方法，接收一个 T 类型的对象，返回一个 R 类型的结果，函数描述符为 <code>T -&gt; R</code>。下面是一个使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T, R&gt; <span class="function">R <span class="title">func</span><span class="params">(T t, Function&lt;T, R&gt; f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> f.apply(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String text = <span class="string">"1234"</span>;</span><br><span class="line">    <span class="keyword">int</span> i = func(text, t -&gt; Integer.parseInt(t));</span><br><span class="line">    <span class="comment">// 输出 1235</span></span><br><span class="line">    System.out.println(i + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是 Function 接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents a function that accepts one argument and produces a result.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Applies this function to the given argument.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a composed function that first applies the before</span></span><br><span class="line"><span class="comment">     * function to its input, and then applies this function to the result.</span></span><br><span class="line"><span class="comment">     * If evaluation of either function throws an exception, it is relayed to</span></span><br><span class="line"><span class="comment">     * the caller of the composed function.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">default</span> &lt;V&gt; <span class="function">Function&lt;V, R&gt; <span class="title">compose</span><span class="params">(Function&lt;? <span class="keyword">super</span> V, ? extends T&gt; before)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(before);</span><br><span class="line">        <span class="keyword">return</span> (V v) -&gt; apply(before.apply(v));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a composed function that first applies this function to</span></span><br><span class="line"><span class="comment">     * its input, and then applies the after function to the result.</span></span><br><span class="line"><span class="comment">     * If evaluation of either function throws an exception, it is relayed to</span></span><br><span class="line"><span class="comment">     * the caller of the composed function.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">default</span> &lt;V&gt; <span class="function">Function&lt;T, V&gt; <span class="title">andThen</span><span class="params">(Function&lt;? <span class="keyword">super</span> R, ? extends V&gt; after)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(after);</span><br><span class="line">        <span class="keyword">return</span> (T t) -&gt; after.apply(apply(t));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a function that always returns its input argument.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> &lt;T&gt; <span class="function">Function&lt;T, T&gt; <span class="title">identity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> t -&gt; t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 Function 接口中定义了两个 default 方法：<code>compose</code> 和 <code>andThen</code> 可以进行链式的调用，假设有两个函数 f(x) 和 g(x):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f.compose(g) =&gt; f(g(x))</span><br><span class="line">f.andThen(g) =&gt; g(f(x))</span><br></pre></td></tr></table></figure></p>
+<p>下图是一个详细的解释</p>
+<p><img src="/images/lambda/function.png" alt></p>
+<p>下面是一个使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Function&lt;Integer, Integer&gt; f = x -&gt; x + <span class="number">1</span>;</span><br><span class="line">    Function&lt;Integer, Integer&gt; g = x -&gt; x * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> i = func(<span class="number">1</span>, f.andThen(g));</span><br><span class="line">    <span class="comment">// 输出 4</span></span><br><span class="line">    System.out.println(i);</span><br><span class="line"></span><br><span class="line">    i = func(<span class="number">1</span>, f.compose(g));</span><br><span class="line">    <span class="comment">// 输出 3</span></span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="UnaryOperator"><a href="#UnaryOperator" class="headerlink" title="UnaryOperator"></a>UnaryOperator</h4><p>UnaryOperator 是一种特殊的 Function，表示操作数和返回值是同一种类型，函数描述符为 <code>T -&gt; T</code>。下面是该接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents an operation on a single operand that produces a result of the</span></span><br><span class="line"><span class="comment"> * same type as its operand.  This is a specialization of &#123;<span class="doctag">@code</span> Function&#125; for</span></span><br><span class="line"><span class="comment"> * the case where the operand and result are of the same type.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UnaryOperator</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a unary operator that always returns its input argument.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> &lt;T&gt; <span class="function">UnaryOperator&lt;T&gt; <span class="title">identity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> t -&gt; t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUnaryOperator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UnaryOperator&lt;Integer&gt; u = x -&gt; x + <span class="number">1</span>;</span><br><span class="line">    System.out.println(u.apply(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="BiFunction"><a href="#BiFunction" class="headerlink" title="BiFunction"></a>BiFunction</h3><p>BiFunction 接收两个参数（T, U），返回一个结果（R），类似于 z=f(x, y)，对应的函数描述符为 <code>(T, U) -&gt; R</code>。下面是该接口的具体实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents a function that accepts two arguments and produces a result.</span></span><br><span class="line"><span class="comment"> * This is the two-arity specialization of Function.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiFunction</span>&lt;<span class="title">T</span>, <span class="title">U</span>, <span class="title">R</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Applies this function to the given arguments.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> t the first function argument</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> u the second function argument</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the function result</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t, U u)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a composed function that first applies this function to</span></span><br><span class="line"><span class="comment">     * its input, and then applies the &#123;<span class="doctag">@code</span> after&#125; function to the result.</span></span><br><span class="line"><span class="comment">     * If evaluation of either function throws an exception, it is relayed to</span></span><br><span class="line"><span class="comment">     * the caller of the composed function.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">default</span> &lt;V&gt; <span class="function">BiFunction&lt;T, U, V&gt; <span class="title">andThen</span><span class="params">(Function&lt;? <span class="keyword">super</span> R, ? extends V&gt; after)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(after);</span><br><span class="line">        <span class="keyword">return</span> (T t, U u) -&gt; after.apply(apply(t, u));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个使用示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testBiFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BiFunction&lt;Integer, Double, String&gt; b = (i, d) -&gt; String.valueOf(i + d);</span><br><span class="line">    String r = b.apply(<span class="number">1</span>, <span class="number">2.5</span>);</span><br><span class="line">    System.out.println(r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="BinaryOperator"><a href="#BinaryOperator" class="headerlink" title="BinaryOperator"></a>BinaryOperator</h4><p>BinaryOperator 是一种特殊的 BiFunction，表示接收的参数和返回的结果都是同一种类型 T，函数描述符为 <code>(T, T) -&gt; T</code>。下面是该接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents an operation upon two operands of the same type, producing a result</span></span><br><span class="line"><span class="comment"> * of the same type as the operands.  This is a specialization of</span></span><br><span class="line"><span class="comment"> * BiFunction for the case where the operands and the result are all of</span></span><br><span class="line"><span class="comment"> * the same type.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BinaryOperator</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">BiFunction</span>&lt;<span class="title">T</span>,<span class="title">T</span>,<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a BinaryOperator which returns the lesser of two elements</span></span><br><span class="line"><span class="comment">     * according to the specified Comparator.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">BinaryOperator&lt;T&gt; <span class="title">minBy</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> T&gt; comparator)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(comparator);</span><br><span class="line">        <span class="keyword">return</span> (a, b) -&gt; comparator.compare(a, b) &lt;= <span class="number">0</span> ? a : b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns a  BinaryOperator which returns the greater of two elements</span></span><br><span class="line"><span class="comment">     * according to the specified Comparator.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">BinaryOperator&lt;T&gt; <span class="title">maxBy</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> T&gt; comparator)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(comparator);</span><br><span class="line">        <span class="keyword">return</span> (a, b) -&gt; comparator.compare(a, b) &gt;= <span class="number">0</span> ? a : b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个使用示例:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testBinaryOperator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BinaryOperator&lt;Integer&gt; b = (x, y) -&gt; x + y;</span><br><span class="line">    <span class="keyword">int</span> z = b.apply(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">    System.out.println(z);</span><br><span class="line"></span><br><span class="line">    BinaryOperator&lt;Integer&gt; min = BinaryOperator.minBy((x, y) -&gt; x - y);</span><br><span class="line">    <span class="comment">// 输出 1</span></span><br><span class="line">    z = min.apply(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">    System.out.println(z);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出 3</span></span><br><span class="line">    BinaryOperator&lt;Integer&gt; max = BinaryOperator.maxBy((x, y) -&gt; x - y);</span><br><span class="line">    z = max.apply(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">    System.out.println(z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Primitive-specializations"><a href="#Primitive-specializations" class="headerlink" title="Primitive specializations"></a>Primitive specializations</h3><p>在上面提到的接口中，都是接受泛型参数，我们知道泛型参数只能是引用类型，也就是说对于 int 这样的基本类型，我们要首先装箱（boxing）成 Integer 类型，在使用的时候再拆箱（unboxing）成 int。虽然 Java 提供了自动装箱机制，但是在性能方面是要付出代价的。所以对于上述的函数式接口，Java 8 提供了针对基本类型的版本，以此来避免输入输出是基本类型时的自动装箱操作。以 Predicate 为例，假设我们要检测一个 int 是否满足某个条件，我们可以使用 IntPredicate ：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testIntPredicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IntPredicate ip = x -&gt; x &gt; <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">boolean</span> r = ip.test(<span class="number">4</span>);</span><br><span class="line">    System.out.println(r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是 IntPredicate 的定义，我们可以看到它将泛型 T 改为了基本类型 int。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Represents a predicate (boolean-valued function) of one &#123;<span class="doctag">@code</span> int&#125;-valued</span></span><br><span class="line"><span class="comment"> * argument. This is the &#123;<span class="doctag">@code</span> int&#125;-consuming primitive type specialization of</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> Predicate&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IntPredicate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> IntPredicate <span class="title">and</span><span class="params">(IntPredicate other)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (value) -&gt; test(value) &amp;&amp; other.test(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> IntPredicate <span class="title">negate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (value) -&gt; !test(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> IntPredicate <span class="title">or</span><span class="params">(IntPredicate other)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (value) -&gt; test(value) || other.test(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下表列出了 Java 8 中的函数式接口以及其对应的基本类型版本：</p>
+<table>
+<thead>
+<tr>
+<th>函数式接口</th>
+<th>函数描述符</th>
+<th style="text-align:left">基本类型版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+<td style="text-align:left"><code>IntPredicate, LongPredicate, DoublePredicate</code></td>
+</tr>
+<tr>
+<td><code>BiPredicate&lt;T&gt;</code></td>
+<td><code>(L, R) -&gt; boolean</code></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td><code>Consumer&lt;T&gt;</code></td>
+<td><code>T -&gt; void</code></td>
+<td style="text-align:left"><code>IntConsumer, LongConsumer, DoubleConsumer</code></td>
+</tr>
+<tr>
+<td><code>BiConsumer&lt;T, U&gt;</code></td>
+<td><code>(T, U) -&gt; void</code></td>
+<td style="text-align:left"><code>ObjIntConsumer&lt;T&gt;, ObjLongConsumer&lt;T&gt;, ObjDoubleConsumer&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>Supplier&lt;T&gt;</code></td>
+<td><code>() -&gt; T</code></td>
+<td style="text-align:left"><code>BooleanSupplier, IntSupplier, LongSupplier, DoubleSupplier</code></td>
+</tr>
+<tr>
+<td><code>Function&lt;T, R&gt;</code></td>
+<td><code>T -&gt; R</code></td>
+<td style="text-align:left"><code>IntFunction&lt;R&gt;, IntToDoubleFunction, IntToLongFunction, LongFunction&lt;R&gt;, LongToDoubleFunction, LongToIntFunction, DoubleFunction&lt;R&gt;, ToIntFunction&lt;T&gt;, ToDoubleFunction&lt;T&gt;, ToLongFunction&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>UnaryOperator&lt;T&gt;</code></td>
+<td><code>T -&gt; T</code></td>
+<td style="text-align:left"><code>IntUnaryOperator, LongUnaryOperator, DoubleUnaryOperator</code></td>
+</tr>
+<tr>
+<td><code>BiFunction&lt;T, U, R&gt;</code></td>
+<td><code>(T, U) -&gt; R</code></td>
+<td style="text-align:left"><code>ToIntBiFunction&lt;T, U&gt;</code>, <code>ToLongBiFunction&lt;T, U&gt;</code>, <code>ToDoubleBiFunction&lt;T, U&gt;</code></td>
+</tr>
+<tr>
+<td><code>BinaryOperator&lt;T&gt;</code></td>
+<td><code>(T, T) -&gt; T</code></td>
+<td style="text-align:left"><code>IntUnaryOperator, LongUnaryOperator, DoubleUnaryOperator</code></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Lambda/" rel="tag"># Lambda</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/24/【Django】Django-ORM-学习笔记/" rel="next" title="【Django】Django ORM 学习笔记">
+                <i class="fa fa-chevron-left"></i> 【Django】Django ORM 学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/08/【Java】-JVM-如何保存-Java-对象/" rel="prev" title="【Java】 JVM 如何保存 Java 对象">
+                【Java】 JVM 如何保存 Java 对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda-形式"><span class="nav-number">2.</span> <span class="nav-text">Lambda 形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式接口"><span class="nav-number">3.</span> <span class="nav-text">函数式接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类型检查"><span class="nav-number">3.1.</span> <span class="nav-text">类型检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型推断"><span class="nav-number">3.2.</span> <span class="nav-text">类型推断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-8-中的函数式接口"><span class="nav-number">4.</span> <span class="nav-text">Java 8 中的函数式接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Predicate"><span class="nav-number">4.1.</span> <span class="nav-text">Predicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiPredicate"><span class="nav-number">4.2.</span> <span class="nav-text">BiPredicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumer"><span class="nav-number">4.3.</span> <span class="nav-text">Consumer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiConsumer"><span class="nav-number">4.4.</span> <span class="nav-text">BiConsumer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Supplier"><span class="nav-number">4.5.</span> <span class="nav-text">Supplier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function"><span class="nav-number">4.6.</span> <span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UnaryOperator"><span class="nav-number">4.6.1.</span> <span class="nav-text">UnaryOperator</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiFunction"><span class="nav-number">4.7.</span> <span class="nav-text">BiFunction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BinaryOperator"><span class="nav-number">4.7.1.</span> <span class="nav-text">BinaryOperator</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Primitive-specializations"><span class="nav-number">4.8.</span> <span class="nav-text">Primitive specializations</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2017/12/08/【Java 8】Lambda 表达式/';
+          this.page.identifier = '2017/12/08/【Java 8】Lambda 表达式/';
+          this.page.title = '【Java 8】Lambda 表达式';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

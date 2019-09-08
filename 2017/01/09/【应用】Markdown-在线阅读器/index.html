@@ -1,0 +1,1223 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="应用,Markdown,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言一款在线的 Markdown 阅读器，主要用来展示 Markdown 内容。支持 HTML 导出，同时可以方便的添加扩展功能。在这个阅读器的基础又做了一款在线 Github Pages 页面生成器，可以方便的生成不同主题风格的 GitHub Page 页面。">
+<meta name="keywords" content="应用,Markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【应用】Markdown 在线阅读器">
+<meta property="og:url" content="http://blog.zhangjikai.com/2017/01/09/【应用】Markdown-在线阅读器/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="前言一款在线的 Markdown 阅读器，主要用来展示 Markdown 内容。支持 HTML 导出，同时可以方便的添加扩展功能。在这个阅读器的基础又做了一款在线 Github Pages 页面生成器，可以方便的生成不同主题风格的 GitHub Page 页面。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/markdown/002.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/markdown/003.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/markdown/004.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/markdown/005.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/markdown/006.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/markdown/007.png">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【应用】Markdown 在线阅读器">
+<meta name="twitter:description" content="前言一款在线的 Markdown 阅读器，主要用来展示 Markdown 内容。支持 HTML 导出，同时可以方便的添加扩展功能。在这个阅读器的基础又做了一款在线 Github Pages 页面生成器，可以方便的生成不同主题风格的 GitHub Page 页面。">
+<meta name="twitter:image" content="http://blog.zhangjikai.com/images/markdown/002.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2017/01/09/【应用】Markdown-在线阅读器/">
+
+
+
+
+
+  <title> 【应用】Markdown 在线阅读器 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2017/01/09/【应用】Markdown-在线阅读器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【应用】Markdown 在线阅读器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-09T16:56:16+08:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/应用/" itemprop="url" rel="index">
+                    <span itemprop="name">应用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/09/【应用】Markdown-在线阅读器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/09/【应用】Markdown-在线阅读器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  4,470
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  21
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一款在线的 Markdown 阅读器，主要用来展示 Markdown 内容。支持 HTML 导出，同时可以方便的添加扩展功能。在这个阅读器的基础又做了一款在线 Github Pages 页面生成器，可以方便的生成不同主题风格的 GitHub Page 页面。</p>
+<a id="more"></a>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><h3 id="阅读器"><a href="#阅读器" class="headerlink" title="阅读器"></a>阅读器</h3><ul>
+<li>支持文件拖拽</li>
+<li>兼容移动端</li>
+<li><code>Prism.js</code> / <code>Highlight.js</code> 代码高亮</li>
+<li>自动生成目录</li>
+<li>本地图片显示</li>
+<li>导出 Html （包含样式）</li>
+<li>扩展功能<ul>
+<li>Toto 列表</li>
+<li><a href="https://github.com/mathjax/MathJax" target="_blank" rel="noopener">MathJax</a> </li>
+<li><a href="https://github.com/bramp/js-sequence-diagrams" target="_blank" rel="noopener">时序图 (Js sequence diagrams)</a></li>
+<li><a href="https://github.com/Ranks/emojify.js" target="_blank" rel="noopener">Emoji (Emojify.js)</a></li>
+<li><a href="http://echarts.baidu.com/" target="_blank" rel="noopener">图表 (ECharts)</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="Github-Page-生成器"><a href="#Github-Page-生成器" class="headerlink" title="Github Page 生成器"></a>Github Page 生成器</h3><p>在上面的基础上加上了下面的功能</p>
+<ul>
+<li>支持多种页面主题<ul>
+<li><a href="https://github.com/jasonlong/architect-theme" target="_blank" rel="noopener">Architect</a></li>
+<li><a href="https://github.com/jasonlong/cayman-theme" target="_blank" rel="noopener">Cayman</a></li>
+<li><a href="https://github.com/orderedlist/minimal" target="_blank" rel="noopener">Minimal</a></li>
+<li><a href="https://github.com/orderedlist/modernist" target="_blank" rel="noopener">Modernist</a></li>
+<li><a href="https://github.com/jasoncostello/slate" target="_blank" rel="noopener">Slate</a></li>
+<li><a href="https://github.com/jonrohan/time-machine-theme" target="_blank" rel="noopener">Time machine</a></li>
+</ul>
+</li>
+<li>评论<ul>
+<li><a href="http://duoshuo.com/" target="_blank" rel="noopener">多说</a></li>
+<li><a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><p><strong>阅读器</strong><br><a href="http://markdown.zhangjikai.com/" target="_blank" rel="noopener">在线地址</a>　　<a href="http://zhangjikai.com/markdown/sample.html" target="_blank" rel="noopener">效果预览</a>　　<a href="https://github.com/zhangjikai/online-markdown-reader" target="_blank" rel="noopener">源码</a></p>
+<p><strong>生成器</strong><br><a href="http://page.zhangjikai.com" target="_blank" rel="noopener">在线地址</a>　　<a href="http://zhangjikai.com/page/index.html" target="_blank" rel="noopener">效果预览</a>　　<a href="https://github.com/zhangjikai/online-ghpages-generator" target="_blank" rel="noopener">源码</a> </p>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><strong>阅读器</strong>  </p>
+<p><img src="/images/markdown/002.png" alt></p>
+<p><strong>生成器</strong></p>
+<p><img src="/images/markdown/003.png" alt></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="文件解析"><a href="#文件解析" class="headerlink" title="文件解析"></a>文件解析</h3><p>程序使用 <a href="https://github.com/chjj/marked" target="_blank" rel="noopener">marked</a> 将 markdown 格式转为 html 格式，这是一个 js 的库，可以直接在浏览器端使用。下面是一个基本的示例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> htmlContent = marked(mdContent);</span><br><span class="line">$(<span class="string">"#content"</span>).html(htmlContent);</span><br></pre></td></tr></table></figure></p>
+<p>同时 marked 提供了一些接口，让我们可以方便的定制自己的功能。具体的可以参考它的 <a href="https://github.com/chjj/marked" target="_blank" rel="noopener">说明文件</a> 。在下面我们会介绍我们是如何利用这些接口来实现扩展功能。</p>
+<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><h4 id="自定义上传按钮样式"><a href="#自定义上传按钮样式" class="headerlink" title="自定义上传按钮样式"></a>自定义上传按钮样式</h4><p>原始的上传按钮太丑了，所以我们需要自定义自己的样式。这里使用的方式是使用在 <code>input</code> 上面覆盖一个 <code>button</code>，用 <code>button</code> 来显示样式。同时我们将 <code>button</code> 的 <code>pointer-events</code> 设为 <code>none</code>，就可以阻止 <code>button</code> 的事件响应（具体可以参考<a href="http://www.zhangxinxu.com/wordpress/2011/12/css3-pointer-events-none-javascript/" target="_blank" rel="noopener">这里</a>）。下面是具体的实现代码：<br>html:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"upload-area"</span> <span class="attr">id</span>=<span class="string">"upload-area"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"select-file"</span> <span class="attr">class</span>=<span class="string">"select-file"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"select-file-style"</span> <span class="attr">id</span>=<span class="string">"drop"</span>&gt;</span>选择或者拖拽 Markdown 文件到此<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>css<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.upload-area</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: auto;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">2.6em</span> <span class="number">0</span> <span class="number">0.4em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">cursor</span>: pointer;</span><br><span class="line">  <span class="attribute">transition</span>: height <span class="number">0.5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.upload-area</span> <span class="selector-class">.select-file</span> &#123;</span><br><span class="line">  <span class="attribute">border-width</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">cursor</span>: pointer;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.upload-area</span> <span class="selector-class">.select-file-style</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#F5F7FA</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">pointer-events</span>: none;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#AAB2BD</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">2em</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">2em</span>;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"Microsoft YaHei"</span>, <span class="string">"Tahoma"</span>, arial;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是效果图</p>
+<p><img src="/images/markdown/004.png" alt></p>
+<h4 id="读取文件内容"><a href="#读取文件内容" class="headerlink" title="读取文件内容"></a>读取文件内容</h4><p>因为程序完全是运行在浏览器端，所以我们使用 html5 的 <code>FileReader</code> 来读取本地文件。<code>FileReader</code> 提供 4 种读取文件的方式</p>
+<ul>
+<li><code>readAsBinaryString(Blob|File)</code></li>
+<li><code>readAsText(Blob|File, opt_encoding)</code></li>
+<li><code>readAsDataURL(Blob|File)</code></li>
+<li><code>readAsArrayBuffer(Blob|File)</code></li>
+</ul>
+<p>其中 <code>readAsText</code> 用来读取文本文件，<code>readAsDataUrl</code> 可以用来读取图片。具体的介绍可以参考 <a href="https://www.html5rocks.com/zh/tutorials/file/dndfiles/" target="_blank" rel="noopener">这里</a> 。<code>FileReader</code> 一般结合文件选择事件或者拖拽事件使用，因为通过这两个事件可以获得源文件。另外 <code>FileReader</code> 是异步读取的，通过 <code>onload</code> 事件可以监听文件是否读取完毕。下面是一个示例, 通过点击 <code>&lt;input type= &quot;file&quot;&gt;</code> 选择文件，然后读取文件内容。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"file-select"</span>).addEventListener(<span class="string">"change"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    reader.readAsText(<span class="keyword">this</span>.files[<span class="number">0</span>]);</span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> content = e.target.result;</span><br><span class="line">        <span class="comment">//......</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
+<h4 id="拖拽文件"><a href="#拖拽文件" class="headerlink" title="拖拽文件"></a>拖拽文件</h4><p>为了方便用户操作，我们提供了点击和拖拽两种方式来上传文件。现在的主流浏览器都支持文件拖拽功能，下面是拖拽过程中触发的事件</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">事件</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dragstart</td>
+<td style="text-align:left">用户开始拖动对象时触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">dragenter</td>
+<td style="text-align:left">鼠标初次移到目标元素并且正在进行拖动时触发。这个事件的监听器应该之指出这个位置是否允许放置元素。如果没有监听器或者监听器不执行任何操作，默认情况下不允许放置。</td>
+</tr>
+<tr>
+<td style="text-align:left">dragover</td>
+<td style="text-align:left">拖动时鼠标移到某个元素上的时候触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">dragleave</td>
+<td style="text-align:left">拖动时鼠标离开某个元素的时候触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">drag</td>
+<td style="text-align:left">对象被拖拽时每次鼠标移动都会触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">drop</td>
+<td style="text-align:left">拖动操作结束，放置元素时触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">dragend</td>
+<td style="text-align:left">拖动对象时用户释放鼠标按键的时候触发。</td>
+</tr>
+</tbody>
+</table>
+<p>另外在拖拽过程中是不触发鼠标事件的。文件读取完后文件信息会保存在 <code>DataTransfer</code> 对象中。详细的介绍可以参考 <a href="http://wiki.jikexueyuan.com/project/html5/drag-drop.html" target="_blank" rel="noopener">这里</a> 。下面是添加事件的示例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fileSelect.addEventListener(<span class="string">"dragenter"</span>, dragMdEnter, <span class="literal">false</span>);</span><br><span class="line">fileSelect.addEventListener(<span class="string">"dragleave"</span>, dragMdLeave, <span class="literal">false</span>);</span><br><span class="line">fileSelect.addEventListener(<span class="string">'drop'</span>, dropMdFile, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
+<p>读取拖拽的文件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dropMdFile</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 取消浏览器默认行为</span></span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    reader.readAsText(e.dataTransfer.files[<span class="number">0</span>]);</span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> content = e.target.result;</span><br><span class="line">        <span class="comment">//......</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="本地图片显示"><a href="#本地图片显示" class="headerlink" title="本地图片显示"></a>本地图片显示</h3><p>因为没有服务器，所以为了显示本地图片，使用了替换图片 <code>src</code> 的方式。首先读取本地文件，然后将 <code>&lt;img&gt;</code> 的 <code>src</code> 路径替换为图片内容 。如下所示：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"path"</span>&gt;</span></span><br><span class="line">// 替换为</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgI..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>下面是具体的代码实现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取选择或者拖拽的文件（多个文件）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processImages</span>(<span class="params">imgFiles</span>) </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; imgFiles.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> file = imgFiles[i];</span><br><span class="line">        <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">        reader.readAsDataURL(file);</span><br><span class="line">        (<span class="function"><span class="keyword">function</span> (<span class="params">reader, file</span>) </span>&#123;</span><br><span class="line">            reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                cacheImages[file.name] = e.target.result;</span><br><span class="line">                index++;</span><br><span class="line">                <span class="keyword">if</span> (index == length) &#123;</span><br><span class="line">                    replaceImage();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)(reader, file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将路径替换为图片内容</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replaceImage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> images = $(<span class="string">"img"</span>);</span><br><span class="line">    <span class="keyword">var</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; images.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> imgSrc = images[i].src;</span><br><span class="line">        <span class="keyword">var</span> imgName = getImgName(imgSrc);</span><br><span class="line">        <span class="keyword">if</span> (cacheImages.hasOwnProperty(imgName)) &#123;</span><br><span class="line">            images[i].src = cacheImages[imgName];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果图片过大，我们可以将图片压缩一下，具体方法就是创建一个 <code>canvas</code> 元素，将图片绘制到 <code>canvas</code> 上，然后将 <code>canvas</code> 转为图片。这种方式对 <code>jpg</code> 文件压缩效果较好，对 <code>png</code> 文件压缩效果不太好。下面是代码实现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compressImage</span>(<span class="params">img, format</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> max_width = <span class="number">862</span>;</span><br><span class="line">    <span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> width = img.width;</span><br><span class="line">    <span class="keyword">var</span> height = img.height;</span><br><span class="line">    <span class="keyword">if</span> (format == <span class="literal">null</span> || format == <span class="string">""</span>) &#123;</span><br><span class="line">        format = <span class="string">"image/png"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (width &gt; max_width) &#123;</span><br><span class="line">        height = <span class="built_in">Math</span>.round(height *= max_width / width);</span><br><span class="line">        width = max_width;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// resize the canvas and draw the image data into it</span></span><br><span class="line">    canvas.width = width;</span><br><span class="line">    canvas.height = height;</span><br><span class="line">    <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">    ctx.drawImage(img, <span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">    <span class="keyword">return</span> canvas.toDataURL(format);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="循环中使用异步回调函数"><a href="#循环中使用异步回调函数" class="headerlink" title="循环中使用异步回调函数"></a>循环中使用异步回调函数</h4><p>为了方便使用，我们可以同时上传多个图片，我们使用 <code>for</code> 循环来读取多个文件，但是有个问题是文件的读取是异步的，也就是说在 <code>for</code> 循环执行完之后，图片可能仍在读取中，当图片读取完后，再调用 <code>onload</code> 回调函数进行处理。简单一点就是说如何在 <code>for</code> 循环中正确使用延迟调用的回调函数。看下面的例子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">value, callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"value in print"</span>, value);</span><br><span class="line">    setTimeout(callback, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> value = i;</span><br><span class="line">    print(value, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"value in callback"</span>, value);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面打的代码和我们读取图片文件的逻辑类似，<code>callback</code> 函数会在调用 <code>print</code> 函数1秒后执行，下面是输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">value in print 0</span><br><span class="line">value in print 1</span><br><span class="line">value in print 2</span><br><span class="line">value in print 3</span><br><span class="line">value in callback 3</span><br><span class="line">value in callback 3</span><br><span class="line">value in callback 3</span><br><span class="line">value in callback 3</span><br></pre></td></tr></table></figure></p>
+<p>最后在 <code>callback</code> 中 <code>value</code> 值都是3，这是因为在 js 中没有块级作用域，只有函数作用域，也就是说下面的两段代码是等同的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> value = i;</span><br><span class="line">    <span class="comment">// do someting</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">var</span> value;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">    value = i;</span><br><span class="line">    <span class="comment">// do someting</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因此，为了解决这个问题，我们只需要为循环中的回调函数添加一个单独的作用域即可，我们使用闭包来实现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> value = i;</span><br><span class="line">    (<span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">        print(value, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"value in callback"</span>, value);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;(value));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h3><p>我们使用两款代码高亮插件 – <a href="https://highlightjs.org/" target="_blank" rel="noopener">highlight.js</a> 和 <a href="http://prismjs.com/" target="_blank" rel="noopener">prism.js</a>，根据喜好可以自由切换。这两款插件对代码块的 html 格式有不同的要求，我们重写了 <code>marked</code> 中解析代码块的方法，根据高亮方式来生成不同的 html 代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">renderer.code = <span class="function"><span class="keyword">function</span> (<span class="params">code, lang</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Setting.highlight == Constants.highlight) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;pre&gt;&lt;code class='"</span> + lang + <span class="string">"'&gt;"</span> + code + <span class="string">"&lt;/code&gt;&lt;/pre&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"&lt;pre&gt;&lt;code class='language-"</span> + lang + <span class="string">"'&gt;"</span> + code + <span class="string">"&lt;/code&gt;&lt;/pre&gt;"</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>然后调用 highlight.js 和 prism.js 的代码高亮方法即可<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Setting.highlight == Constants.highlight) &#123;</span><br><span class="line">    $(<span class="string">'pre code'</span>).each(<span class="function"><span class="keyword">function</span> (<span class="params">i, block</span>) </span>&#123;</span><br><span class="line">        hljs.highlightBlock(block);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 添加行号支持</span></span><br><span class="line">    $(<span class="string">"pre"</span>).addClass(<span class="string">"line-numbers"</span>);</span><br><span class="line">    Prism.highlightAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>为了生成文件的目录，我们需要首先获得目录信息，因此我们重写 <code>marked</code> 的 <code>heading</code> 方法， 将目录信息保存起来，同时为每个标题添加链接图标（仿照 github），下面是代码:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">renderer.heading = <span class="function"><span class="keyword">function</span> (<span class="params">text, level</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> slug = text.toLowerCase().replace(<span class="regexp">/[\s]+/g</span>, <span class="string">'-'</span>);</span><br><span class="line">    <span class="keyword">if</span> (tocStr.indexOf(slug) != <span class="number">-1</span>) &#123;</span><br><span class="line">        slug += <span class="string">"-"</span> + tocDumpIndex;</span><br><span class="line">        tocDumpIndex++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tocStr += slug;</span><br><span class="line">    toc.push(&#123;</span><br><span class="line">        level: level,</span><br><span class="line">        slug: slug,</span><br><span class="line">        title: text</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"&lt;h"</span> + level + <span class="string">" id=\""</span> + slug + <span class="string">"\"&gt;&lt;a href=\"#"</span> + slug + <span class="string">"\" class=\"anchor\"&gt;"</span> + <span class="string">''</span> +</span><br><span class="line">        <span class="string">'&lt;svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"&gt;&lt;path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"&gt;&lt;/path&gt;&lt;/svg&gt;'</span> +</span><br><span class="line">        <span class="string">''</span> + <span class="string">"&lt;/a&gt;"</span> + text + <span class="string">"&lt;/h"</span> + level + <span class="string">"&gt;"</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>同时需要加入下面的 css，以是标题的链接图片正常显示：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span>, <span class="selector-tag">h2</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span>, <span class="selector-tag">h3</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span>, <span class="selector-tag">h4</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span>, <span class="selector-tag">h5</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span>, <span class="selector-tag">h6</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> <span class="selector-class">.octicon-link</span>, <span class="selector-tag">h2</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> <span class="selector-class">.octicon-link</span>, <span class="selector-tag">h3</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> <span class="selector-class">.octicon-link</span>, <span class="selector-tag">h4</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> <span class="selector-class">.octicon-link</span>, <span class="selector-tag">h5</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> <span class="selector-class">.octicon-link</span>, <span class="selector-tag">h6</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.anchor</span> <span class="selector-class">.octicon-link</span> &#123;</span><br><span class="line">    <span class="attribute">visibility</span>: visible</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.octicon</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">vertical-align</span>: text-top;</span><br><span class="line">    <span class="attribute">fill</span>: currentColor;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.anchor</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">padding-right</span>: <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: -<span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为了生成目录，我们只需按照保存的目录信息，生成 <code>&lt;ul&gt;</code> 和 <code>&lt;li&gt;</code> 标签即可，具体的可以参考源码中的实现。</p>
+<h4 id="配置页面锚链接"><a href="#配置页面锚链接" class="headerlink" title="配置页面锚链接"></a>配置页面锚链接</h4><p>目录使用的是页内锚链接的方式进行跳转，如下面所示：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#h1"</span>&gt;</span>跳转到 H1<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">"h1"</span>&gt;</span>我是 H1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，页内锚链接跳转之后，目标标签（上面代码中的 <code>&lt;h1&gt;</code> ）会移动到页面的最顶部，但是在我们的程序中有一个固定的 header，如果跳转到最顶部，目标标签会被 header 遮挡住，所以我们希望目标标签移动到距离页面顶部 <code>header-height</code> 的地方。为了实现我们的需要，只要加入下面的 css 代码即可。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:target</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>:<span class="string">""</span>;</span><br><span class="line">    <span class="attribute">display</span>:block;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">50px</span>; <span class="comment">/* fixed header height*/</span></span><br><span class="line">    <span class="attribute">margin</span>:-<span class="number">50px</span> <span class="number">0</span> <span class="number">0</span>; <span class="comment">/* negative fixed header height */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Todo-列表"><a href="#Todo-列表" class="headerlink" title="Todo 列表"></a>Todo 列表</h3><p>Todo 列表实际上就是 checkbox 的列表，完成的工作用选中的 checkbox 表示，未完成的工作用喂选中的列表表示，如下图所示：</p>
+<p><img src="/images/markdown/005.png" alt></p>
+<p>一般来说，会将下面形式的 markdown 代码解析为 todo 列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- [x] 完成</span><br><span class="line">- [ ] 未完成</span><br><span class="line">- [ ] 未完成</span><br></pre></td></tr></table></figure></p>
+<p>为了实现这个功能，我们重写 <code>marked</code> 中解析列表的方法，加入对 todo 列表的支持。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">renderer.listitem = <span class="function"><span class="keyword">function</span> (<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^\s*\[[x ]\]\s*/</span>.test(text)) &#123;</span><br><span class="line">        text = text</span><br><span class="line">            .replace(<span class="regexp">/^\s*\[ \]\s*/</span>, <span class="string">'&lt;input type="checkbox" class="task-list-item-checkbox" disabled&gt; '</span>)</span><br><span class="line">            .replace(<span class="regexp">/^\s*\[x\]\s*/</span>, <span class="string">'&lt;input type="checkbox" class="task-list-item-checkbox" disabled checked&gt; '</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;li style="list-style: none"&gt;'</span> + text + <span class="string">'&lt;/li&gt;'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;li&gt;'</span> + text + <span class="string">'&lt;/li&gt;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>同时加入下面的样式：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.task-list-item-checkbox</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">0.2em</span> <span class="number">0.25em</span> -<span class="number">2.3em</span>;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-attr">[type="checkbox"]</span>, <span class="selector-attr">[type="radio"]</span> &#123;</span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>现在的浏览器都已经支持 <code>localStorage</code>，可以方便的存储数据。<code>localStorage</code> 就是一个对象。我们存储数据就是直接给它添加一个属性，可以通过 <code>localStoage[&quot;a&quot;]=1</code> 或者 <code>localStorage.a = 1</code> 的方式来存储数据，但是看起来总觉的不太优雅，因为一般使用下面的方式来操作 <code>localStorage</code>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(key, vlaue);</span><br><span class="line">localStorage.getItem(key);</span><br><span class="line">localStorage.removeItem(key);</span><br></pre></td></tr></table></figure></p>
+<p>另外 <code>localStorage</code> 也有一些局限，使用时需要注意：</p>
+<ul>
+<li>存储空间有限制，一般是 <code>5M</code>  左右，和浏览器有关</li>
+<li>用户清除浏览器缓存之后有可能丢失本地缓存的数据</li>
+<li>不能直接存对象，要先使用 <code>JSON.stringfy</code> 方法将对象进行序列化处理之后再保存。使用时需要使用 <code>JSON.parse</code> 方法将字符串转为对象。</li>
+</ul>
+<h3 id="导出文件"><a href="#导出文件" class="headerlink" title="导出文件"></a>导出文件</h3><p>通过使用 <a href="https://github.com/eligrey/FileSaver.js/" target="_blank" rel="noopener">FileSaver.js</a>，我们可以方便的在浏览器端生成文件，并提供给用户下载。使用方法也很简单：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([htmlContent], &#123;<span class="attr">type</span>: <span class="string">"text/html;charset=utf-8"</span>&#125;);</span><br><span class="line">saveAs(blob, name);</span><br></pre></td></tr></table></figure></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>我们提供了一些扩展功能，用来更好的展示 markdown 内容。在现在的程序中我们可以很方便的添加扩展功能，下面会具体介绍。</p>
+<h4 id="自定义扩展"><a href="#自定义扩展" class="headerlink" title="自定义扩展"></a>自定义扩展</h4><p>为了添加扩展，我们首先需要确定哪些内容需要作为扩展处理。因为在将 markdown 文件转为 html 的过程中，一般是不处理代码块中的内容的，所以我们使用代码块来存放扩展内容，通过代码块的语言来确定是哪种扩展。以添加序列图扩展为例：</p>
+<ul>
+<li><p>确定时序图的代码标记<br><img src="/images/markdown/006.png" alt></p>
+</li>
+<li><p>修改 <code>marked</code> 中对于代码块的解析函数，添加对于时序图标记的支持</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> renderer = <span class="keyword">new</span> marked.Renderer();</span><br><span class="line"><span class="keyword">var</span> originalCodeFun = <span class="function"><span class="keyword">function</span> (<span class="params">code, lang</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Setting.highlight == Constants.highlight) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;pre&gt;&lt;code class='"</span> + lang + <span class="string">"'&gt;"</span> + code + <span class="string">"&lt;/code&gt;&lt;/pre&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"&lt;pre&gt;&lt;code class='language-"</span> + lang + <span class="string">"'&gt;"</span> + code + <span class="string">"&lt;/code&gt;&lt;/pre&gt;"</span>;</span><br><span class="line">&#125;;</span><br><span class="line">renderer.code = <span class="function"><span class="keyword">function</span> (<span class="params">code, language</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (language == <span class="string">"seq"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;div class='diagram' id='diagram'&gt;"</span> + code + <span class="string">"&lt;/div&gt;"</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> originalCodeFun.call(<span class="keyword">this</span>, code, language);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">marked.setOptions(&#123;</span><br><span class="line">    renderer: renderer</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引入 <code>js-sequence-diagrams</code> 相关文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; bower directory &#125;&#125;/js-sequence-diagrams/dist/sequence-diagram-min.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"&#123;&#123; bower directory &#125;&#125;/bower-webfontloader/webfont.js"</span> /&gt;</span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; bower directory &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">/snap.svg/dist/snap.svg-min.js"</span> /&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; bower directory &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">/underscore/underscore-min.js"</span> /&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; bower directory &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">/js-sequence-diagrams/dist/sequence-diagram-min.js"</span> /&gt;</span></span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>渲染 Markdown 文件时，调用相关函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".diagram"</span>).sequenceDiagram(&#123;<span class="attr">theme</span>: <span class="string">'simple'</span>&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>添加扩展会影响文件的渲染速度，如果不需要某个扩展可以手动关闭。</p>
+<h4 id="Mathjax"><a href="#Mathjax" class="headerlink" title="Mathjax"></a>Mathjax</h4><p>使用<a href="https://github.com/mathjax/MathJax" target="_blank" rel="noopener">Mathjax</a> 对数学公式进行支持。关于Mathjax 语法，请参考<a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference/5044" target="_blank" rel="noopener">这里</a>。下面是添加扩展的流程：</p>
+<ul>
+<li><p>引入文件并配置</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-mathjax-config"</span>&gt;</span></span><br><span class="line"><span class="actionscript">  MathJax.Hub.Config(&#123;tex2jax: &#123;inlineMath: [[<span class="string">'$'</span>,<span class="string">'$'</span>], [<span class="string">'\\('</span>,<span class="string">'\\)'</span>]]&#125;,</span></span><br><span class="line">    TeX: &#123;</span><br><span class="line">      equationNumbers: &#123;</span><br><span class="line"><span class="actionscript">        autoNumber: [<span class="string">"AMS"</span>],</span></span><br><span class="line"><span class="actionscript">        useLabelIds: <span class="literal">true</span></span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"><span class="actionscript">    <span class="string">"HTML-CSS"</span>: &#123;</span></span><br><span class="line">      linebreaks: &#123;</span><br><span class="line"><span class="actionscript">        automatic: <span class="literal">true</span></span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    SVG: &#123;</span><br><span class="line">      linebreaks: &#123;</span><br><span class="line"><span class="actionscript">        automatic: <span class="literal">true</span></span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"http://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将 markdown 文件转为 html 之后，调用 Mathjax 中的方法将对应标记转为数学公式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// content 是需要处理的 html 标签的 id</span></span><br><span class="line">MathJax.Hub.Queue([<span class="string">"Typeset"</span>, MathJax.Hub, <span class="string">"content"</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h4><p>使用 <a href="https://github.com/Ranks/emojify.js" target="_blank" rel="noopener">emojify.js</a> 来提供对 Emoji 标签的支持。Emoji表情参见 <a href="http://www.webpagefx.com/tools/emoji-cheat-sheet/" target="_blank" rel="noopener">EMOJI CHEAT SHEET</a>。下面是添加扩展的流程</p>
+<ul>
+<li><p>引用文件并配置</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://cdn.bootcss.com/emojify.js/1.1.0/js/emojify.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line">trueemojify.setConfig(&#123;</span><br><span class="line"><span class="actionscript">        emojify_tag_type: <span class="string">'div'</span>,           <span class="comment">// Only run emojify.js on this element</span></span></span><br><span class="line"><span class="actionscript">        only_crawl_id: <span class="literal">null</span>,            <span class="comment">// Use to restrict where emojify.js applies</span></span></span><br><span class="line"><span class="actionscript">        img_dir: <span class="string">'http://cdn.bootcss.com/emojify.js/1.0/images/basic'</span>,  <span class="comment">// Directory for emoji images</span></span></span><br><span class="line"><span class="actionscript">        ignored_tags: &#123;                <span class="comment">// Ignore the following tags</span></span></span><br><span class="line"><span class="actionscript">            <span class="string">'SCRIPT'</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="actionscript">            <span class="string">'TEXTAREA'</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="actionscript">            <span class="string">'A'</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="actionscript">            <span class="string">'PRE'</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="actionscript">            <span class="string">'CODE'</span>: <span class="number">1</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将 markdown 文件转为 html 之后，调用 emojify 中的方法将对应标记转换 emoji 表情。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emojify.run(<span class="built_in">document</span>.getElementById(<span class="string">'content'</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="图表-（ECharts）"><a href="#图表-（ECharts）" class="headerlink" title="图表 （ECharts）"></a>图表 （ECharts）</h4><p>使用 <a href="https://github.com/ecomfe/echarts" target="_blank" rel="noopener">ECharts</a> 来提供对图表的支持。ECharts 的语法可以参考 <a href="http://echarts.baidu.com/examples.html" target="_blank" rel="noopener">官网的示例</a>。下面是使用方法：</p>
+<ul>
+<li><p>确定 ECharts 在 markdown 中的语法标签<br><img src="/images/markdown/007.png" alt></p>
+</li>
+<li><p>在 code 方法解析中添加对 echarts 的支持</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">renderer.code = <span class="function"><span class="keyword">function</span> (<span class="params">code, language</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (language) &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"echarts"</span>:</span><br><span class="line">            <span class="keyword">if</span> (Setting.echarts) &#123;</span><br><span class="line">                <span class="keyword">return</span> loadEcharts(code);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> originalCodeFun.call(<span class="keyword">this</span>, code, language);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadEcharts</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> width = <span class="string">"100%"</span>;</span><br><span class="line">    <span class="keyword">var</span> height = <span class="string">"400px"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> options = <span class="built_in">eval</span>(<span class="string">"("</span> + text + <span class="string">")"</span>);</span><br><span class="line">        <span class="keyword">if</span> (options.hasOwnProperty(<span class="string">"width"</span>)) &#123;</span><br><span class="line">            width = options[<span class="string">"width"</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (options.hasOwnProperty(<span class="string">"height"</span>)) &#123;</span><br><span class="line">            height = options[<span class="string">"height"</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        echartIndex++;</span><br><span class="line">        echartData.push(&#123;</span><br><span class="line">            id: echartIndex,</span><br><span class="line">            option: options,</span><br><span class="line">            previousOption: text</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;div id="echarts-'</span> + echartIndex + <span class="string">'" style="width: '</span> + width + <span class="string">';height:'</span> + height + <span class="string">';"&gt;&lt;/div&gt;'</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将 markdown 文件转为 html 之后，调用 echarts 中的方法，将对应的 div 转为图表：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> chart;</span><br><span class="line">echartData.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (data.option.theme) &#123;</span><br><span class="line">        chart = echarts.init(<span class="built_in">document</span>.getElementById(<span class="string">'echarts-'</span> + data.id), data.option.theme);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        chart = echarts.init(<span class="built_in">document</span>.getElementById(<span class="string">'echarts-'</span> + data.id));</span><br><span class="line">    &#125;</span><br><span class="line">    chart.setOption(data.option);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h4><p>在生成Github Page页面时，我们可以选择添加 <a href="http://duoshuo.com/" target="_blank" rel="noopener">多说</a> 或者 <a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a> 评论，其中多说就是在导出的页面中加入下面的代码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span> <span class="attr">data-thread-key</span>=<span class="string">""</span> <span class="attr">data-title</span>=<span class="string">""</span> <span class="attr">data-url</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> duoshuoQuery = &#123;</span></span><br><span class="line"><span class="actionscript">        short_name: <span class="string">""</span></span></span><br><span class="line">    &#125;;</span><br><span class="line"><span class="actionscript">    (<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> ds = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</span></span><br><span class="line"><span class="actionscript">        ds.type = <span class="string">"text/javascript"</span>;</span></span><br><span class="line"><span class="actionscript">        ds.async = <span class="literal">true</span>;</span></span><br><span class="line"><span class="javascript">        ds.src = (<span class="built_in">document</span>.location.protocol == <span class="string">"https:"</span> ? <span class="string">"https:"</span> : <span class="string">"http:"</span>) + <span class="string">"//static.duoshuo.com/embed.js"</span>;</span></span><br><span class="line"><span class="actionscript">        ds.charset = <span class="string">"UTF-8"</span>;</span></span><br><span class="line"><span class="javascript">        (<span class="built_in">document</span>.getElementsByTagName(<span class="string">"head"</span>)[<span class="number">0</span>] || <span class="built_in">document</span>.getElementsByTagName(<span class="string">"body"</span>)[<span class="number">0</span>]).appendChild(ds);</span></span><br><span class="line">    &#125;)();</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>其中 <code>data-thread-key</code>, <code>data-title</code>, <code>data-url</code> 和 <code>short_name</code> 是需要我们自定义的东西。而Disqus 需要在导出时插入下面的代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"disqus_thread"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> disqus_shortname = <span class="string">''</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> prefix = <span class="built_in">document</span>.location.protocol == <span class="string">"https:"</span> ? <span class="string">"https:"</span> : <span class="string">"http:"</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> disqus_config = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.page.url = <span class="string">""</span>;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.page.identifier = <span class="string">""</span></span></span><br><span class="line">    &#125;;</span><br><span class="line"><span class="actionscript">    (<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> d = <span class="built_in">document</span>,</span></span><br><span class="line"><span class="actionscript">                s = d.createElement(<span class="string">'script'</span>);</span></span><br><span class="line"><span class="actionscript">        s.src = prefix + <span class="string">'//'</span> + disqus_shortname + <span class="string">'.disqus.com/embed.js'</span>;</span></span><br><span class="line"><span class="javascript">        s.setAttribute(<span class="string">'data-timestamp'</span>, +<span class="keyword">new</span> <span class="built_in">Date</span>());</span></span><br><span class="line">        (d.head || d.body).appendChild(s);</span><br><span class="line">    &#125;)();</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>其中 <code>disqus_shortname</code>, <code>page.url</code> 和 <code>page.indertifier</code> 是需要我们自定义的东西。这里需要注意的是 <code>page.url</code> 要使用绝对路径。</p>
+<p>具体的插入逻辑可参考源码的实现，这里不再赘述。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/应用/" rel="tag"># 应用</a>
+          
+            <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/06/【HTML5】Canvas元素添加事件/" rel="next" title="【HTML5】Canvas 内部元素添加事件处理">
+                <i class="fa fa-chevron-left"></i> 【HTML5】Canvas 内部元素添加事件处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/29/【Java-并发】详解-ThreadLocal/" rel="prev" title="【Java 并发】详解 ThreadLocal">
+                【Java 并发】详解 ThreadLocal <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">2.</span> <span class="nav-text">功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阅读器"><span class="nav-number">2.1.</span> <span class="nav-text">阅读器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-Page-生成器"><span class="nav-number">2.2.</span> <span class="nav-text">Github Page 生成器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址"><span class="nav-number">3.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果"><span class="nav-number">4.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">5.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件解析"><span class="nav-number">5.1.</span> <span class="nav-text">文件解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传"><span class="nav-number">5.2.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义上传按钮样式"><span class="nav-number">5.2.1.</span> <span class="nav-text">自定义上传按钮样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读取文件内容"><span class="nav-number">5.2.2.</span> <span class="nav-text">读取文件内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拖拽文件"><span class="nav-number">5.2.3.</span> <span class="nav-text">拖拽文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地图片显示"><span class="nav-number">5.3.</span> <span class="nav-text">本地图片显示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#循环中使用异步回调函数"><span class="nav-number">5.3.1.</span> <span class="nav-text">循环中使用异步回调函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码高亮"><span class="nav-number">5.4.</span> <span class="nav-text">代码高亮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">5.5.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置页面锚链接"><span class="nav-number">5.5.1.</span> <span class="nav-text">配置页面锚链接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Todo-列表"><span class="nav-number">5.6.</span> <span class="nav-text">Todo 列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">5.7.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出文件"><span class="nav-number">5.8.</span> <span class="nav-text">导出文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">5.9.</span> <span class="nav-text">扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义扩展"><span class="nav-number">5.9.1.</span> <span class="nav-text">自定义扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mathjax"><span class="nav-number">5.9.2.</span> <span class="nav-text">Mathjax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Emoji"><span class="nav-number">5.9.3.</span> <span class="nav-text">Emoji</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图表-（ECharts）"><span class="nav-number">5.9.4.</span> <span class="nav-text">图表 （ECharts）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#评论"><span class="nav-number">5.9.5.</span> <span class="nav-text">评论</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2017/01/09/【应用】Markdown-在线阅读器/';
+          this.page.identifier = '2017/01/09/【应用】Markdown-在线阅读器/';
+          this.page.title = '【应用】Markdown 在线阅读器';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

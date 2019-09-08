@@ -1,0 +1,1277 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习笔记,CSS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言本文绝大部分摘自 CSS 权威指南 第三版 基本概念 正常流 (Normal Flow)： 有时会被翻译为 文档流 或者 普通流，指文档从左至右、从上至下的显示内容，是传统的 HTML 文档布局。如果使元素不在正常流中，可以使用浮动（float）或者定位（absolute, fixed）。 块级元素 (Block-level)： 块级元素在普通流中会独占一行，即在其框之前和之后生成“换行”，因">
+<meta name="keywords" content="学习笔记,CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CSS 学习笔记】CSS元素和布局">
+<meta property="og:url" content="http://blog.zhangjikai.com/2016/11/29/【CSS学习笔记】CSS元素和布局/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="前言本文绝大部分摘自 CSS 权威指南 第三版 基本概念 正常流 (Normal Flow)： 有时会被翻译为 文档流 或者 普通流，指文档从左至右、从上至下的显示内容，是传统的 HTML 文档布局。如果使元素不在正常流中，可以使用浮动（float）或者定位（absolute, fixed）。 块级元素 (Block-level)： 块级元素在普通流中会独占一行，即在其框之前和之后生成“换行”，因">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/css_layout/box-model.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/css_layout/box-model-1.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/css_layout/box-model-2.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/css_layout/margin-collapse.gif">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.619Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【CSS 学习笔记】CSS元素和布局">
+<meta name="twitter:description" content="前言本文绝大部分摘自 CSS 权威指南 第三版 基本概念 正常流 (Normal Flow)： 有时会被翻译为 文档流 或者 普通流，指文档从左至右、从上至下的显示内容，是传统的 HTML 文档布局。如果使元素不在正常流中，可以使用浮动（float）或者定位（absolute, fixed）。 块级元素 (Block-level)： 块级元素在普通流中会独占一行，即在其框之前和之后生成“换行”，因">
+<meta name="twitter:image" content="http://blog.zhangjikai.com/images/css_layout/box-model.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2016/11/29/【CSS学习笔记】CSS元素和布局/">
+
+
+
+
+
+  <title> 【CSS 学习笔记】CSS元素和布局 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2016/11/29/【CSS学习笔记】CSS元素和布局/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【CSS 学习笔记】CSS元素和布局
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-29T20:49:18+08:00">
+                2016-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/29/【CSS学习笔记】CSS元素和布局/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/29/【CSS学习笔记】CSS元素和布局/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  3,447
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文绝大部分摘自 <code>CSS 权威指南 第三版</code></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li><strong>正常流 (Normal Flow)：</strong> 有时会被翻译为 <strong>文档流</strong> 或者 <strong>普通流</strong>，指文档从左至右、从上至下的显示内容，是传统的 HTML 文档布局。如果使元素不在正常流中，可以使用浮动（<code>float</code>）或者定位（<code>absolute</code>, <code>fixed</code>）。</li>
+<li><strong>块级元素 (Block-level)：</strong> 块级元素在<strong>普通流</strong>中会独占一行，即在其框之前和之后生成“换行”，因此处于<strong>普通流</strong>中的块级元素会按照从上到下的顺序垂直（vertically）排列。常见的 block 元素有 <code>div</code>, <code>p</code>, <code>h1-h6</code>, <code>ul</code>, <code>li</code>, <code>canvas</code>, <code>table</code> 等。完整的元素可以参考<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements" target="_blank" rel="noopener">这里</a>。通过使用 <code>display:block</code>，可以将元素生成块级框。</li>
+<li><strong>内联元素 (Inline)：</strong> 或者称为 <strong>行内元素</strong>。在<strong>普通流</strong>中的内联元素之间不会生成“行分割符”，因此处于<strong>普通流</strong>中的内联元素会首先按照从左至右的顺序水平（horizontally）排列，当父容器水平方向上的剩余宽度不足以放下新的内联元素时，会往下换行，在新行的中继续按照水平顺序排列元素。常见的 inline 元素有：<code>a</code>, <code>img</code>, <code>button</code>, <code>br</code>, <code>input</code>, <code>label</code>, <code>select</code>, <code>textarea</code>。完整的可以参考<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements" target="_blank" rel="noopener">这里</a>通过使用 <code>display:inline</code> 可以让元素变成内联元素。</li>
+<li><strong>非替换元素 (non-replaced)：</strong> 如果元素的内容包含在文档中，就成为非替换元素。 例如段落 <code>&lt;p&gt;</code>。</li>
+<li><strong>替换元素 (replaced)：</strong> 可以理解为嵌入元素，相当于一个占位符，解析时会被其他内容替换。例如 <code>&lt;img&gt;</code> 和大部分表单元素 <code>&lt;input type=&quot;radio&quot;&gt;</code>。</li>
+<li><code>em</code>: 1em等于 <code>font-size</code> 的设置值</li>
+</ul>
+<a id="more"></a>
+<h2 id="盒模型-Box-Model"><a href="#盒模型-Box-Model" class="headerlink" title="盒模型 (Box-Model)"></a>盒模型 (Box-Model)</h2><p><img src="/images/css_layout/box-model.png" alt>  </p>
+<p>在盒子模型中，水平和垂直方向上各有7个属性:</p>
+<ul>
+<li>水平方向 - <code>margin-left</code>, <code>border-left</code>, <code>padding-left</code>, <code>width</code>,  <code>padding-right</code>,  <code>border-right</code>,  <code>margin-right</code></li>
+<li>垂直方向 - <code>margin-top</code>,  <code>border-top</code>,  <code>padding-top</code>,  <code>height</code>, <code>padding-bottom</code>, <code>border-bottom</code>, <code>margin-bottom</code></li>
+</ul>
+<p>其中 <code>margin</code> 称为外边距，在计算元素整体宽高的时候一般不包括它。CSS3 中新增了一个属性 <code>box-sizing</code>，可以用来指定使用的盒模型计算方式。下面是 CSS3 中支持的盒模型计算方式（CSS2种只支持默认的）</p>
+<ul>
+<li><code>content-box</code>（默认值）: <code>width</code> 和 <code>height</code> 属性只作用到 Content Area 的长宽，在 Content Area 外面绘制内边距和边框，见图 (1)。<ul>
+<li><code>Width = width + padding-left + padding-right + border-left + border-right</code></li>
+<li><code>Height = height + padding-top + padding-bottom + border-top + border-bottom</code></li>
+</ul>
+</li>
+<li><code>border-box</code>: <code>width</code> 和 <code>height</code> 属性设置的值就为元素整体的宽高，内边距和边框在已设定的宽度和高度内进行绘制，见图 (2)。<ul>
+<li><code>Width = width</code></li>
+<li><code>Height = height</code></li>
+</ul>
+</li>
+<li><code>inherit</code>: 继承父类的属性</li>
+</ul>
+<p><img src="/images/css_layout/box-model-1.png" alt="图 (1) : content-box">  </p>
+<p><img src="/images/css_layout/box-model-2.png" alt="图 (2) : border-box">  </p>
+<h2 id="块级元素"><a href="#块级元素" class="headerlink" title="块级元素"></a>块级元素</h2><!--### 水平属性
+通过上面的盒子模型，我们可以看到水平方向上对应7个属性 `margin-left`, `border-left`, `padding-left`, `width`, `padding-right`, `border-right`, `margin-right`。默认的盒模型计算方式为`content-box`（CSS3 新增了两个盒模型计算方式：`padding-box` 和 `border-box`，具体可以参考[这里](https://leohxj.gitbooks.io/front-end-database/content/html-and-css-basic/box-module.html)）。-->
+<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>在上面提到的几个属性中，只有<code>margin</code>, <code>width</code>, <code>height</code> 可以设为 <code>auto</code>，<code>padding</code> 和 <code>border</code> 必须设定为特定值或者使用默认值。</p>
+<h4 id="水平属性"><a href="#水平属性" class="headerlink" title="水平属性"></a>水平属性</h4><p>在上面提到的7个水平属性中，只有3个值可以设置为 <code>auto</code>：<code>width</code>, <code>margin-left</code>, <code>margin-right</code>。其余属性必须设置为特定的值或者使用默认值。下面是使用 <code>auto</code> 的几种情形：</p>
+<ul>
+<li>没有一个属性设为 <code>auto</code>： 如果 <code>width</code>, <code>margin-left</code>, <code>margin-right</code> 这三个属性都设为非 <code>auto</code> 的特定值，那么会将 <code>margin-right</code> 强制为 <code>auto</code>。</li>
+<li>有且只有一个属性设为 <code>auto</code>： 如果三个属性中某个值设为 <code>auto</code>，而余下的两个属性设为特定的值，那么设置为 <code>auto</code> 的属性值会自动确定所需长度，从而使元素框的总宽度（上面提到的7种属性相加）等于父容器的 <code>width</code>。</li>
+<li>两个外边距都设为 <code>auto</code>，<code>width</code> 设为特定值： 元素会居中（常用的居中方式），<code>margin-left</code> 和 <code>margin-right</code> 会设为相等的长度</li>
+<li><code>width</code> 设为 <code>auto</code>，外边距有一个或者两个均设为 <code>auto</code>： 设为 <code>auto</code> 的外边距会变成0，如果两个外边距都设为 <code>auto</code>，会都变为0。</li>
+</ul>
+<h4 id="垂直属性"><a href="#垂直属性" class="headerlink" title="垂直属性"></a>垂直属性</h4><ul>
+<li>如果 <code>margin-top</code> 和 <code>margin-bottom</code> 都设为 <code>auto</code>（对于定位元素会有不同），会将它们计算为0。</li>
+<li><code>height</code> 设为 <code>auto</code>，一般等于其包含的子元素的总高度。</li>
+</ul>
+<h3 id="外边距合并"><a href="#外边距合并" class="headerlink" title="外边距合并"></a>外边距合并</h3><p>针对垂直外边距（<code>margin-top</code> 和 <code>margin-bottom</code>），两个相邻的垂直外边距会合并成一个外边距，两个外边距中较小的一个会被较大的一个合并。详细内容可以参考 <a href="http://www.w3school.com.cn/css/css_margin_collapsing.asp" target="_blank" rel="noopener">这里</a> 。</p>
+<p><img src="/images/css_layout/margin-collapse.gif" alt>  </p>
+<p>如果外边距中有负值：</p>
+<ul>
+<li>如果相邻的垂直外边距都设为负值，会取外边距中绝对值较大的那个外边距。例如一个外边距为：<code>margin-bottom:-10px</code>，和它相邻的另外一个为：<code>margin-top:-20px</code>，会保留 <code>margin-top:-20px</code>。</li>
+<li>如果一个正外边距和一个负外边距，会从正外边距减去负外边距的绝对值。例如一个外边距为: <code>margin-bottom:20px</code>，另外一个为: <code>margin-top:-10px</code>，最终的效果相当于 <code>margin-bottom:10px</code>。</li>
+</ul>
+<h3 id="负外边距"><a href="#负外边距" class="headerlink" title="负外边距"></a>负外边距</h3><p>外边距可以是负的，即 <code>margin</code> 可以设为负值，此时子元素的 <code>width</code> 或者 <code>height</code> 就有可能大于父元素的 <code>width</code>。只有外边距能小于0，内边距、边框和内容的宽高都不能设为负值。</p>
+<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>东西比较多，先附一些文章链接：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000003038583" target="_blank" rel="noopener">CSS 中的line-height</a></li>
+<li><a href="http://www.zhangxinxu.com/wordpress/2009/11/css%E8%A1%8C%E9%AB%98line-height%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8F%8A%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener">CSS 行高line-height的一些深入理解及应用</a></li>
+<li><a href="http://www.slideshare.net/daemao/line-height-2470819" target="_blank" rel="noopener">CSS line-height 中文版</a></li>
+<li><a href="http://blog.doyoe.com/2015/03/09/css/%E8%A7%86%E8%A7%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E6%A1%86/" target="_blank" rel="noopener">视觉格式化模型中的各种框</a></li>
+<li><strong>CSS权威指南</strong></li>
+</ul>
+<h3 id="行内框（inline-box）"><a href="#行内框（inline-box）" class="headerlink" title="行内框（inline-box）"></a>行内框（inline-box）</h3><p><a href="http://meyerweb.com/eric/css/inline-format.html" target="_blank" rel="noopener">http://meyerweb.com/eric/css/inline-format.html</a><br><a href="https://www.w3.org/TR/CSS21/visuren.html#inline-box" target="_blank" rel="noopener">https://www.w3.org/TR/CSS21/visuren.html#inline-box</a>  </p>
+<p>行内框通过向内容区（context-area）增加行间距（leading）来描述。对于非替换元素来说，元素行内框的高度刚好等于 <code>line-height</code> 的值。对于替换元素来说，元素行内框的高度等于元素的 <code>height + margin-top + margin-bottom + padding-top + padding-bottom + border-top + border-bottom</code>。<br>浏览器会根据行内元素行内框的大小来对元素布局。假设行内元素的内容区高 <code>20px</code>，但是 <code>line-height</code> 只有 <code>14px</code>，那么为该元素分配的高度只有 <code>14px</code>，就会出现内容去溢出的情况（覆盖其他的行元素）。</p>
+<h4 id="非替换元素"><a href="#非替换元素" class="headerlink" title="非替换元素"></a>非替换元素</h4><ul>
+<li>margin, border, padding 不影响行内框的高度，但是会影响行内框的宽度。</li>
+<li><code>width</code> 和 <code>height</code> 属性不会作用于行内非替换元素，即不能设置宽高。</li>
+</ul>
+<h4 id="替换元素"><a href="#替换元素" class="headerlink" title="替换元素"></a>替换元素</h4><ul>
+<li>替换元素的 margin, border. padding 会影响行内框的宽度和高度</li>
+<li>可以对替换元素设置 <code>width</code> 和 <code>height</code>。如果不设置宽高，会使用元素本来的宽度和高度。</li>
+</ul>
+<h4 id="设置line-height的几种方式"><a href="#设置line-height的几种方式" class="headerlink" title="设置line-height的几种方式"></a>设置line-height的几种方式</h4><p><code>line-height</code> 只作用于内联元素或者其他的内联内容。</p>
+<ul>
+<li><code>normal</code> - 默认值，设置合理的行间距（1.2）</li>
+<li>具体的长度 - <code>12px</code> 、<code>1em</code> 等等</li>
+<li>纯数字 - 和当前 <code>font-size</code> 的比值</li>
+<li>百分比 - 和当前 <code>font-size</code> 的百分比</li>
+<li><code>inherit</code> - 从父类中继承</li>
+</ul>
+<h4 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h4><ul>
+<li>内联非替换元素的 <code>width</code> 和 <code>height</code> 是不起作用的</li>
+<li>padding 和 border 不改变 <code>line-height</code></li>
+<li><code>margin-top</code> 和 <code>margin-bottom</code> 不作用于行内非替换元素，比如 <code>span</code></li>
+</ul>
+<h2 id="修改显示类别"><a href="#修改显示类别" class="headerlink" title="修改显示类别"></a>修改显示类别</h2><p>使用 <code>display:value</code> 可以修改元素的类别。有效值如下：</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td>此元素不会被显示。</td>
+</tr>
+<tr>
+<td>block</td>
+<td>此元素将显示为块级元素，此元素前后会带有换行符。</td>
+</tr>
+<tr>
+<td>inline</td>
+<td>默认。此元素会被显示为内联元素，元素前后没有换行符。</td>
+</tr>
+<tr>
+<td>inline-block</td>
+<td>行内块元素。（CSS2.1 新增的值）</td>
+</tr>
+<tr>
+<td>list-item</td>
+<td>此元素会作为列表显示。</td>
+</tr>
+<tr>
+<td>run-in</td>
+<td>此元素会根据上下文作为块级元素或内联元素显示。</td>
+</tr>
+<tr>
+<td>compact</td>
+<td>CSS 中有值 compact，不过由于缺乏广泛支持，已经从 CSS2.1 中删除。</td>
+</tr>
+<tr>
+<td>marker</td>
+<td>CSS 中有值 marker，不过由于缺乏广泛支持，已经从 CSS2.1 中删除。</td>
+</tr>
+<tr>
+<td>table</td>
+<td>此元素会作为块级表格来显示（类似 table），表格前后带有换行符。</td>
+</tr>
+<tr>
+<td>inline-table</td>
+<td>此元素会作为内联表格来显示（类似 table），表格前后没有换行符。</td>
+</tr>
+<tr>
+<td>table-row-group</td>
+<td>此元素会作为一个或多个行的分组来显示（类似 tbody）。</td>
+</tr>
+<tr>
+<td>table-header-group</td>
+<td>此元素会作为一个或多个行的分组来显示（类似 thead）。</td>
+</tr>
+<tr>
+<td>table-footer-group</td>
+<td>此元素会作为一个或多个行的分组来显示（类似 tfoot）。</td>
+</tr>
+<tr>
+<td>table-row</td>
+<td>此元素会作为一个表格行显示（类似 tr）。</td>
+</tr>
+<tr>
+<td>table-column-group</td>
+<td>此元素会作为一个或多个列的分组来显示（类似 colgroup）。</td>
+</tr>
+<tr>
+<td>table-column</td>
+<td>此元素会作为一个单元格列显示（类似 col）</td>
+</tr>
+<tr>
+<td>table-cell</td>
+<td>此元素会作为一个表格单元格显示（类似 td 和 th）</td>
+</tr>
+<tr>
+<td>table-caption</td>
+<td>此元素会作为一个表格标题显示（类似 caption）</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>规定应该从父元素继承 display 属性的值。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>inline-block</code>：会使元素表现的像行内非替换元素一样，是行内元素，但是可以设置宽高，margin, border, padding 会影响行内框的高度</li>
+<li><code>run-in</code>：使某些块级元素成为下一个元素的行内元素(chrome不支持)。</li>
+</ul>
+<h2 id="浮动-float"><a href="#浮动-float" class="headerlink" title="浮动(float)"></a>浮动(float)</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/float" target="_blank" rel="noopener">MDN float</a><br><a href="https://www.w3.org/TR/CSS2/visuren.html#floats" target="_blank" rel="noopener">w3 float</a></p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>下面是MDN上关于 <code>float</code> 的定义</p>
+<blockquote>
+<p>The float CSS property specifies that an element should <strong>be taken from the normal flow</strong> and placed along the <strong>left or right side of its container</strong>, where <strong>text and inline elements will wrap around it</strong>.</p>
+</blockquote>
+<p>根据定义需要注意的有下面三点：</p>
+<ol>
+<li>浮动元素会脱离正常流。</li>
+<li>浮动元素会被放置在所在容器的左侧或者右侧。</li>
+<li>文字和行内元素会环绕浮动元素，所以会影响布局。</li>
+</ol>
+<h3 id="其他注意点"><a href="#其他注意点" class="headerlink" title="其他注意点"></a>其他注意点</h3><ul>
+<li>浮动元素会生成一个块级框，即便元素本身是行内元素，也会生成块级框。所以不需要为浮动元素声明 <code>display:block</code>。</li>
+<li>浮动元素的外边距不会合并。</li>
+<li>浮动元素之间一般不会重叠（外边距设为负值就可能会重叠），会按照顺序排序，如果当前行剩余的宽度不足以放下新的元素，会另起一行。</li>
+<li>浮动元素会延伸，从而包含其所有的代浮动元素。</li>
+</ul>
+<h3 id="重叠"><a href="#重叠" class="headerlink" title="重叠"></a>重叠</h3><p>如果浮动元素和正常流中的内容发生重叠（浮动元素的外边距为负值），会按照以下规则显示内容：</p>
+<ul>
+<li>行内框和一个浮动元素重叠时，其边框、背景和内容都会在该浮动元素 <strong>之上</strong> 显示</li>
+<li>框框与一个浮动元素重叠时，其边框和背景在该浮动元素 <strong>之下</strong> 显示，内容在浮动元素 <strong>之上</strong> 显示</li>
+</ul>
+<h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p>清除浮动就是让元素的左边或者右边或者两边不会有浮动元素出现。清除浮动的一个主要的原因就是增加父容器的高度，当子元素浮动时，会脱离正常流，因此父元素计算高度时不会加上浮动子元素的高度，就会造成父元素的高度小于浮动子元素。当清除浮动之后，父容器就可以正确高度。下面是清除浮动的几种方式，更多方式可以参考 <a href="http://lightcss.com/all-about-clear-float/" target="_blank" rel="noopener">这里</a> ：</p>
+<ul>
+<li><p>使用带clear元素的空属性</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.clear&#123;</span><br><span class="line">    clear:both;</span><br><span class="line">&#125;</span><br><span class="line">&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>:after</code> 伪元素</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">clear</span>:both;</span><br><span class="line">    <span class="attribute">content</span>:<span class="string">'\20'</span>;</span><br><span class="line">    <span class="attribute">display</span>:block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">visibility</span>:hidden</span><br><span class="line">&#125;</span><br><span class="line">&lt;div class="clearfix"&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在父容器里添加 <code>overflow:auto</code> 或者 <code>overflow:hidden</code></p>
+</li>
+</ul>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>CSS 有三种基本的定位机制: 正常流、浮动和绝对定位。使用 <code>position</code> 可以设置不同类型的定位方式。下面是 <code>position</code> 属性值的定义:</p>
+<ul>
+<li><code>static</code>：默认值，元素框正常生成，不会被特殊的定位。块级元素生成块级块，行内元素生成一个或者多个行框，置于其父元素中。</li>
+<li><code>relative</code>: 元素框偏移某个距离。元素仍保持其未定位前的形状，它原本所占的空间仍保留。<code>relative</code> 的表现和 <code>static</code> 十分类似，不同的是相对于定位参考的是它<strong>应该在的位置</strong>(或者说它自身的位置)，通过使用偏移属性 <code>top</code>, <code>bottom</code>, <code>left</code> 和 <code>right</code> 属性会使元素<strong>相对于</strong> 它的<strong>起点</strong>进行移动。<strong>其他元素的位置不会受到影响</strong>。</li>
+<li><code>absolute</code>: 元素会脱离正常流，相对于其最近的非 static 定位的祖先元素定位，如果没有满足条件的祖先元素，则会相对于文档的 <code>body</code> 元素。元素在正常流中的所占的位置会被清除，就好像该元素不存在一样。<code>absolute</code> 元素会生成一个块级框。</li>
+<li><code>fixed</code>: 和 <code>absolute</code> 类似，不过其定位的参考元素是视窗，当页面滚动时还是会停留在原先的位置。 <code>absolute</code> 会跟随父元素滚动。</li>
+</ul>
+<h3 id="其他注意点-1"><a href="#其他注意点-1" class="headerlink" title="其他注意点"></a>其他注意点</h3><ul>
+<li>一般称 <code>relative</code>, <code>absolute</code> 以及 <code>fixed</code> 为定位元素 (positioned)</li>
+<li>除了 <code>static</code>，其他三种定位都可以使用偏移属性 <code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>。</li>
+<li><code>absolute</code> 定位里 <code>left</code>,  <code>right</code>, <code>width</code>，有一个值设为 <code>auto</code>，会自动调整其大小，使总长度相加等于父容器宽度。如果有没有auto，会重置 <code>right</code>。<code>top</code> 和 <code>bottom</code> 类似。</li>
+</ul>
+<h3 id="z-index"><a href="#z-index" class="headerlink" title="z-index"></a>z-index</h3><p>利用 <code>z-index</code> 可以修改元素相互的覆盖顺序。所有数都可以作为 <code>z-index</code> 的值，包括负数。需要注意的是</p>
+<ul>
+<li><code>z-index</code> 只能作用于定位元素，<code>static</code> 元素会失效</li>
+<li>子元素会继承父元素的 <code>z-index</code>，子元素设置的 <code>z-index</code> 是相对于父元素的局部 <code>z-index</code>。比如下面的代码：<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>:absolute;</span><br><span class="line">    <span class="attribute">z-index</span>:<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.p2</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>:absolute;</span><br><span class="line">    <span class="attribute">z-index</span>:<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.p1</span> <span class="selector-class">.c</span> &#123;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.p2</span> <span class="selector-class">.c</span>&#123;</span><br><span class="line">    <span class="attribute">z-index</span>:<span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>.p2 .c</code> 会在 <code>.p1 .c</code> 的下面</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/09/【HTML5】Canvas-放大镜/" rel="next" title="【HTML5】Canvas 实现放大镜效果">
+                <i class="fa fa-chevron-left"></i> 【HTML5】Canvas 实现放大镜效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/06/【HTML5】Canvas元素添加事件/" rel="prev" title="【HTML5】Canvas 内部元素添加事件处理">
+                【HTML5】Canvas 内部元素添加事件处理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#盒模型-Box-Model"><span class="nav-number">3.</span> <span class="nav-text">盒模型 (Box-Model)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块级元素"><span class="nav-number">4.</span> <span class="nav-text">块级元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#auto"><span class="nav-number">4.1.</span> <span class="nav-text">auto</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#水平属性"><span class="nav-number">4.1.1.</span> <span class="nav-text">水平属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垂直属性"><span class="nav-number">4.1.2.</span> <span class="nav-text">垂直属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外边距合并"><span class="nav-number">4.2.</span> <span class="nav-text">外边距合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#负外边距"><span class="nav-number">4.3.</span> <span class="nav-text">负外边距</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联元素"><span class="nav-number">5.</span> <span class="nav-text">内联元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行内框（inline-box）"><span class="nav-number">5.1.</span> <span class="nav-text">行内框（inline-box）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#非替换元素"><span class="nav-number">5.1.1.</span> <span class="nav-text">非替换元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替换元素"><span class="nav-number">5.1.2.</span> <span class="nav-text">替换元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置line-height的几种方式"><span class="nav-number">5.1.3.</span> <span class="nav-text">设置line-height的几种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意点"><span class="nav-number">5.1.4.</span> <span class="nav-text">注意点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改显示类别"><span class="nav-number">6.</span> <span class="nav-text">修改显示类别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮动-float"><span class="nav-number">7.</span> <span class="nav-text">浮动(float)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">7.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他注意点"><span class="nav-number">7.2.</span> <span class="nav-text">其他注意点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重叠"><span class="nav-number">7.3.</span> <span class="nav-text">重叠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除浮动"><span class="nav-number">7.4.</span> <span class="nav-text">清除浮动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位"><span class="nav-number">8.</span> <span class="nav-text">定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#其他注意点-1"><span class="nav-number">8.1.</span> <span class="nav-text">其他注意点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#z-index"><span class="nav-number">8.2.</span> <span class="nav-text">z-index</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2016/11/29/【CSS学习笔记】CSS元素和布局/';
+          this.page.identifier = '2016/11/29/【CSS学习笔记】CSS元素和布局/';
+          this.page.title = '【CSS 学习笔记】CSS元素和布局';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

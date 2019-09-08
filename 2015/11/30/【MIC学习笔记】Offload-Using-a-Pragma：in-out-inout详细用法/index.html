@@ -1,0 +1,1059 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="MIC,学习笔记,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="下面的代码主要使用in作为测试, out和inout的用法应该是类似的， 下面主要以代码为主， 并且附带执行结果。">
+<meta name="keywords" content="MIC,学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【MIC学习笔记】in&#x2F;out&#x2F;inout详细用法">
+<meta property="og:url" content="http://blog.zhangjikai.com/2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="下面的代码主要使用in作为测试, out和inout的用法应该是类似的， 下面主要以代码为主， 并且附带执行结果。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.628Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【MIC学习笔记】in&#x2F;out&#x2F;inout详细用法">
+<meta name="twitter:description" content="下面的代码主要使用in作为测试, out和inout的用法应该是类似的， 下面主要以代码为主， 并且附带执行结果。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/">
+
+
+
+
+
+  <title> 【MIC学习笔记】in/out/inout详细用法 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【MIC学习笔记】in/out/inout详细用法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-30T22:00:40+08:00">
+                2015-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MIC/" itemprop="url" rel="index">
+                    <span itemprop="name">MIC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  2,760
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>下面的代码主要使用in作为测试, out和inout的用法应该是类似的， 下面主要以代码为主， 并且附带执行结果。<br><a id="more"></a></p>
+<h2 id="静态一维数组"><a href="#静态一维数组" class="headerlink" title="静态一维数组"></a>静态一维数组</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">offload_one_dim_array</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> arr[n];</span><br><span class="line">    <span class="keyword">int</span> arr2[n];</span><br><span class="line">    <span class="keyword">int</span> arr3[n];</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">        arr2[i] = n + i;</span><br><span class="line">        arr3[i] = <span class="number">2</span> * n + i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//上传arr的全部元素,上传arr2的前0-4共5(长度为5)个元素,上传arr3的从索引2开始的5个元素(即索引2-6)到mic上</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(arr) in(arr2:length(5)) in(arr3[1:5])</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">" arr[%d] is %d\n"</span>, i, arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"arr2[%d] is %d\n"</span>, i, arr2[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"arr3[%d] is %d\n"</span>, i, arr3[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    offload_one_dim_array(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果为:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> arr[0] is 0</span><br><span class="line"> arr[1] is 1</span><br><span class="line"> arr[2] is 2</span><br><span class="line"> arr[3] is 3</span><br><span class="line"> arr[4] is 4</span><br><span class="line"> arr[5] is 5</span><br><span class="line"> arr[6] is 6</span><br><span class="line"> arr[7] is 7</span><br><span class="line"> arr[8] is 8</span><br><span class="line"> arr[9] is 9</span><br><span class="line">==========================</span><br><span class="line">arr2[0] is 10</span><br><span class="line">arr2[1] is 11</span><br><span class="line">arr2[2] is 12</span><br><span class="line">arr2[3] is 13</span><br><span class="line">arr2[4] is 14</span><br><span class="line">arr2[5] is 0</span><br><span class="line">arr2[6] is 0</span><br><span class="line">arr2[7] is 0</span><br><span class="line">arr2[8] is 0</span><br><span class="line">arr2[9] is 0</span><br><span class="line">==========================</span><br><span class="line">arr3[0] is 0</span><br><span class="line">arr3[1] is 0</span><br><span class="line">arr3[2] is 22</span><br><span class="line">arr3[3] is 23</span><br><span class="line">arr3[4] is 24</span><br><span class="line">arr3[5] is 25</span><br><span class="line">arr3[6] is 26</span><br><span class="line">arr3[7] is 0</span><br><span class="line">arr3[8] is 0</span><br><span class="line">arr3[9] is 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="静态二维数组"><a href="#静态二维数组" class="headerlink" title="静态二维数组"></a>静态二维数组</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">offload_two_dim_array</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> arr[n][n];</span><br><span class="line">    <span class="keyword">int</span> arr2[n][n];</span><br><span class="line">    <span class="keyword">int</span> arr3[n][n];</span><br><span class="line">    <span class="keyword">int</span> arr4[n][n];</span><br><span class="line">    <span class="keyword">int</span> i, j, index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            arr[i][j] = index;</span><br><span class="line">            arr2[i][j] = n * n + index;</span><br><span class="line">            arr3[i][j] = <span class="number">2</span> * n * n + index;</span><br><span class="line">            arr4[i][j] = <span class="number">3</span> * n * n + index;</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//上传arr的全部值,上传arr2的前5个值(整体看为长度为n*n的一维数组,取前5个值),上传arr3中[0-1][0-(n-1)]的值,</span></span><br><span class="line">    <span class="comment">//不加后面的y的维度,默认y的是1-(n-1), 上传arr4中[0-1][0-1]的值</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(arr) in(arr2:length(5)) in(arr3[0:2]) in(arr4[0:2][0:2])</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">" arr[%d][%d] is %d\n"</span>, i, j, arr[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"arr2[%d][%d] is %d\n"</span>, i, j, arr2[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"arr3[%d][%d] is %d\n"</span>, i, j,  arr3[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"arr4[%d][%d] is %d\n"</span>, i, j, arr4[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    offload_two_dim_array(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是输出结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"> arr[0][0] is 0</span><br><span class="line"> arr[0][1] is 1</span><br><span class="line"> arr[0][2] is 2</span><br><span class="line"> arr[1][0] is 3</span><br><span class="line"> arr[1][1] is 4</span><br><span class="line"> arr[1][2] is 5</span><br><span class="line"> arr[2][0] is 6</span><br><span class="line"> arr[2][1] is 7</span><br><span class="line"> arr[2][2] is 8</span><br><span class="line">==========================</span><br><span class="line">arr2[0][0] is 9</span><br><span class="line">arr2[0][1] is 10</span><br><span class="line">arr2[0][2] is 11</span><br><span class="line">arr2[1][0] is 12</span><br><span class="line">arr2[1][1] is 13</span><br><span class="line">arr2[1][2] is 0</span><br><span class="line">arr2[2][0] is 0</span><br><span class="line">arr2[2][1] is 0</span><br><span class="line">arr2[2][2] is 0</span><br><span class="line">==========================</span><br><span class="line">arr3[0][0] is 18</span><br><span class="line">arr3[0][1] is 19</span><br><span class="line">arr3[0][2] is 20</span><br><span class="line">arr3[1][0] is 21</span><br><span class="line">arr3[1][1] is 22</span><br><span class="line">arr3[1][2] is 23</span><br><span class="line">arr3[2][0] is 0</span><br><span class="line">arr3[2][1] is 0</span><br><span class="line">arr3[2][2] is 0</span><br><span class="line">==========================</span><br><span class="line">arr4[0][0] is 27</span><br><span class="line">arr4[0][1] is 28</span><br><span class="line">arr4[0][2] is 0</span><br><span class="line">arr4[1][0] is 30</span><br><span class="line">arr4[1][1] is 31</span><br><span class="line">arr4[1][2] is 0</span><br><span class="line">arr4[2][0] is 0</span><br><span class="line">arr4[2][1] is 0</span><br><span class="line">arr4[2][2] is 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="一个小问题"><a href="#一个小问题" class="headerlink" title="一个小问题"></a>一个小问题</h2><p>当数组(非指针)被offload一次之后会在mic上保存,并没有立即释放,在同一个作用域下,再次offload时,<br>如果值改变会更改为新值,如果没有offload某些位置的值,这些位置会使用上一次的旧值<br>下面是局部变量测试<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">offload_array_test</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> arr[n];</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(arr)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"arr[%d] in first offload is %d\n"</span>, i,  arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 这里修改了并没有传回到CPU上, 但是会保存在MIC上</span></span><br><span class="line">        arr[<span class="number">9</span>] = <span class="number">1111</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    arr[<span class="number">1</span>] = <span class="number">1000</span>;</span><br><span class="line">    arr[<span class="number">8</span>] = <span class="number">2000</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//这次的offload只上传了0-2共3个值,mic上arr[1]的值会更改为1000,arr[3-(n-1)]的值会使用MIC上保存的值, 注意arr[9]的值</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(arr:length(3))</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"arr[%d] in second offload is %d\n"</span>,i, arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"arr[%d] without offload is %d\n"</span>,i, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    offload_array_test(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="number">0</span>] without offload is <span class="number">0</span></span><br><span class="line">arr[<span class="number">1</span>] without offload is <span class="number">1000</span></span><br><span class="line">arr[<span class="number">2</span>] without offload is <span class="number">2</span></span><br><span class="line">arr[<span class="number">3</span>] without offload is <span class="number">3</span></span><br><span class="line">arr[<span class="number">4</span>] without offload is <span class="number">4</span></span><br><span class="line">arr[<span class="number">5</span>] without offload is <span class="number">5</span></span><br><span class="line">arr[<span class="number">6</span>] without offload is <span class="number">6</span></span><br><span class="line">arr[<span class="number">7</span>] without offload is <span class="number">7</span></span><br><span class="line">arr[<span class="number">8</span>] without offload is <span class="number">2000</span></span><br><span class="line">arr[<span class="number">9</span>] without offload is <span class="number">9</span></span><br><span class="line">==========================</span><br><span class="line">arr[<span class="number">0</span>] in first offload is <span class="number">0</span></span><br><span class="line">arr[<span class="number">1</span>] in first offload is <span class="number">1</span></span><br><span class="line">arr[<span class="number">2</span>] in first offload is <span class="number">2</span></span><br><span class="line">arr[<span class="number">3</span>] in first offload is <span class="number">3</span></span><br><span class="line">arr[<span class="number">4</span>] in first offload is <span class="number">4</span></span><br><span class="line">arr[<span class="number">5</span>] in first offload is <span class="number">5</span></span><br><span class="line">arr[<span class="number">6</span>] in first offload is <span class="number">6</span></span><br><span class="line">arr[<span class="number">7</span>] in first offload is <span class="number">7</span></span><br><span class="line">arr[<span class="number">8</span>] in first offload is <span class="number">8</span></span><br><span class="line">arr[<span class="number">9</span>] in first offload is <span class="number">9</span></span><br><span class="line">==========================</span><br><span class="line">arr[<span class="number">0</span>] in second offload is <span class="number">0</span></span><br><span class="line">arr[<span class="number">1</span>] in second offload is <span class="number">1000</span></span><br><span class="line">arr[<span class="number">2</span>] in second offload is <span class="number">2</span></span><br><span class="line">arr[<span class="number">3</span>] in second offload is <span class="number">3</span></span><br><span class="line">arr[<span class="number">4</span>] in second offload is <span class="number">4</span></span><br><span class="line">arr[<span class="number">5</span>] in second offload is <span class="number">5</span></span><br><span class="line">arr[<span class="number">6</span>] in second offload is <span class="number">6</span></span><br><span class="line">arr[<span class="number">7</span>] in second offload is <span class="number">7</span></span><br><span class="line">arr[<span class="number">8</span>] in second offload is <span class="number">8</span></span><br><span class="line">arr[<span class="number">9</span>] in second offload is <span class="number">1111</span></span><br></pre></td></tr></table></figure></p>
+<p>下面是全局变量测试:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __ONMIC__ __attribute__((target(mic)))</span></span><br><span class="line"></span><br><span class="line">__ONMIC__ <span class="keyword">int</span> gArr[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        gArr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"gArr[%d] in test1 is %d\n"</span>, i, gArr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    gArr[<span class="number">0</span>] = <span class="number">10</span>;</span><br><span class="line">    gArr[<span class="number">5</span>] = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(gArr[0:2])</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"gArr[%d] in test2 is %d\n"</span>, i, gArr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    test1();</span><br><span class="line">    test2();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是测试结果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">gArr[0] <span class="keyword">in</span> test1 is 0</span><br><span class="line">gArr[1] <span class="keyword">in</span> test1 is 1</span><br><span class="line">gArr[2] <span class="keyword">in</span> test1 is 2</span><br><span class="line">gArr[3] <span class="keyword">in</span> test1 is 3</span><br><span class="line">gArr[4] <span class="keyword">in</span> test1 is 4</span><br><span class="line">gArr[5] <span class="keyword">in</span> test1 is 5</span><br><span class="line">gArr[6] <span class="keyword">in</span> test1 is 6</span><br><span class="line">gArr[7] <span class="keyword">in</span> test1 is 7</span><br><span class="line">gArr[8] <span class="keyword">in</span> test1 is 8</span><br><span class="line">gArr[9] <span class="keyword">in</span> test1 is 9</span><br><span class="line">==========================</span><br><span class="line">gArr[0] <span class="keyword">in</span> test2 is 10</span><br><span class="line">gArr[1] <span class="keyword">in</span> test2 is 1</span><br><span class="line">gArr[2] <span class="keyword">in</span> test2 is 2</span><br><span class="line">gArr[3] <span class="keyword">in</span> test2 is 3</span><br><span class="line">gArr[4] <span class="keyword">in</span> test2 is 4</span><br><span class="line">gArr[5] <span class="keyword">in</span> test2 is 5</span><br><span class="line">gArr[6] <span class="keyword">in</span> test2 is 6</span><br><span class="line">gArr[7] <span class="keyword">in</span> test2 is 7</span><br><span class="line">gArr[8] <span class="keyword">in</span> test2 is 8</span><br><span class="line">gArr[9] <span class="keyword">in</span> test2 is 9</span><br></pre></td></tr></table></figure></p>
+<h2 id="一维动态数组"><a href="#一维动态数组" class="headerlink" title="一维动态数组"></a>一维动态数组</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">offload_point</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> *arr =(<span class="keyword">int</span>*) <span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="keyword">int</span> *arr2 = (<span class="keyword">int</span>*) <span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="keyword">int</span> *arr3 = (<span class="keyword">int</span>*) <span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        arr[i] = i;</span><br><span class="line">        arr2[i] = n + i;</span><br><span class="line">        arr3[i] = n * <span class="number">2</span> + i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//需要注意:上传指针定义的数组时 1:要指定length或者[start:length]属性 2:要显示用in</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(arr:length(n)) in (arr2[2:3]) in (arr3:length(3))</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">" arr[%d] is  %d\n"</span>,i, arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"arr2[%d] is %d \n"</span>,i, arr2[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"arr3[%d] is %d \n"</span>, i, arr3[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">free</span>(arr);</span><br><span class="line">    <span class="built_in">free</span>(arr2);</span><br><span class="line">    <span class="built_in">free</span>(arr3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    offload_point();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序输出如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> arr[0] is  0</span><br><span class="line"> arr[1] is  1</span><br><span class="line"> arr[2] is  2</span><br><span class="line"> arr[3] is  3</span><br><span class="line"> arr[4] is  4</span><br><span class="line"> arr[5] is  5</span><br><span class="line"> arr[6] is  6</span><br><span class="line"> arr[7] is  7</span><br><span class="line"> arr[8] is  8</span><br><span class="line"> arr[9] is  9</span><br><span class="line">==========================</span><br><span class="line">arr2[0] is 0 </span><br><span class="line">arr2[1] is 0 </span><br><span class="line">arr2[2] is 12 </span><br><span class="line">arr2[3] is 13 </span><br><span class="line">arr2[4] is 14 </span><br><span class="line">arr2[5] is 0 </span><br><span class="line">arr2[6] is 0 </span><br><span class="line">arr2[7] is 0 </span><br><span class="line">arr2[8] is 0 </span><br><span class="line">arr2[9] is 0 </span><br><span class="line">==========================</span><br><span class="line">arr3[0] is 20 </span><br><span class="line">arr3[1] is 21 </span><br><span class="line">arr3[2] is 22 </span><br><span class="line">arr3[3] is 0 </span><br><span class="line">arr3[4] is 0 </span><br><span class="line">arr3[5] is 0 </span><br><span class="line">arr3[6] is 0 </span><br><span class="line">arr3[7] is 0 </span><br><span class="line">arr3[8] is 0 </span><br><span class="line">arr3[9] is 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用指针实现的二维数组"><a href="#使用指针实现的二维数组" class="headerlink" title="使用指针实现的二维数组"></a>使用指针实现的二维数组</h2><p>首先用typedef定义一个一维静态数组的类型, 然后为该类型声明一个动态数组<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ARRAY[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//下面相当于上传了一个二维数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">offload_point2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">3</span>;</span><br><span class="line">    ARRAY *arr = (ARRAY*)<span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(ARRAY));</span><br><span class="line">    ARRAY *arr2 = (ARRAY*)<span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(ARRAY));</span><br><span class="line">    <span class="keyword">int</span> i, j, index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">            arr[i][j] = index;</span><br><span class="line">            arr2[i][j] = n *n + index;</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(arr:length(n))  in (arr2[0:2][0:2])</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">" arr[%d][%d] is %d \n"</span>, i, j , arr[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"==========================\n"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"arr2[%d][%d] is %d \n"</span>, i, j , arr2[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">free</span>(arr);</span><br><span class="line">    <span class="built_in">free</span>(arr2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    offload_point2();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> arr[0][0] is 0 </span><br><span class="line"> arr[0][1] is 1 </span><br><span class="line"> arr[0][2] is 2 </span><br><span class="line"> arr[0][3] is 3 </span><br><span class="line"> arr[0][4] is 4 </span><br><span class="line"> arr[1][0] is 5 </span><br><span class="line"> arr[1][1] is 6 </span><br><span class="line"> arr[1][2] is 7 </span><br><span class="line"> arr[1][3] is 8 </span><br><span class="line"> arr[1][4] is 9 </span><br><span class="line"> arr[2][0] is 10 </span><br><span class="line"> arr[2][1] is 11 </span><br><span class="line"> arr[2][2] is 12 </span><br><span class="line"> arr[2][3] is 13 </span><br><span class="line"> arr[2][4] is 14 </span><br><span class="line">==========================</span><br><span class="line">arr2[0][0] is 9 </span><br><span class="line">arr2[0][1] is 10 </span><br><span class="line">arr2[0][2] is 0 </span><br><span class="line">arr2[0][3] is 0 </span><br><span class="line">arr2[0][4] is 0 </span><br><span class="line">arr2[1][0] is 14 </span><br><span class="line">arr2[1][1] is 15 </span><br><span class="line">arr2[1][2] is 0 </span><br><span class="line">arr2[1][3] is 0 </span><br><span class="line">arr2[1][4] is 0 </span><br><span class="line">arr2[2][0] is 0 </span><br><span class="line">arr2[2][1] is 0 </span><br><span class="line">arr2[2][2] is 0 </span><br><span class="line">arr2[2][3] is 0 </span><br><span class="line">arr2[2][4] is 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="包含指针的struct"><a href="#包含指针的struct" class="headerlink" title="包含指针的struct"></a>包含指针的struct</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">my_struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> y;</span><br><span class="line">    <span class="keyword">int</span> *a;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">offload_struct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">my_struct</span> <span class="title">m</span>;</span></span><br><span class="line">    m.y = <span class="number">10</span>;</span><br><span class="line">    m.a =(<span class="keyword">int</span>*) <span class="built_in">calloc</span>(<span class="number">10</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        m.a[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//struct中有指针变量时要单独传指针变量</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> offload target(mic) in(m) in(m.a:length(10))</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"offload_struct: the struct.y is %d\n"</span>, m.y);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"offload_struct: the struct.a is %d\n"</span>, m.a[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(m.a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    offload_struct();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>使用offload不能上传指针数组, 即一个数组中的每个元素是一个指针, 或者元素中包含一个指针， 比如下面的形式<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> **p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mystruct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> *i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mystruct</span> *<span class="title">m</span>;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MIC/" rel="tag"># MIC</a>
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma/" rel="next" title="【MIC学习笔记】Offload Using a Pragma">
+                <i class="fa fa-chevron-left"></i> 【MIC学习笔记】Offload Using a Pragma
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/08/【MIC学习笔记】记录几个用法/" rel="prev" title="【MIC学习笔记】记录几个用法">
+                【MIC学习笔记】记录几个用法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态一维数组"><span class="nav-number">1.</span> <span class="nav-text">静态一维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态二维数组"><span class="nav-number">2.</span> <span class="nav-text">静态二维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个小问题"><span class="nav-number">3.</span> <span class="nav-text">一个小问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一维动态数组"><span class="nav-number">4.</span> <span class="nav-text">一维动态数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用指针实现的二维数组"><span class="nav-number">5.</span> <span class="nav-text">使用指针实现的二维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包含指针的struct"><span class="nav-number">6.</span> <span class="nav-text">包含指针的struct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">7.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/';
+          this.page.identifier = '2015/11/30/【MIC学习笔记】Offload-Using-a-Pragma：in-out-inout详细用法/';
+          this.page.title = '【MIC学习笔记】in/out/inout详细用法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

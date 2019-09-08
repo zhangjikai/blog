@@ -1,0 +1,1162 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="C,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言这里主要记录一下C对二进制的读写操作, 包括随机读取文件和写入文件 fseek 和 ftellfseekfseek主要用来移动文件指针, 它允许用户像对待数组那样对待一个文件, 可以直接将文件指针移动到任意字节处, 下面是它的函数原型:1int fseek ( FILE * stream, long int offset, int origin ); 下面是个参数的含义  stream - 打">
+<meta name="keywords" content="C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C】文件操作(二)">
+<meta property="og:url" content="http://blog.zhangjikai.com/2016/03/04/【C】文件操作(二)/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="前言这里主要记录一下C对二进制的读写操作, 包括随机读取文件和写入文件 fseek 和 ftellfseekfseek主要用来移动文件指针, 它允许用户像对待数组那样对待一个文件, 可以直接将文件指针移动到任意字节处, 下面是它的函数原型:1int fseek ( FILE * stream, long int offset, int origin ); 下面是个参数的含义  stream - 打">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.621Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【C】文件操作(二)">
+<meta name="twitter:description" content="前言这里主要记录一下C对二进制的读写操作, 包括随机读取文件和写入文件 fseek 和 ftellfseekfseek主要用来移动文件指针, 它允许用户像对待数组那样对待一个文件, 可以直接将文件指针移动到任意字节处, 下面是它的函数原型:1int fseek ( FILE * stream, long int offset, int origin ); 下面是个参数的含义  stream - 打">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2016/03/04/【C】文件操作(二)/">
+
+
+
+
+
+  <title> 【C】文件操作(二) | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2016/03/04/【C】文件操作(二)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【C】文件操作(二)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-04T18:45:21+08:00">
+                2016-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/04/【C】文件操作(二)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/04/【C】文件操作(二)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  2,959
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里主要记录一下C对二进制的读写操作, 包括随机读取文件和写入文件</p>
+<h2 id="fseek-和-ftell"><a href="#fseek-和-ftell" class="headerlink" title="fseek 和 ftell"></a>fseek 和 ftell</h2><p><strong>fseek</strong><br>fseek主要用来移动文件指针, 它允许用户像对待数组那样对待一个文件, 可以直接将文件指针移动到任意字节处, 下面是它的函数原型:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fseek</span> <span class="params">( FILE * stream, <span class="keyword">long</span> <span class="keyword">int</span> offset, <span class="keyword">int</span> origin )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>下面是个参数的含义</p>
+<ul>
+<li>stream - 打开的文件指针</li>
+<li>offset - 偏移量, 表示从起始点开始要移动的距离(起始点的选择由origin指定), 可以为正(向前移)、负(往回移), 也可以为零(保持不动).</li>
+<li>origin - 用来指定起始点的模式, 可以使用下面定义的几个模式常量:<ol>
+<li>SEEK_SET : 以文件开始位置作为起始点</li>
+<li>SEEK_CUR : 以文件指针当前所在的位置作为起始点</li>
+<li>SEEK_END : 以文件结尾作为起始点</li>
+</ol>
+</li>
+</ul>
+<a id="more"></a>
+<p>下面是一些使用示例, 其中fp是一个文件指针<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fseek(fp, <span class="number">0L</span>, SEEK_SET)  <span class="comment">// 移动到文件开头</span></span><br><span class="line">fseek(fp, <span class="number">10L</span>, SEEK_SET)  <span class="comment">// 移动到文件的第10个字节</span></span><br><span class="line">fseek(fp, <span class="number">2L</span>, SEEK_CUR)  <span class="comment">// 从文件的当前位置向前移动两个字节</span></span><br><span class="line">fssek(fp, <span class="number">0L</span>, SEEK_END)  <span class="comment">// 移动到文件的结尾处</span></span><br><span class="line">fseek(fp, <span class="number">-10L</span>, SEEK_END)  <span class="comment">// 从文件结尾处退回10个字节</span></span><br></pre></td></tr></table></figure></p>
+<p>如果函数执行正常, 那么返回值为0, 如果有错误, 则返回值为-1.<br><strong>ftell</strong><br>ftell函数用来获得当前文件指针的位置, 它返回当前文件指针距离文件开始处的字节数目, 函数原型如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">int</span> <span class="title">ftell</span> <span class="params">( FILE * stream )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>如果函数执行失败会返回-1,</p>
+<p>下面是一个使用示例, 接合fseek和ftell用来获得文件的大小<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">file_size</span><span class="params">(<span class="keyword">char</span> *fileName)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> size;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    <span class="keyword">if</span>((fp = fopen(fileName, <span class="string">"rb"</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"can't open file %s\n"</span>, fileName);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    fseek (fp, <span class="number">0</span> , SEEK_END);</span><br><span class="line">    size = ftell(fp);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> mb;</span><br><span class="line">    mb = size * <span class="number">1.0</span> / <span class="number">1024</span> / <span class="number">1024</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"file size is %ldB and %.2fMB \n"</span>, size, mb); </span><br><span class="line">    fclose(fp);</span><br><span class="line">    <span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="fwrite"><a href="#fwrite" class="headerlink" title="fwrite"></a>fwrite</h2><blockquote>
+<p>Writes an array of <strong>count</strong> elements, each one with a size of <strong>size</strong> bytes, from the block of memory pointed by <strong>ptr</strong> to the current position in the <strong>stream</strong>.</p>
+</blockquote>
+<p>以二进制的形式将数据块写入文件, 函数原型为:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> fwrite ( <span class="keyword">const</span> <span class="keyword">void</span> * ptr, <span class="keyword">size_t</span> size, <span class="keyword">size_t</span> count, FILE * stream );</span><br></pre></td></tr></table></figure></p>
+<p>下面是参数意义:</p>
+<ul>
+<li>ptr - 要写入的内存数据地址</li>
+<li>size - 单个数据块的大小</li>
+<li>count - 写入的数据块的数量</li>
+<li>stream - 写入的目标文件</li>
+</ul>
+<p>如果写入成功, 会返回写入的数据块的数量, 即count, 如果返回值不等于count, 说明程序运行出现了错误.<br>下面是一个使用示例:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">file_fwrite</span><span class="params">(<span class="keyword">char</span> *fileName)</span> </span>&#123;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    <span class="keyword">if</span>((fp = fopen(fileName, <span class="string">"w+b"</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"can't open file %s\n"</span>, fileName);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">20</span>, i;</span><br><span class="line">    <span class="keyword">int</span> *buffer;</span><br><span class="line">    buffer = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * count);</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        buffer[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">long</span> success_num = <span class="number">0</span>;</span><br><span class="line">    success_num = fwrite(buffer, <span class="keyword">sizeof</span>(<span class="keyword">int</span>) , count, fp);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"success_num is %ld\n"</span>, success_num);</span><br><span class="line"></span><br><span class="line">    fclose(fp);</span><br><span class="line">    <span class="built_in">free</span>(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是写入的内容<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0100 0000 0200 0000 0300 0000</span><br><span class="line">0400 0000 0500 0000 0600 0000 0700 0000</span><br><span class="line">0800 0000 0900 0000 0a00 0000 0b00 0000</span><br><span class="line">0c00 0000 0d00 0000 0e00 0000 0f00 0000</span><br><span class="line">1000 0000 1100 0000 1200 0000 1300 0000</span><br></pre></td></tr></table></figure></p>
+<p>上面是以16进制的形式进行显示, 即一个数字为4位, 一个int值占32位(4个字节),  在上面的内容中, 8个数字为1个int, 如 <code>0000 0000</code>为第一个int值, 即0, <code>0100 0000</code>为第二个int值, 即1. 这里需要说明的是在写入时是字节作为一个基本单位的, 并且低位字节是先写入的, 如<code>0100 0000</code>, 其中<code>01</code>就是int的最低位的字节. 我们来看这个例子, 如果写入文件之后的值为<code>1234 5678</code>, 那么其原先的值就是<code>0x78563412</code></p>
+<h2 id="fread"><a href="#fread" class="headerlink" title="fread"></a>fread</h2><blockquote>
+<p>Reads an array of <strong>count</strong> elements, each one with a size of <strong>size</strong> bytes, from the <strong>stream</strong> and stores them in the block of memory specified by <strong>ptr</strong>.</p>
+</blockquote>
+<p>以二进制的形式将数据块读入内存, 下面是函数原型:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> fread ( <span class="keyword">void</span> * ptr, <span class="keyword">size_t</span> size, <span class="keyword">size_t</span> count, FILE * stream );</span><br></pre></td></tr></table></figure></p>
+<p>下面是参数含义</p>
+<ul>
+<li>ptr - 读入文件数据的内存地址</li>
+<li>size - 单个数据块的大小</li>
+<li>count - 数据块的数量</li>
+<li>stream - 读取的文件</li>
+</ul>
+<p>如果读入成功, 会返回读入的数据块的数量. 下面是一个使用示例:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">file_fread</span><span class="params">(<span class="keyword">char</span> *fileName)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> count;</span><br><span class="line">    <span class="keyword">int</span> *buffer;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    <span class="keyword">if</span>((fp = fopen(fileName, <span class="string">"rb"</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"can't open file %s\n"</span>, fileName);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    fseek (fp, <span class="number">0</span> , SEEK_END);</span><br><span class="line">    count = ftell(fp);</span><br><span class="line">    rewind(fp);</span><br><span class="line">    buffer =(<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * count);</span><br><span class="line"></span><br><span class="line">    fread(buffer, <span class="keyword">sizeof</span>(<span class="keyword">int</span>), count / <span class="keyword">sizeof</span>(<span class="keyword">int</span>), fp);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; count/ <span class="keyword">sizeof</span>(<span class="keyword">int</span>); i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, buffer[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(fp);</span><br><span class="line">    <span class="built_in">free</span>(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="rewind"><a href="#rewind" class="headerlink" title="rewind"></a>rewind</h2><blockquote>
+<p>Sets the position indicator associated with stream to the beginning of the file.</p>
+</blockquote>
+<p>重置文件指针到文件开头位置, 下面是函数原型:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rewind</span> <span class="params">( FILE * stream )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="setbuf-和-setvbuf"><a href="#setbuf-和-setvbuf" class="headerlink" title="setbuf 和 setvbuf"></a>setbuf 和 setvbuf</h2><p>当打开一个文件后, 系统会自动为该文件流分配一个缓冲区, 其大小为<code>BUFSIZ</code>, 我们可以通过打印<code>BUFSIZ</code>来获得默认的缓冲区大小. 如果想自定义缓冲区, 可以使用setbuf和setvbuf函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"%d"</span>, BUFSIZ);</span><br></pre></td></tr></table></figure></p>
+<p><strong>setbuf</strong></p>
+<blockquote>
+<p>Specifies the buffer to be used by the stream for I/O operations, which becomes a fully buffered stream. Or, alternatively, if buffer is a null pointer, buffering is disabled for the stream, which becomes an unbuffered stream.</p>
+</blockquote>
+<p>为文件流指定一个缓冲区, 函数原型为<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setbuf</span> <span class="params">( FILE * stream, <span class="keyword">char</span> * buffer )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>buffer表示指定的缓冲区, 需要注意的一点是, 这里缓冲区的大小仍然为<code>BUFSIZ</code>, 只不过是缓冲区的位置发生了改变, 因此buffer的大小应该大于或者等于<code>BUFSIZ</code>.  该函数应该在文件刚被打开时调用, 不能在进行了读写操作之后再调用. 如果buffer的为NULL, 就表示禁用缓冲区. 下面是一个使用示例:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buffer[BUFSIZ];</span><br><span class="line">  FILE *pFile1, *pFile2;</span><br><span class="line"></span><br><span class="line">  pFile1=fopen (<span class="string">"myfile1.txt"</span>,<span class="string">"w"</span>);</span><br><span class="line">  pFile2=fopen (<span class="string">"myfile2.txt"</span>,<span class="string">"a"</span>);</span><br><span class="line"></span><br><span class="line">  setbuf ( pFile1 , buffer );</span><br><span class="line">  <span class="built_in">fputs</span> (<span class="string">"This is sent to a buffered stream"</span>,pFile1);</span><br><span class="line">  fflush (pFile1);</span><br><span class="line"></span><br><span class="line">  setbuf ( pFile2 , <span class="literal">NULL</span> );</span><br><span class="line">  <span class="built_in">fputs</span> (<span class="string">"This is sent to an unbuffered stream"</span>,pFile2);</span><br><span class="line"></span><br><span class="line">  fclose (pFile1);</span><br><span class="line">  fclose (pFile2);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>setvbuf</strong></p>
+<blockquote>
+<p>Specifies a buffer for stream. The function allows to specify the mode and size of the buffer (in bytes).</p>
+</blockquote>
+<p>为文件指定一个缓冲区, 同时可以指定缓冲区的类型和大小, 下面是函数原型:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">setvbuf</span> <span class="params">( FILE * stream, <span class="keyword">char</span> * buffer, <span class="keyword">int</span> mode, <span class="keyword">size_t</span> size )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>其中 stream表示操作的文件, buffer为指定的缓冲区首地址, 如果缓冲区为NULL, 系统会自动创建一个大小为size的缓冲区, mode为缓冲区的类别, size为缓冲区的大小, 其中mode的值可以为下面几个:</p>
+<ul>
+<li><p><strong>_IOFBF</strong> - 全缓冲(Full buffering), 当缓冲区满时才执行真正的I/O操作, 例如对磁盘文件的读写. </p>
+<blockquote>
+<p> On output, data is written once the buffer is full (or flushed). On Input, the buffer is filled when an input operation is requested and the buffer is empty.</p>
+</blockquote>
+</li>
+<li><p><strong>_IOLBF</strong> - 行缓冲(Line buffering), 在输入和输出时遇到换行符时才进行真正的I/O操作, 例如标准输入(stdin)和标准输出(stdout). </p>
+<blockquote>
+<p>On output, data is written when a newline character is inserted into the stream or when the buffer is full (or flushed), whatever happens first. On Input, the buffer is filled up to the next newline character when an input operation is requested and the buffer is empty. </p>
+</blockquote>
+</li>
+<li><p><strong>_IONBF</strong> - 无缓冲(No buffering), 在这种情况下buffer和size参数会被忽略.</p>
+</li>
+</ul>
+<p>其实setbuf将相当于调用了setvbuf<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setvbuf(stream, buf, buf ? _IOFBF : _IONBF, BUFSIZE)</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个使用示例:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span>&#123;</span><br><span class="line">  FILE *pFile;</span><br><span class="line">  pFile=fopen (<span class="string">"myfile.txt"</span>,<span class="string">"w"</span>);</span><br><span class="line">  setvbuf ( pFile , <span class="literal">NULL</span> , _IOFBF , <span class="number">1024</span> );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// File operations here</span></span><br><span class="line"></span><br><span class="line">  fclose (pFile);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="fflush"><a href="#fflush" class="headerlink" title="fflush"></a>fflush</h2><p>对于输入输出流, 下列情况会自动刷新缓冲区</p>
+<ul>
+<li>当进行输出(output)操作时, 输出缓冲区满了</li>
+<li>当流(stream)被关闭</li>
+<li>当程序调用exit方法终止</li>
+<li>当缓冲区为行缓冲区时, 一个换行符(newline)被写入</li>
+<li>Whenever an input operation on any stream actually reads data from its file.</li>
+</ul>
+<p>对于一个输出流, 可以调用fflush进行显示的刷新缓冲区, 即将缓冲区的内容写入到文件中, 但是对于一个输入流使用fflush函数的效果没有定义. 下面是函数原型:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fflush</span> <span class="params">( FILE * stream )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>如果stream为NULL, 那么所有的缓冲区都将被刷新.</p>
+<h2 id="stat"><a href="#stat" class="headerlink" title="stat"></a>stat</h2><p>stat函数主要用于获取文件状态, 函数原型为<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">stat</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filename, struct stat *buf)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>下面是struct stat的定义:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">    <span class="comment">//device 文件的设备编号</span></span><br><span class="line">    <span class="keyword">dev_t</span> st_dev;   </span><br><span class="line">    <span class="comment">//inode 文件的i-node</span></span><br><span class="line">    <span class="keyword">ino_t</span> st_ino;   </span><br><span class="line">    <span class="comment">//protection 文件的类型和存取的权限</span></span><br><span class="line">    <span class="keyword">mode_t</span> st_mode;  </span><br><span class="line">    <span class="comment">//number of hard links 连到该文件的硬连接数目, 刚建立的文件值为1.</span></span><br><span class="line">    <span class="keyword">nlink_t</span> st_nlink;  </span><br><span class="line">    <span class="comment">//user ID of owner 文件所有者的用户识别码</span></span><br><span class="line">    <span class="keyword">uid_t</span> st_uid;  </span><br><span class="line">    <span class="comment">//group ID of owner 文件所有者的组识别码</span></span><br><span class="line">    <span class="keyword">gid_t</span> st_gid;  </span><br><span class="line">    <span class="comment">//device type 若此文件为装置设备文件, 则为其设备编号</span></span><br><span class="line">    <span class="keyword">dev_t</span> st_rdev;  </span><br><span class="line">    <span class="comment">//total size, in bytes 文件大小, 以字节计算</span></span><br><span class="line">    <span class="keyword">off_t</span> st_size;  </span><br><span class="line">    <span class="comment">//blocksize for filesystem I/O 文件系统的I/O 缓冲区大小.</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> st_blksize;  </span><br><span class="line">    <span class="comment">//number of blocks allocated 占用文件区块的个数, 每一区块大小为512 个字节.</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> st_blocks; </span><br><span class="line">    <span class="comment">//time of lastaccess 文件最近一次被存取或被执行的时间, 一般只有在用mknod、utime、read、write 与tructate 时改变.</span></span><br><span class="line">    <span class="keyword">time_t</span> st_atime;  </span><br><span class="line">    <span class="comment">//time of last modification 文件最后一次被修改的时间, 一般只有在用mknod、utime 和write 时才会改变</span></span><br><span class="line">    <span class="keyword">time_t</span> st_mtime;  </span><br><span class="line">    <span class="comment">//time of last change i-node 最近一次被更改的时间, 此参数会在文件所有者、组、权限被更改时更新</span></span><br><span class="line">    <span class="keyword">time_t</span> st_ctime;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>其中st_mode定义了以下数种情况</p>
+<ol>
+<li><strong>S_IFMT</strong> - 0170000 文件类型的位遮罩</li>
+<li><strong>S_IFSOCK</strong> - 0140000 scoket</li>
+<li><strong>S_IFLNK</strong> - 0120000 符号连接</li>
+<li><strong>S_IFREG</strong> - 0100000 一般文件</li>
+<li><strong>S_IFBLK</strong> - 0060000 区块装置</li>
+<li><strong>S_IFDIR</strong> - 0040000 目录</li>
+<li><strong>S_IFCHR</strong> - 0020000 字符装置</li>
+<li><strong>S_IFIFO</strong> - 0010000 先进先出</li>
+<li><strong>S_ISUID</strong> - 04000 文件的 (set user-id on execution)位</li>
+<li><strong>S_ISGID</strong> - 02000 文件的 (set group-id on execution)位</li>
+<li><strong>S_ISVTX</strong> - 01000 文件的sticky 位</li>
+<li><strong>S_IRUSR (S_IREAD)</strong> - 00400 文件所有者具可读取权限</li>
+<li><strong>S_IWUSR (S_IWRITE)</strong> - 00200 文件所有者具可写入权限</li>
+<li><strong>S_IXUSR (S_IEXEC)</strong> - 00100 文件所有者具可执行权限</li>
+<li><strong>S_IRGRP</strong> - 00040 用户组具可读取权限</li>
+<li><strong>S_IWGRP</strong> - 00020 用户组具可写入权限</li>
+<li><strong>S_IXGRP</strong> - 00010 用户组具可执行权限</li>
+<li><strong>S_IROTH</strong> - 00004 其他用户具可读取权限</li>
+<li><strong>S_IWOTH</strong> - 00002 其他用户具可写入权限</li>
+<li><strong>S_IXOTH</strong> - 00001 其他用户具可执行权限上述的文件类型在 POSIX 中定义了检查这些类型的宏定义</li>
+<li><strong>S_ISLNK (st_mode)</strong> - 判断是否为符号连接</li>
+<li><strong>S_ISREG (st_mode)</strong> - 是否为一般文件</li>
+<li><strong>S_ISDIR (st_mode)</strong> - 是否为目录</li>
+<li><strong>S_ISCHR (st_mode)</strong> - 是否为字符装置文件</li>
+<li><strong>S_ISBLK (s3e)</strong> - 是否为先进先出</li>
+<li><strong>S_ISSOCK (st_mode)</strong> - 是否为socket 若一目录具有sticky 位 (S_ISVTX), 则表示在此目录下的文件只能被该文件所有者、此目录所有者或root 来删除或改名.</li>
+</ol>
+<p>下面是一个使用示例:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">file_stat</span><span class="params">(<span class="keyword">char</span> * fileName)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">fileStat</span>;</span></span><br><span class="line">    stat(fileName, &amp;fileStat);</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Information for %s\n"</span>, fileName);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"---------------------------\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"File Size: \t\t%ld bytes\n"</span>,fileStat.st_size);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Number of Links: \t%ld\n"</span>,fileStat.st_nlink);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"File inode: \t\t%ld\n"</span>,fileStat.st_ino);</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"File Permissions: \t"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (S_ISDIR(fileStat.st_mode)) ? <span class="string">"d"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IRUSR) ? <span class="string">"r"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IWUSR) ? <span class="string">"w"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IXUSR) ? <span class="string">"x"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IRGRP) ? <span class="string">"r"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IWGRP) ? <span class="string">"w"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IXGRP) ? <span class="string">"x"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IROTH) ? <span class="string">"r"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IWOTH) ? <span class="string">"w"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>( (fileStat.st_mode &amp; S_IXOTH) ? <span class="string">"x"</span> : <span class="string">"-"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n\n"</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The file %s a symbolic link\n"</span>, (S_ISLNK(fileStat.st_mode)) ? <span class="string">"is"</span> : <span class="string">"is not"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Information for data/test.txt</span><br><span class="line">---------------------------</span><br><span class="line">File Size:      24023896 bytes</span><br><span class="line">Number of Links:    1</span><br><span class="line">File inode:         8261278</span><br><span class="line">File Permissions:   -rw-rw-r--</span><br><span class="line"></span><br><span class="line">The file is not a symbolic link</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/26/【OpenMP学习笔记】更多指令和子句介绍/" rel="next" title="【OpenMP学习笔记】更多指令和子句介绍">
+                <i class="fa fa-chevron-left"></i> 【OpenMP学习笔记】更多指令和子句介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/05/【C】解析命令行参数--getopt和getopt_long/" rel="prev" title="【C】解析命令行参数--getopt和getopt_long">
+                【C】解析命令行参数--getopt和getopt_long <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fseek-和-ftell"><span class="nav-number">2.</span> <span class="nav-text">fseek 和 ftell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fwrite"><span class="nav-number">3.</span> <span class="nav-text">fwrite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fread"><span class="nav-number">4.</span> <span class="nav-text">fread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rewind"><span class="nav-number">5.</span> <span class="nav-text">rewind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setbuf-和-setvbuf"><span class="nav-number">6.</span> <span class="nav-text">setbuf 和 setvbuf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fflush"><span class="nav-number">7.</span> <span class="nav-text">fflush</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stat"><span class="nav-number">8.</span> <span class="nav-text">stat</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2016/03/04/【C】文件操作(二)/';
+          this.page.identifier = '2016/03/04/【C】文件操作(二)/';
+          this.page.title = '【C】文件操作(二)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

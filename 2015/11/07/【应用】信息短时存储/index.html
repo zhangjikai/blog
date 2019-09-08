@@ -1,0 +1,1070 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="应用,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="功能这是一个在线的应用，用来短时间存储一些信息，以实现在不同设备上共享这些信息的功能。其实目的就是可以将手机上的一些信息快速的复制到电脑上，尤其是在使用Linux系统的时候。下面是该应用的截图。其中阅后即焚是指信息被访问一次之后就会被销毁。 流程程序主要的流程就是首先在文本框中输入或者粘贴一些内容，然后保存到服务器（使用的是新浪sae），保存成功之后会返回给客户端一个编号，通过该编号就可以访问存储">
+<meta name="keywords" content="应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【应用】信息短时存储">
+<meta property="og:url" content="http://blog.zhangjikai.com/2015/11/07/【应用】信息短时存储/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="功能这是一个在线的应用，用来短时间存储一些信息，以实现在不同设备上共享这些信息的功能。其实目的就是可以将手机上的一些信息快速的复制到电脑上，尤其是在使用Linux系统的时候。下面是该应用的截图。其中阅后即焚是指信息被访问一次之后就会被销毁。 流程程序主要的流程就是首先在文本框中输入或者粘贴一些内容，然后保存到服务器（使用的是新浪sae），保存成功之后会返回给客户端一个编号，通过该编号就可以访问存储">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/msg01.PNG">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/msg03.PNG">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/msg04.PNG">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/msg05.PNG">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/msg06.PNG">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【应用】信息短时存储">
+<meta name="twitter:description" content="功能这是一个在线的应用，用来短时间存储一些信息，以实现在不同设备上共享这些信息的功能。其实目的就是可以将手机上的一些信息快速的复制到电脑上，尤其是在使用Linux系统的时候。下面是该应用的截图。其中阅后即焚是指信息被访问一次之后就会被销毁。 流程程序主要的流程就是首先在文本框中输入或者粘贴一些内容，然后保存到服务器（使用的是新浪sae），保存成功之后会返回给客户端一个编号，通过该编号就可以访问存储">
+<meta name="twitter:image" content="http://blog.zhangjikai.com/images/msg01.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2015/11/07/【应用】信息短时存储/">
+
+
+
+
+
+  <title> 【应用】信息短时存储 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2015/11/07/【应用】信息短时存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【应用】信息短时存储
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-07T19:11:47+08:00">
+                2015-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/应用/" itemprop="url" rel="index">
+                    <span itemprop="name">应用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/07/【应用】信息短时存储/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/07/【应用】信息短时存储/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  3,675
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  19
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>这是一个在线的应用，用来短时间存储一些信息，以实现在不同设备上共享这些信息的功能。其实目的就是可以将手机上的一些信息快速的复制到电脑上，尤其是在使用Linux系统的时候。下面是该应用的截图。其中阅后即焚是指信息被访问一次之后就会被销毁。</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>程序主要的流程就是首先在文本框中输入或者粘贴一些内容，然后保存到服务器（使用的是新浪sae），保存成功之后会返回给客户端一个编号，通过该编号就可以访问存储的内容。因为就是为了给手机和电脑之间的复制粘贴提供一个介质，所以信息的有效时间暂时设为了2分钟，2分钟之后就会清除保存的信息。<br><img src="/images/msg01.PNG" alt="应用界面"><br><a id="more"></a></p>
+<h2 id="前端实现"><a href="#前端实现" class="headerlink" title="前端实现"></a>前端实现</h2><h3 id="整体风格"><a href="#整体风格" class="headerlink" title="整体风格"></a>整体风格</h3><p>程序使用的是bootstrap框架，如果你还没有用过这个前端框架，那么强烈推荐你试用一下，因为使用该框架可以极大的减少你的工作量，并且兼容手机设备。下面是页面的主要html代码，其中css样式几乎全部为bootstrap定义的样式，这样我们就可以将更多的时间放在功能实现，而不是网页设计上。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container "</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row "</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"padding:10px; "</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"bs-example bs-example-form"</span> <span class="attr">role</span>=<span class="string">"form"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-lg-12"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-group input-group-lg"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"input-group-addon"</span>&gt;</span>编号<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"textId"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"input-group-btn"</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-default"</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"msgGet"</span>&gt;</span>获取信息<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                           <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group "</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">class</span>=<span class="string">"form-control custom-control change_font"</span> <span class="attr">style</span>=<span class="string">"resize:none"</span> <span class="attr">rows</span>=<span class="string">"8"</span></span></span><br><span class="line"><span class="tag">                                  <span class="attr">placeholder</span>=<span class="string">"请输入信息"</span> <span class="attr">id</span>=<span class="string">"mainText"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary button_width"</span> <span class="attr">id</span>=<span class="string">"msgClear"</span>&gt;</span>清空<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary button_width2 "</span> <span class="attr">id</span>=<span class="string">"msgSave"</span>&gt;</span>保存<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bootstrap-switch "</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"onlyOne"</span> <span class="attr">data-label-text</span>=<span class="string">"阅后即焚"</span> <span class="attr">data-on-text</span>=<span class="string">"是"</span></span></span><br><span class="line"><span class="tag">                                   <span class="attr">data-off-text</span>=<span class="string">"否"</span> <span class="attr">onSwitchChange</span>=<span class="string">"changeOne"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>bootstrap有自适应机制，页面内容的宽度会随浏览器窗口的大小改变而改变。但是在我们的页面中如果采用默认的自适应机制，就可能会造成在较宽的屏幕上输入框的宽度过大，从而使的页面看起来不美观。所以我们更改了一下其默认行为，当浏览器窗口宽度大于800px时，将网页内容的宽度固定为800px。实现方式很简单，加上下面的css代码即可。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">800px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还有一点就是input的placeholder属性在较低的IE版本中不兼容，使用下面的js代码可以解决这个问题<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> JPlaceHolder = &#123;</span><br><span class="line">    <span class="comment">//检测</span></span><br><span class="line">    _check: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'placeholder'</span> <span class="keyword">in</span> <span class="built_in">document</span>.createElement(<span class="string">'input'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    init: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>._check()) &#123;</span><br><span class="line">            <span class="keyword">this</span>.fix();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//修复</span></span><br><span class="line">    fix: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        jQuery(<span class="string">':input[placeholder]'</span>).each(<span class="function"><span class="keyword">function</span> (<span class="params">index, element</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> self = $(<span class="keyword">this</span>), txt = self.attr(<span class="string">'placeholder'</span>);</span><br><span class="line">            self.wrap($(<span class="string">'&lt;div&gt;&lt;/div&gt;'</span>).css(&#123;<span class="attr">position</span>: <span class="string">'relative'</span>, <span class="attr">zoom</span>: <span class="string">'1'</span>, <span class="attr">border</span>: <span class="string">'none'</span>, <span class="attr">background</span>: <span class="string">'none'</span>, <span class="attr">padding</span>: <span class="string">'none'</span>, <span class="attr">margin</span>: <span class="string">'none'</span>&#125;));</span><br><span class="line">            <span class="keyword">var</span> pos = self.position(), h = self.outerHeight(<span class="literal">true</span>), paddingleft = self.css(<span class="string">'padding-left'</span>);</span><br><span class="line">            <span class="keyword">var</span> holder = $(<span class="string">'&lt;span&gt;&lt;/span&gt;'</span>).text(txt).css(&#123;<span class="attr">position</span>: <span class="string">'absolute'</span>, <span class="attr">left</span>: pos.left, <span class="attr">top</span>: pos.top, <span class="attr">height</span>: h, <span class="attr">lienHeight</span>: h, <span class="attr">paddingLeft</span>: paddingleft, <span class="attr">fontSize</span>: <span class="string">'1.5em'</span>, <span class="attr">color</span>: <span class="string">'#aaa'</span>&#125;).appendTo(self.parent());</span><br><span class="line">            self.focusin(<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                holder.hide();</span><br><span class="line">            &#125;).focusout(<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (!self.val()) &#123;</span><br><span class="line">                    holder.show();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            holder.click(<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                holder.hide();</span><br><span class="line">                self.focus();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//执行</span></span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    JPlaceHolder.init();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="bootstrap开关切换插件"><a href="#bootstrap开关切换插件" class="headerlink" title="bootstrap开关切换插件"></a>bootstrap开关切换插件</h3><p>在选择”阅后即焚”功能的地方，我们使用了一个开关切换的插件——bootstrap switch，<strong><a href="https://github.com/nostalgiaz/bootstrap-switch" target="_blank" rel="noopener">这里</a></strong> 是该插件的github地址，使用起来也十分简单，下面是一个简单的示例，更多的属性可以参考官方文档<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>bootstrap switch demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap3/bootstrap.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap3/bootstrap-switch.min.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap-switch.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">        $(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            $(<span class="string">"[name='my-checkbox']"</span>).bootstrapSwitch();</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">            $(<span class="string">'input[name="my-checkbox"]'</span>).on(<span class="string">'switchChange.bootstrapSwitch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event, state</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="keyword">this</span>); <span class="comment">// DOM element</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(event); <span class="comment">// jQuery event</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(state); <span class="comment">// true | false</span></span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"my-checkbox"</span> <span class="attr">data-on-text</span>=<span class="string">"是"</span> <span class="attr">data-off-text</span>=<span class="string">"否"</span> <span class="attr">checked</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>效果图如下所示<br><img src="/images/msg03.PNG" alt><img src="/images/msg04.PNG" alt>  </p>
+<h3 id="信息提示"><a href="#信息提示" class="headerlink" title="信息提示"></a>信息提示</h3><p>一般来说使用alert就可以实现弹窗提示的功能，但是各个浏览器的弹窗样式都不相同并且也不美观，这里使用了jQuery Toaster插件，效果如下图所示，<strong><a href="https://github.com/scottoffen/jquery.toaster" target="_blank" rel="noopener">这里</a></strong> 是github地址。<br><img src="/images/msg05.PNG" alt><br>这个插件需要bootstrap 3.0+，不过使用起来更加方便，只需要引入一个jquery.toaster.js即可，下面是一个示例<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>bootstrap toaster demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap3/bootstrap.min.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.toaster.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"open"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary "</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">    $(<span class="string">"#open"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">       $.toaster(&#123;<span class="attr">message</span>: <span class="string">'Your message here'</span>, <span class="attr">title</span>: <span class="string">'Your Title'</span>, <span class="attr">priority</span>: <span class="string">'danger'</span>&#125;);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在默认情况下，弹窗出现的位置是在右上角，我们可以修改一下css样式使其出现在屏幕中间，不过要首先去jquery.toaster.js中，将下面的代码注释掉(大概90行附近)，<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'css'</span>       :</span><br><span class="line">&#123;</span><br><span class="line">     <span class="string">'position'</span> : <span class="string">'fixed'</span>,</span><br><span class="line">     <span class="string">'top'</span>      : <span class="string">'10px'</span>,</span><br><span class="line">     <span class="string">'right'</span>    : <span class="string">'10px'</span>,</span><br><span class="line">     <span class="string">'width'</span>    : <span class="string">'300px'</span>,</span><br><span class="line">     <span class="string">'zIndex'</span>   : <span class="number">50000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是修改后的代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>bootstrap toaster demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap3/bootstrap.min.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.toaster.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></span><br><span class="line"><span class="css">        @<span class="keyword">media</span> screen and (min-width: <span class="number">800px</span>) &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.center_toaster</span> &#123;</span></span><br><span class="line">                right: 30%;</span><br><span class="line">                width: 40%;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        @<span class="keyword">media</span> screen and (min-width: <span class="number">500px</span>) and (max-width: <span class="number">799px</span>) &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.center_toaster</span> &#123;</span></span><br><span class="line">                right: 20%;</span><br><span class="line">                width: 60%;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        @<span class="keyword">media</span> screen and (min-width: <span class="number">200px</span> ) and (max-width: <span class="number">499px</span>) &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.center_toaster</span> &#123;</span></span><br><span class="line">                right: 5%;</span><br><span class="line">                width: 90%;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"open"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary "</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    $.toaster(&#123;</span></span><br><span class="line">        settings: &#123;</span><br><span class="line"><span class="actionscript">            <span class="string">'toaster'</span>: &#123;</span></span><br><span class="line"><span class="actionscript">                <span class="string">'class'</span>: <span class="string">'center_toaster'</span>,</span></span><br><span class="line"><span class="actionscript">                <span class="string">'css'</span>: &#123;</span></span><br><span class="line"><span class="actionscript">                    <span class="string">'position'</span>: <span class="string">'fixed'</span>,</span></span><br><span class="line"><span class="actionscript">                    <span class="string">'top'</span>: <span class="string">'2px'</span>,</span></span><br><span class="line"><span class="actionscript">                    <span class="string">'zIndex'</span>: <span class="number">50000</span></span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="javascript">    $(<span class="string">"#open"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $.toaster(&#123;<span class="attr">message</span>: <span class="string">'Your222 message here'</span>, <span class="attr">title</span>: <span class="string">'Your Title'</span>, <span class="attr">priority</span>: <span class="string">'danger'</span>&#125;);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>不过按上面修改之后在低于IE9的浏览器中工作并不理想，可能是IE9以下对 @media 支持不太好，所以在js的代码中加了一个判断，如果浏览器支持html5的一些特性(使用jquery判断)就使用toaster，否则使用alert。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ($.support.leadingWhitespace) &#123;</span><br><span class="line">    $.toaster(&#123; <span class="attr">priority</span>: <span class="string">'warning'</span>, <span class="attr">title</span>: <span class="string">'警告'</span>, <span class="attr">message</span>: <span class="string">'编号不能为空'</span>&#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    alert(<span class="string">"警告：编号不能为空"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Loading插件"><a href="#Loading插件" class="headerlink" title="Loading插件"></a>Loading插件</h3><p>当用户点完获取数据或者保存按钮时，会弹出一个正在加载的弹出层，防止由于网络延迟等原因造成用户重复点击，下面是效果图<br><img src="/images/msg06.PNG" alt> </p>
+<p><strong><a href="https://github.com/scottoffen/jquery.toaster" target="_blank" rel="noopener">这里</a></strong> 是github地址。下面是一个简单的示例：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>bootstrap watingDialog demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap3/bootstrap.min.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap-waitingfor.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"open"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary "</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">    $(<span class="string">"#open"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line">        waitingDialog.show();</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line">            waitingDialog.hide();</span><br><span class="line">        &#125;,2000);</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="底部固定"><a href="#底部固定" class="headerlink" title="底部固定"></a>底部固定</h3><p>当页面内容的高度小于屏幕的高度时，将footer固定在底部，当页面内容的高度大于屏幕高度时，footer会随着滚动条滚动，不会遮盖到正常的内容，下面一个解决方法，<strong><a href="http://ryanfait.com/resources/footer-stick-to-bottom-of-page/" target="_blank" rel="noopener">这里</a></strong> 是原文地址。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>bootstrap fixed footer demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap3/bootstrap.min.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></span><br><span class="line">        * &#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        html, body &#123;</span><br><span class="line">            height: 100%;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.wrapper</span> &#123;</span></span><br><span class="line">            min-height: 100%;</span><br><span class="line">            height: auto !important;</span><br><span class="line">            height: 100%;</span><br><span class="line">            margin: 0 auto -6em;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="comment">/*push和footer的高度不一样是因为加了一条hr*/</span></span></span><br><span class="line"><span class="css">        <span class="selector-class">.push</span> &#123;</span></span><br><span class="line">            height: 6em;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.footer</span>, &#123;</span></span><br><span class="line">            height: 4em;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这里是内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"push"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span> <span class="attr">class</span>=<span class="string">"footer"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">" col-lg-12 text-center"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>Copyright &amp;copy; zhangjk 2015<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="服务端实现"><a href="#服务端实现" class="headerlink" title="服务端实现"></a>服务端实现</h2><h3 id="平台及语言"><a href="#平台及语言" class="headerlink" title="平台及语言"></a>平台及语言</h3><p>服务器使用的新浪的sae，语言是使用的php。</p>
+<h3 id="php-restful-service"><a href="#php-restful-service" class="headerlink" title="php restful service"></a>php restful service</h3><p>因为应用逻辑非常简单，就是一个存和取数据，所以简单的实现了几个restful的接口，并没有使用专门的框架（主要是对php不熟悉）。接口的实现参考自<strong><a href="http://ryanfait.com/resources/footer-stick-to-bottom-of-page/" target="_blank" rel="noopener">这篇文章</a></strong>，下面是该文章给出的代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    API Demo</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    This script provides a RESTful API interface for a web application</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Input:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">        $_GET['format'] = [ json | html | xml ]</span></span><br><span class="line"><span class="comment">        $_GET['method'] = []</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Output: A formatted HTTP response</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Author: Mark Roland</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    History:</span></span><br><span class="line"><span class="comment">        11/13/2012 - Created</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// --- Step 1: Initialize variables and functions</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Deliver HTTP Response</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $format The desired HTTP response content type: [json, html, xml]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $api_response The desired HTTP response data</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deliver_response</span><span class="params">($format, $api_response)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Define HTTP responses</span></span><br><span class="line">    $http_response_code = <span class="keyword">array</span>(</span><br><span class="line">        <span class="number">200</span> =&gt; <span class="string">'OK'</span>,</span><br><span class="line">        <span class="number">400</span> =&gt; <span class="string">'Bad Request'</span>,</span><br><span class="line">        <span class="number">401</span> =&gt; <span class="string">'Unauthorized'</span>,</span><br><span class="line">        <span class="number">403</span> =&gt; <span class="string">'Forbidden'</span>,</span><br><span class="line">        <span class="number">404</span> =&gt; <span class="string">'Not Found'</span></span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// Set HTTP Response</span></span><br><span class="line">    header(<span class="string">'HTTP/1.1 '</span> . $api_response[<span class="string">'status'</span>] . <span class="string">' '</span> . $http_response_code[$api_response[<span class="string">'status'</span>]]);</span><br><span class="line">    <span class="comment">// Process different content types</span></span><br><span class="line">    <span class="keyword">if</span> (strcasecmp($format, <span class="string">'json'</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// Set HTTP Response Content Type</span></span><br><span class="line">        header(<span class="string">'Content-Type: application/json; charset=utf-8'</span>);</span><br><span class="line">        <span class="comment">// Format data into a JSON response</span></span><br><span class="line">        $json_response = json_encode($api_response);</span><br><span class="line">        <span class="comment">// Deliver formatted data</span></span><br><span class="line">        <span class="keyword">echo</span> $json_response;</span><br><span class="line">    &#125; <span class="keyword">elseif</span> (strcasecmp($format, <span class="string">'xml'</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// Set HTTP Response Content Type</span></span><br><span class="line">        header(<span class="string">'Content-Type: application/xml; charset=utf-8'</span>);</span><br><span class="line">        <span class="comment">// Format data into an XML response (This is only good at handling string data, not arrays)</span></span><br><span class="line">        $xml_response = <span class="string">'&lt;?xml version="1.0" encoding="UTF-8"?&gt;'</span> . <span class="string">"\n"</span> . <span class="string">'&lt;response&gt;'</span> . <span class="string">"\n"</span> . <span class="string">"\t"</span> . <span class="string">'&lt;code&gt;'</span> . $api_response[<span class="string">'code'</span>] . <span class="string">'&lt;/code&gt;'</span> . <span class="string">"\n"</span> . <span class="string">"\t"</span> . <span class="string">'&lt;data&gt;'</span> . $api_response[<span class="string">'data'</span>] . <span class="string">'&lt;/data&gt;'</span> . <span class="string">"\n"</span> . <span class="string">'&lt;/response&gt;'</span>;</span><br><span class="line">        <span class="comment">// Deliver formatted data</span></span><br><span class="line">        <span class="keyword">echo</span> $xml_response;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Set HTTP Response Content Type (This is only good at handling string data, not arrays)</span></span><br><span class="line">        header(<span class="string">'Content-Type: text/html; charset=utf-8'</span>);</span><br><span class="line">        <span class="comment">// Deliver formatted data</span></span><br><span class="line">        <span class="keyword">echo</span> $api_response[<span class="string">'data'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// End script process</span></span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Define whether an HTTPS connection is required</span></span><br><span class="line">$HTTPS_required = <span class="keyword">FALSE</span>;</span><br><span class="line"><span class="comment">// Define whether user authentication is required</span></span><br><span class="line">$authentication_required = <span class="keyword">FALSE</span>;</span><br><span class="line"><span class="comment">// Define API response codes and their related HTTP response</span></span><br><span class="line">$api_response_code = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">0</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">400</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'Unknown Error'</span></span><br><span class="line">    ) ,</span><br><span class="line">    <span class="number">1</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">200</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'Success'</span></span><br><span class="line">    ) ,</span><br><span class="line">    <span class="number">2</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">403</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'HTTPS Required'</span></span><br><span class="line">    ) ,</span><br><span class="line">    <span class="number">3</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">401</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'Authentication Required'</span></span><br><span class="line">    ) ,</span><br><span class="line">    <span class="number">4</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">401</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'Authentication Failed'</span></span><br><span class="line">    ) ,</span><br><span class="line">    <span class="number">5</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">404</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'Invalid Request'</span></span><br><span class="line">    ) ,</span><br><span class="line">    <span class="number">6</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'HTTP Response'</span> =&gt; <span class="number">400</span>,</span><br><span class="line">        <span class="string">'Message'</span> =&gt; <span class="string">'Invalid Response Format'</span></span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line"><span class="comment">// Set default HTTP response of 'ok'</span></span><br><span class="line">$response[<span class="string">'code'</span>] = <span class="number">0</span>;</span><br><span class="line">$response[<span class="string">'status'</span>] = <span class="number">404</span>;</span><br><span class="line">$response[<span class="string">'data'</span>] = <span class="keyword">NULL</span>;</span><br><span class="line"><span class="comment">// --- Step 2: Authorization</span></span><br><span class="line"><span class="comment">// Optionally require connections to be made via HTTPS</span></span><br><span class="line"><span class="keyword">if</span> ($HTTPS_required &amp;&amp; $_SERVER[<span class="string">'HTTPS'</span>] != <span class="string">'on'</span>) &#123;</span><br><span class="line">    $response[<span class="string">'code'</span>] = <span class="number">2</span>;</span><br><span class="line">    $response[<span class="string">'status'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'HTTP Response'</span>];</span><br><span class="line">    $response[<span class="string">'data'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'Message'</span>];</span><br><span class="line">    <span class="comment">// Return Response to browser. This will exit the script.</span></span><br><span class="line">    deliver_response($_GET[<span class="string">'format'</span>], $response);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Optionally require user authentication</span></span><br><span class="line"><span class="keyword">if</span> ($authentication_required) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>($_POST[<span class="string">'username'</span>]) || <span class="keyword">empty</span>($_POST[<span class="string">'password'</span>])) &#123;</span><br><span class="line">        $response[<span class="string">'code'</span>] = <span class="number">3</span>;</span><br><span class="line">        $response[<span class="string">'status'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'HTTP Response'</span>];</span><br><span class="line">        $response[<span class="string">'data'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'Message'</span>];</span><br><span class="line">        <span class="comment">// Return Response to browser</span></span><br><span class="line">        deliver_response($_GET[<span class="string">'format'</span>], $response);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Return an error response if user fails authentication. This is a very simplistic example</span></span><br><span class="line">    <span class="comment">// that should be modified for security in a production environment</span></span><br><span class="line">    <span class="keyword">elseif</span> ($_POST[<span class="string">'username'</span>] != <span class="string">'foo'</span> &amp;&amp; $_POST[<span class="string">'password'</span>] != <span class="string">'bar'</span>) &#123;</span><br><span class="line">        $response[<span class="string">'code'</span>] = <span class="number">4</span>;</span><br><span class="line">        $response[<span class="string">'status'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'HTTP Response'</span>];</span><br><span class="line">        $response[<span class="string">'data'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'Message'</span>];</span><br><span class="line">        <span class="comment">// Return Response to browser</span></span><br><span class="line">        deliver_response($_GET[<span class="string">'format'</span>], $response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// --- Step 3: Process Request</span></span><br><span class="line"><span class="comment">// Method A: Say Hello to the API</span></span><br><span class="line"><span class="keyword">if</span> (strcasecmp($_GET[<span class="string">'method'</span>], <span class="string">'hello'</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">    $response[<span class="string">'code'</span>] = <span class="number">1</span>;</span><br><span class="line">    $response[<span class="string">'status'</span>] = $api_response_code[$response[<span class="string">'code'</span>]][<span class="string">'HTTP Response'</span>];</span><br><span class="line">    $response[<span class="string">'data'</span>] = <span class="string">'Hello World'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// --- Step 4: Deliver Response</span></span><br><span class="line"><span class="comment">// Return Response to browser</span></span><br><span class="line">deliver_response($_GET[<span class="string">'format'</span>], $response);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>对于apache服务器，需要修改一下.htaccess文件，该成下面的形式<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Turn on the rewrite engine</span></span><br><span class="line">Options +FollowSymlinks</span><br><span class="line">RewriteEngine on</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Request routing</span></span><br><span class="line">RewriteRule ^([a-zA-Z_-]*)\.(html|json|xml)?$   index.php?method=$<span class="number">1</span>&amp;format=$<span class="number">2</span> [nc,qsa]</span><br></pre></td></tr></table></figure></p>
+<p>其中RewriteRule部分是指将<code>[a-zA-Z_-]*</code>匹配到的字符串赋值到 <code>$1</code> 的位置，将<code>(html|json|xml)?</code>匹配的字符串赋值到 <code>$2</code> 的位置，访问 <code>hello.json</code> 就相当于访问 <code>index.php?method=hello&amp;format=json</code>。<br>在sae中，使用的服务器也是apache，不过它不能更改.htaccess文件，而是需要修改config.yaml文件，如果使用git方式管理代码，默认是不会将该文件下载到本地的，所以推荐使用svn方式管理代码，下面是具体配置<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name: appname</span><br><span class="line">version: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">handle:</span><br><span class="line">  -rewrite: <span class="keyword">if</span>(!is_dir() &amp;&amp; !is_file() &amp;&amp; path ~ <span class="string">"^([a-zA-Z_-]*).(html|json|xml)?$"</span>) <span class="keyword">goto</span> <span class="string">"index.php?method=$1&amp;format=$2"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="信息存储–memcache"><a href="#信息存储–memcache" class="headerlink" title="信息存储–memcache"></a>信息存储–memcache</h3><p>这里存储没有使用数据库，而是使用的memcache，主要是信息只是短期存储，并且数据量不会太大。官方对memcache的使用解释的并不是十分详细，这里主要参考了 <strong><a href="https://www.mxgw.info/coding/how-to-use-memcache-in-sae.html" target="_blank" rel="noopener">这篇文章</a></strong> ，下面是具体的代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">//连接</span></span><br><span class="line">    $mem = memcache_init();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//保存数据</span></span><br><span class="line">    $mem-&gt;set(<span class="string">'key1'</span>, <span class="string">'This is first value'</span>, <span class="number">0</span>, <span class="number">60</span>);</span><br><span class="line">    $val = $mem-&gt;get(<span class="string">'key1'</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Get key1 value: "</span> . $val . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//替换数据</span></span><br><span class="line">    $mem-&gt;replace(<span class="string">'key1'</span>, <span class="string">'This is replace value'</span>, <span class="number">0</span>, <span class="number">60</span>);</span><br><span class="line">    $val = $mem-&gt;get(<span class="string">'key1'</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Get key1 value: "</span> . $val . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//保存数组</span></span><br><span class="line">    $arr = <span class="keyword">array</span>(<span class="string">'aaa'</span>, <span class="string">'bbb'</span>, <span class="string">'ccc'</span>, <span class="string">'ddd'</span>);</span><br><span class="line">    $mem-&gt;set(<span class="string">'key2'</span>, $arr, <span class="number">0</span>, <span class="number">60</span>);</span><br><span class="line">    $val2 = $mem-&gt;get(<span class="string">'key2'</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Get key2 value: "</span>;</span><br><span class="line">    print_r($val2);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//删除数据</span></span><br><span class="line">    $mem-&gt;delete(<span class="string">'key1'</span>);</span><br><span class="line">    $val = $mem-&gt;get(<span class="string">'key1'</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Get key1 value: "</span> . $val . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//清除所有数据</span></span><br><span class="line">    $mem-&gt;flush();</span><br><span class="line">    $val2 = $mem-&gt;get(<span class="string">'key2'</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Get key2 value: "</span>;</span><br><span class="line">    print_r($val2);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//关闭连接</span></span><br><span class="line">    $mem-&gt;close();</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>$mem-&gt;set</code>的第四个参数就是数据的有效期，单位是秒。</p>
+<h3 id="ajax跨域访问"><a href="#ajax跨域访问" class="headerlink" title="ajax跨域访问"></a>ajax跨域访问</h3><p>为了使服务端允许客户端的ajax跨域请求，需要在php代码中加上下面的代码。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header(<span class="string">'Access-Control-Allow-Origin:*'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>前端使用jquery 的 $.ajax 发送ajax请求，在IE10及以上的版本中，工作正常，但是IE9及以下的版本无法正确访问，找了半天也没有找到好的解决方法。索性就在sae上放了一个同样的应用首页，如果使用IE9及以下的浏览器，可以访问那个页面。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/应用/" rel="tag"># 应用</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/26/【C】Storage-Class/" rel="next" title="【C】Storage Class">
+                <i class="fa fa-chevron-left"></i> 【C】Storage Class
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/15/【C】记录两个C语言的误区/" rel="prev" title="【C】记录两个C语言的误区">
+                【C】记录两个C语言的误区 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">2.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端实现"><span class="nav-number">3.</span> <span class="nav-text">前端实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整体风格"><span class="nav-number">3.1.</span> <span class="nav-text">整体风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bootstrap开关切换插件"><span class="nav-number">3.2.</span> <span class="nav-text">bootstrap开关切换插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息提示"><span class="nav-number">3.3.</span> <span class="nav-text">信息提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Loading插件"><span class="nav-number">3.4.</span> <span class="nav-text">Loading插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#底部固定"><span class="nav-number">3.5.</span> <span class="nav-text">底部固定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端实现"><span class="nav-number">4.</span> <span class="nav-text">服务端实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平台及语言"><span class="nav-number">4.1.</span> <span class="nav-text">平台及语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-restful-service"><span class="nav-number">4.2.</span> <span class="nav-text">php restful service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息存储–memcache"><span class="nav-number">4.3.</span> <span class="nav-text">信息存储–memcache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax跨域访问"><span class="nav-number">4.4.</span> <span class="nav-text">ajax跨域访问</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2015/11/07/【应用】信息短时存储/';
+          this.page.identifier = '2015/11/07/【应用】信息短时存储/';
+          this.page.title = '【应用】信息短时存储';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

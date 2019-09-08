@@ -1,0 +1,1082 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="HTML5,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="图片放大镜效果在线演示 &amp;nbsp;&amp;nbsp; 源码 原理首先选择图片的一块区域，然后将这块区域放大，然后再绘制到原先的图片上，保证两块区域的中心点一致, 如下图所示:">
+<meta name="keywords" content="HTML5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【HTML5】Canvas 实现放大镜效果">
+<meta property="og:url" content="http://blog.zhangjikai.com/2016/10/09/【HTML5】Canvas-放大镜/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="图片放大镜效果在线演示 &amp;nbsp;&amp;nbsp; 源码 原理首先选择图片的一块区域，然后将这块区域放大，然后再绘制到原先的图片上，保证两块区域的中心点一致, 如下图所示:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/glass/002.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/glass/001.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/glass/003.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/glass/004.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/glass/005.png">
+<meta property="og:image" content="http://blog.zhangjikai.com/images/glass/006.png">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【HTML5】Canvas 实现放大镜效果">
+<meta name="twitter:description" content="图片放大镜效果在线演示 &amp;nbsp;&amp;nbsp; 源码 原理首先选择图片的一块区域，然后将这块区域放大，然后再绘制到原先的图片上，保证两块区域的中心点一致, 如下图所示:">
+<meta name="twitter:image" content="http://blog.zhangjikai.com/images/glass/002.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2016/10/09/【HTML5】Canvas-放大镜/">
+
+
+
+
+
+  <title> 【HTML5】Canvas 实现放大镜效果 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2016/10/09/【HTML5】Canvas-放大镜/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【HTML5】Canvas 实现放大镜效果
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-09T09:58:34+08:00">
+                2016-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML5/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML5</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/09/【HTML5】Canvas-放大镜/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/09/【HTML5】Canvas-放大镜/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  2,681
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="图片放大镜"><a href="#图片放大镜" class="headerlink" title="图片放大镜"></a>图片放大镜</h2><h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="/images/glass/002.png" alt><br><a href="http://zhangjikai.com/demo/html5-magnifying-glass/image.html" target="_blank" rel="noopener">在线演示</a> &nbsp;&nbsp; <a href="https://github.com/zhangjikai/samples/tree/master/html5-magnifying-glass" target="_blank" rel="noopener">源码</a></p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>首先选择图片的一块区域，然后将这块区域放大，然后再绘制到原先的图片上，保证两块区域的中心点一致, 如下图所示:<br><img src="/images/glass/001.png" alt></p>
+<a id="more"></a>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"canvas"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.png"</span> <span class="attr">style</span>=<span class="string">"display: none"</span> <span class="attr">id</span>=<span class="string">"img"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>获得 canvas 和 image 对象，这里使用 <code>&lt;img&gt;</code> 标签预加载图片, 关于图片预加载可以看<a href="http://blog.zhangjikai.com/2015/06/22/%E3%80%90HTML5%E3%80%91%E5%9B%BE%E7%89%87%E9%A2%84%E5%8A%A0%E8%BD%BD/">这里</a><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"><span class="keyword">var</span> img = <span class="built_in">document</span>.getElementById(<span class="string">"img"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>设置相关变量<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 图片被放大区域的中心点，也是放大镜的中心点</span></span><br><span class="line"><span class="keyword">var</span> centerPoint = &#123;&#125;;</span><br><span class="line"><span class="comment">// 图片被放大区域的半径</span></span><br><span class="line"><span class="keyword">var</span> originalRadius = <span class="number">100</span>;</span><br><span class="line"><span class="comment">// 图片被放大区域</span></span><br><span class="line"><span class="keyword">var</span> originalRectangle = &#123;&#125;;</span><br><span class="line"><span class="comment">// 放大倍数</span></span><br><span class="line"><span class="keyword">var</span> scale = <span class="number">2</span>;</span><br><span class="line"><span class="comment">// 放大后区域</span></span><br><span class="line"><span class="keyword">var</span> scaleGlassRectangle</span><br></pre></td></tr></table></figure></p>
+<h3 id="画背景图片"><a href="#画背景图片" class="headerlink" title="画背景图片"></a>画背景图片</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawBackGround</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    context.drawImage(img, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="计算图片被放大的区域的范围"><a href="#计算图片被放大的区域的范围" class="headerlink" title="计算图片被放大的区域的范围"></a>计算图片被放大的区域的范围</h3><p>这里我们使用鼠标的位置作为被放大区域的中心点(放大镜随着鼠标移动而移动)，因为 canvas 在画图片的时候，需要知道左上角的坐标以及区域的宽高，所以这里我们计算区域的范围<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">calOriginalRectangle</span>(<span class="params">point</span>) </span>&#123;</span><br><span class="line">    originalRectangle.x = point.x - originalRadius;</span><br><span class="line">    originalRectangle.y = point.y - originalRadius;</span><br><span class="line">    originalRectangle.width = originalRadius * <span class="number">2</span>;</span><br><span class="line">    originalRectangle.height = originalRadius * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="绘制放大镜区域"><a href="#绘制放大镜区域" class="headerlink" title="绘制放大镜区域"></a>绘制放大镜区域</h3><h4 id="裁剪区域"><a href="#裁剪区域" class="headerlink" title="裁剪区域"></a>裁剪区域</h4><p>放大镜一般是圆形的，这里我们使用 <code>clip</code> 函数裁剪出一个圆形区域，然后在该区域中绘制放大后的图。一旦裁减了某个区域，以后所有的绘图都会被限制的这个区域里，这里我们使用 <code>save</code> 和 <code>restore</code> 方法清除裁剪区域的影响。<code>save</code> 保存当前画布的一次状态，包含 canvas 的上下文属性，例如 <code>style</code>，<code>lineWidth</code> 等，然后会将这个状态压入一个堆栈。<code>restore</code> 用来恢复上一次 save 的状态，从堆栈里弹出最顶层的状态。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">context.save();</span><br><span class="line">context.beginPath();</span><br><span class="line">context.arc(centerPoint.x, centerPoint.y, originalRadius, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line">context.clip();</span><br><span class="line">......</span><br><span class="line">context.restore();</span><br></pre></td></tr></table></figure></p>
+<h4 id="计算放大镜区域"><a href="#计算放大镜区域" class="headerlink" title="计算放大镜区域"></a>计算放大镜区域</h4><p>通过中心点、被放大区域的宽高以及放大倍数，获得区域的左上角坐标以及区域的宽高。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scaleGlassRectangle = &#123;</span><br><span class="line">    x: centerPoint.x - originalRectangle.width * scale / <span class="number">2</span>,</span><br><span class="line">    y: centerPoint.y - originalRectangle.height * scale / <span class="number">2</span>,</span><br><span class="line">    width: originalRectangle.width * scale,</span><br><span class="line">    height: originalRectangle.height * scale</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="绘制图片"><a href="#绘制图片" class="headerlink" title="绘制图片"></a>绘制图片</h4><p>在这里我们使用 <code>context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);</code> 方法，将 canvas 自身作为一副图片，然后取被放大区域的图像，将其绘制到放大镜区域里。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">context.drawImage(canvas,</span><br><span class="line">    originalRectangle.x, originalRectangle.y,</span><br><span class="line">    originalRectangle.width, originalRectangle.height,</span><br><span class="line">    scaleGlassRectangle.x, scaleGlassRectangle.y,</span><br><span class="line">    scaleGlassRectangle.width, scaleGlassRectangle.height</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h4 id="绘制放大边缘"><a href="#绘制放大边缘" class="headerlink" title="绘制放大边缘"></a>绘制放大边缘</h4><p><code>createRadialGradient</code> 用来绘制渐变图像<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">context.beginPath();</span><br><span class="line"><span class="keyword">var</span> gradient = context.createRadialGradient(</span><br><span class="line">    centerPoint.x, centerPoint.y, originalRadius - <span class="number">5</span>,</span><br><span class="line">    centerPoint.x, centerPoint.y, originalRadius);</span><br><span class="line">gradient.addColorStop(<span class="number">0</span>, <span class="string">'rgba(0,0,0,0.2)'</span>);</span><br><span class="line">gradient.addColorStop(<span class="number">0.80</span>, <span class="string">'silver'</span>);</span><br><span class="line">gradient.addColorStop(<span class="number">0.90</span>, <span class="string">'silver'</span>);</span><br><span class="line">gradient.addColorStop(<span class="number">1.0</span>, <span class="string">'rgba(150,150,150,0.9)'</span>);</span><br><span class="line"></span><br><span class="line">context.strokeStyle = gradient;</span><br><span class="line">context.lineWidth = <span class="number">5</span>;</span><br><span class="line">context.arc(centerPoint.x, centerPoint.y, originalRadius, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line">context.stroke();</span><br></pre></td></tr></table></figure></p>
+<h3 id="添加鼠标事件"><a href="#添加鼠标事件" class="headerlink" title="添加鼠标事件"></a>添加鼠标事件</h3><p>为 canvas 添加鼠标移动事件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">canvas.onmousemove = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="转换坐标"><a href="#转换坐标" class="headerlink" title="转换坐标"></a>转换坐标</h4><p>鼠标事件获得坐标一般为屏幕的或者 window 的坐标，我们需要将其装换为 canvas 的坐标。<code>getBoundingClientRect</code> 用于获得页面中某个元素的左，上，右和下分别相对浏览器视窗的位置。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">windowToCanvas</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> bbox = canvas.getBoundingClientRect();</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">x</span>: x - bbox.left, <span class="attr">y</span>: y - bbox.top&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改鼠标样式"><a href="#修改鼠标样式" class="headerlink" title="修改鼠标样式"></a>修改鼠标样式</h4><p>我们可以通过 css 来修改鼠标样式<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#canvas</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">cursor</span>: crosshair;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="图表放大镜"><a href="#图表放大镜" class="headerlink" title="图表放大镜"></a>图表放大镜</h2><p>我们可能基于 canvas 绘制一些图表或者图像，如果两个元素的坐标离得比较近，就会给元素的选择带来一些影响，例如我们画两条线，一个线的坐标是<code>(200.5, 400) -&gt; (200.5, 200)</code>，另一个线的坐标为 <code>(201.5, 400) -&gt; (201.5, 20)</code>，那么这两条线几乎就会重叠在一起，如下图所示：<br><img src="/images/glass/003.png" alt><br>使用图表放大镜的效果<br><img src="/images/glass/004.png" alt></p>
+<p><a href="http://zhangjikai.com/demo/html5-magnifying-glass/chart.html" target="_blank" rel="noopener">在线演示</a> &nbsp;&nbsp; <a href="https://github.com/zhangjikai/samples/tree/master/html5-magnifying-glass" target="_blank" rel="noopener">源码</a></p>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>类似于地图中的图例，放大镜使用较为精确的图例，如下图所示：</p>
+<p><img src="/images/glass/005.png" alt></p>
+<p>在放大镜坐标系统中，原始的区域会变大，如下图所示</p>
+<p><img src="/images/glass/006.png" alt></p>
+<h3 id="绘制原始线段"><a href="#绘制原始线段" class="headerlink" title="绘制原始线段"></a>绘制原始线段</h3><p>首先创建一个线段对象<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Line</span>(<span class="params">xStart, yStart, xEnd, yEnd, index, color</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 起点x坐标</span></span><br><span class="line">    <span class="keyword">this</span>.xStart = xStart;</span><br><span class="line">    <span class="comment">// 起点y坐标</span></span><br><span class="line">    <span class="keyword">this</span>.yStart = yStart;</span><br><span class="line">    <span class="comment">// 终点x坐标</span></span><br><span class="line">    <span class="keyword">this</span>.xEnd = xEnd;</span><br><span class="line">    <span class="comment">// 终点y坐标</span></span><br><span class="line">    <span class="keyword">this</span>.yEnd = yEnd;</span><br><span class="line">    <span class="comment">// 用来标记是哪条线段</span></span><br><span class="line">    <span class="keyword">this</span>.index = index;</span><br><span class="line">    <span class="comment">// 线段颜色</span></span><br><span class="line">    <span class="keyword">this</span>.color = color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>初始化线段<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原始线段</span></span><br><span class="line"><span class="keyword">var</span> chartLines = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"><span class="comment">// 处于放大镜中的原始线段</span></span><br><span class="line"><span class="keyword">var</span> glassLines;</span><br><span class="line"><span class="comment">// 放大后的线段</span></span><br><span class="line"><span class="keyword">var</span> scaleGlassLines;</span><br><span class="line"><span class="comment">// 位于放大镜中的线段数量</span></span><br><span class="line"><span class="keyword">var</span> glassLineSize;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initLines</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> line;</span><br><span class="line">    line = <span class="keyword">new</span> Line(<span class="number">200.5</span>, <span class="number">400</span>, <span class="number">200.5</span>, <span class="number">200</span>, <span class="number">0</span>, <span class="string">"#888"</span>);</span><br><span class="line">    chartLines.push(line);</span><br><span class="line">    line = <span class="keyword">new</span> Line(<span class="number">201.5</span>, <span class="number">400</span>, <span class="number">201.5</span>, <span class="number">20</span>, <span class="number">1</span>, <span class="string">"#888"</span>);</span><br><span class="line">    chartLines.push(line);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    glassLineSize = chartLines.length;</span><br><span class="line">    glassLines = <span class="keyword">new</span> <span class="built_in">Array</span>(glassLineSize);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; glassLineSize; i++) &#123;</span><br><span class="line">        line = <span class="keyword">new</span> Line(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, i);</span><br><span class="line">        glassLines[i] = line;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    scaleGlassLines = <span class="keyword">new</span> <span class="built_in">Array</span>(glassLineSize);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; glassLineSize; i++) &#123;</span><br><span class="line">        line = <span class="keyword">new</span> Line(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, i);</span><br><span class="line">        scaleGlassLines[i] = line;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>绘制线段<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawLines</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> line;</span><br><span class="line">    context.lineWidth = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; chartLines.length; i++) &#123;</span><br><span class="line">        line = chartLines[i];</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.strokeStyle = line.color;</span><br><span class="line">        context.moveTo(line.xStart, line.yStart);</span><br><span class="line">        context.lineTo(line.xEnd, line.yEnd);</span><br><span class="line">        context.stroke();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="计算原始区域和放大镜区域"><a href="#计算原始区域和放大镜区域" class="headerlink" title="计算原始区域和放大镜区域"></a>计算原始区域和放大镜区域</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">calGlassRectangle</span>(<span class="params">point</span>) </span>&#123;</span><br><span class="line">    originalRectangle.x = point.x - originalRadius;</span><br><span class="line">    originalRectangle.y = point.y - originalRadius;</span><br><span class="line">    originalRectangle.width = originalRadius * <span class="number">2</span>;</span><br><span class="line">    originalRectangle.height = originalRadius * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    scaleGlassRectangle.width = originalRectangle.width * scale;</span><br><span class="line">    scaleGlassRectangle.height = originalRectangle.height * scale;</span><br><span class="line">    scaleGlassRectangle.x = originalRectangle.x + originalRectangle.width / <span class="number">2</span> - scaleGlassRectangle.width / <span class="number">2</span>;</span><br><span class="line">    scaleGlassRectangle.y = originalRectangle.y + originalRectangle.height / <span class="number">2</span> - scaleGlassRectangle.height / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将值装换为整数</span></span><br><span class="line">    scaleGlassRectangle.width = <span class="built_in">parseInt</span>(scaleGlassRectangle.width);</span><br><span class="line">    scaleGlassRectangle.height = <span class="built_in">parseInt</span>(scaleGlassRectangle.height);</span><br><span class="line">    scaleGlassRectangle.x = <span class="built_in">parseInt</span>(scaleGlassRectangle.x);</span><br><span class="line">    scaleGlassRectangle.y = <span class="built_in">parseInt</span>(scaleGlassRectangle.y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="计算线段在新坐标系统的位置"><a href="#计算线段在新坐标系统的位置" class="headerlink" title="计算线段在新坐标系统的位置"></a>计算线段在新坐标系统的位置</h3><p>由原理图我们知道，放大镜中使用坐标系的图例要比原始坐标系更加精确，比如原始坐标系使用 <code>1:100</code>，那么放大镜坐标系使用 <code>1:10</code>，因此我们需要重新计算线段在放大镜坐标系中的位置。同时为了简便，我们将线段的原始坐标进行了转化，减去原始区域起始的x值和y值，即将原始区域左上角的点看做为<code>(0,0)</code>。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">calScaleLines</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> xStart = originalRectangle.x;</span><br><span class="line">    <span class="keyword">var</span> xEnd = originalRectangle.x + originalRectangle.width;</span><br><span class="line">    <span class="keyword">var</span> yStart = originalRectangle.y;</span><br><span class="line">    <span class="keyword">var</span> yEnd = originalRectangle.y + originalRectangle.height;</span><br><span class="line">    <span class="keyword">var</span> line, gLine, sgLine;</span><br><span class="line">    <span class="keyword">var</span> glassLineIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; chartLines.length; i++) &#123;</span><br><span class="line">        line = chartLines[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断线段是否在放大镜中</span></span><br><span class="line">        <span class="keyword">if</span> (line.xStart &lt; xStart || line.xEnd &gt; xEnd) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (line.yEnd &gt; yEnd || line.yStart &lt; yStart) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        gLine = glassLines[glassLineIndex];</span><br><span class="line">        sgLine = scaleGlassLines[glassLineIndex];</span><br><span class="line">        <span class="keyword">if</span> (line.yEnd &gt; yEnd) &#123;</span><br><span class="line">            gLine.yEnd = yEnd;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (line.yStart &lt; yStart) &#123;</span><br><span class="line">            gLine.yStart = yStart;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        gLine.xStart = line.xStart - xStart;</span><br><span class="line">        gLine.yStart = line.yStart - yStart;</span><br><span class="line">        gLine.xEnd = line.xEnd - xStart;</span><br><span class="line">        gLine.yEnd = line.yEnd - yStart;</span><br><span class="line"></span><br><span class="line">        sgLine.xStart = <span class="built_in">parseInt</span>(gLine.xStart * scale);</span><br><span class="line">        sgLine.yStart = <span class="built_in">parseInt</span>(gLine.yStart * scale);</span><br><span class="line">        sgLine.xEnd = <span class="built_in">parseInt</span>(gLine.xEnd * scale);</span><br><span class="line">        sgLine.yEnd = <span class="built_in">parseInt</span>(gLine.yEnd * scale);</span><br><span class="line">        sgLine.color = line.color;</span><br><span class="line">        glassLineIndex++;</span><br><span class="line">    &#125;</span><br><span class="line">    glassLineSize = glassLineIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="绘制放大镜中心点"><a href="#绘制放大镜中心点" class="headerlink" title="绘制放大镜中心点"></a>绘制放大镜中心点</h3><p>绘制放大镜中心的瞄准器<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawAnchor</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    context.beginPath();</span><br><span class="line">    context.lineWidth = <span class="number">2</span>;</span><br><span class="line">    context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">    context.strokeStyle = <span class="string">"#000"</span>;</span><br><span class="line">    context.arc(<span class="built_in">parseInt</span>(centerPoint.x), <span class="built_in">parseInt</span>(centerPoint.y), <span class="number">10</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> radius = <span class="number">15</span>;</span><br><span class="line">    context.moveTo(<span class="built_in">parseInt</span>(centerPoint.x - radius), <span class="built_in">parseInt</span>(centerPoint.y));</span><br><span class="line">    context.lineTo(<span class="built_in">parseInt</span>(centerPoint.x + radius), <span class="built_in">parseInt</span>(centerPoint.y));</span><br><span class="line">    context.moveTo(<span class="built_in">parseInt</span>(centerPoint.x), <span class="built_in">parseInt</span>(centerPoint.y - radius));</span><br><span class="line">    context.lineTo(<span class="built_in">parseInt</span>(centerPoint.x), <span class="built_in">parseInt</span>(centerPoint.y + radius));</span><br><span class="line">    <span class="comment">//context.fill();</span></span><br><span class="line">    context.stroke();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="绘制放大镜"><a href="#绘制放大镜" class="headerlink" title="绘制放大镜"></a>绘制放大镜</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawMagnifyingGlass</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    calScaleLines();</span><br><span class="line"></span><br><span class="line">    context.save();</span><br><span class="line">    context.beginPath();</span><br><span class="line">    context.arc(centerPoint.x, centerPoint.y, originalRadius, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line">    context.clip();</span><br><span class="line"></span><br><span class="line">    context.beginPath();</span><br><span class="line">    context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">    context.arc(centerPoint.x, centerPoint.y, originalRadius, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line">    context.fill();</span><br><span class="line"></span><br><span class="line">    context.lineWidth = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; glassLineSize; i++) &#123;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.strokeStyle = scaleGlassLines[i].color;</span><br><span class="line">        context.moveTo(scaleGlassRectangle.x + scaleGlassLines[i].xStart, scaleGlassRectangle.y + scaleGlassLines[i].yStart);</span><br><span class="line">        context.lineTo(scaleGlassRectangle.x + scaleGlassLines[i].xEnd, scaleGlassRectangle.y + scaleGlassLines[i].yEnd);</span><br><span class="line">        context.stroke();</span><br><span class="line">    &#125;</span><br><span class="line">    context.restore();</span><br><span class="line"></span><br><span class="line">    context.beginPath();</span><br><span class="line">    <span class="keyword">var</span> gradient = context.createRadialGradient(</span><br><span class="line">        <span class="built_in">parseInt</span>(centerPoint.x), <span class="built_in">parseInt</span>(centerPoint.y), originalRadius - <span class="number">5</span>,</span><br><span class="line">        <span class="built_in">parseInt</span>(centerPoint.x), <span class="built_in">parseInt</span>(centerPoint.y), originalRadius);</span><br><span class="line"></span><br><span class="line">    gradient.addColorStop(<span class="number">0.50</span>, <span class="string">'silver'</span>);</span><br><span class="line">    gradient.addColorStop(<span class="number">0.90</span>, <span class="string">'silver'</span>);</span><br><span class="line">    gradient.addColorStop(<span class="number">1</span>, <span class="string">'black'</span>);</span><br><span class="line">    context.strokeStyle = gradient;</span><br><span class="line">    context.lineWidth = <span class="number">5</span>;</span><br><span class="line">    context.arc(<span class="built_in">parseInt</span>(centerPoint.x), <span class="built_in">parseInt</span>(centerPoint.y), originalRadius, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">false</span>);</span><br><span class="line">    context.stroke();</span><br><span class="line"></span><br><span class="line">    drawAnchor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加事件"><a href="#添加事件" class="headerlink" title="添加事件"></a>添加事件</h3><h4 id="鼠标拖动"><a href="#鼠标拖动" class="headerlink" title="鼠标拖动"></a>鼠标拖动</h4><p>鼠标移动到放大镜上，然后按下鼠标左键，可以拖动放大镜，不按鼠标左键或者不在放大镜区域都不可以拖动放大镜。<br>为了实现上面的效果，我们要实现3种事件 <code>mousedown</code>, <code>mousemove</code>, ‘mouseup’, 当鼠标按下时，检测是否在放大镜区域，如果在，设置放大镜可以移动。鼠标移动时更新放大镜中兴点的坐标。鼠标松开时，设置放大镜不可以被移动。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">canvas.onmousedown = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> point = windowToCanvas(e.clientX, e.clientY);</span><br><span class="line">    <span class="keyword">var</span> x1, x2, y1, y2, dis;</span><br><span class="line"></span><br><span class="line">    x1 = point.x;</span><br><span class="line">    y1 = point.y;</span><br><span class="line">    x2 = centerPoint.x;</span><br><span class="line">    y2 = centerPoint.y;</span><br><span class="line">    dis = <span class="built_in">Math</span>.pow(x2 - x1, <span class="number">2</span>) + <span class="built_in">Math</span>.pow(y2 - y1, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (dis &lt; <span class="built_in">Math</span>.pow(originalRadius, <span class="number">2</span>)) &#123;</span><br><span class="line">        lastPoint.x = point.x;</span><br><span class="line">        lastPoint.y = point.y;</span><br><span class="line">        moveGlass = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">canvas.onmousemove = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (moveGlass) &#123;</span><br><span class="line">        <span class="keyword">var</span> xDis, yDis;</span><br><span class="line">        <span class="keyword">var</span> point = windowToCanvas(e.clientX, e.clientY);</span><br><span class="line">        xDis = point.x - lastPoint.x;</span><br><span class="line">        yDis = point.y - lastPoint.y;</span><br><span class="line">        centerPoint.x += xDis;</span><br><span class="line">        centerPoint.y += yDis;</span><br><span class="line">        lastPoint.x = point.x;</span><br><span class="line">        lastPoint.y = point.y;</span><br><span class="line">        draw();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">canvas.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    moveGlass = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="鼠标双击"><a href="#鼠标双击" class="headerlink" title="鼠标双击"></a>鼠标双击</h4><p>当移动到对应的线段上时，鼠标双击可以选择该线段，将该线段的颜色变为红色。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">canvas.ondblclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> xStart, xEnd, yStart, yEnd;</span><br><span class="line">    <span class="keyword">var</span> clickPoint = &#123;&#125;;</span><br><span class="line">    clickPoint.x = scaleGlassRectangle.x + scaleGlassRectangle.width / <span class="number">2</span>;</span><br><span class="line">    clickPoint.y = scaleGlassRectangle.y + scaleGlassRectangle.height / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">var</span> index = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; scaleGlassLines.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> scaleLine = scaleGlassLines[i];</span><br><span class="line"></span><br><span class="line">        xStart = scaleGlassRectangle.x + scaleLine.xStart - <span class="number">3</span>;</span><br><span class="line">        xEnd = scaleGlassRectangle.x + scaleLine.xStart + <span class="number">3</span>;</span><br><span class="line">        yStart = scaleGlassRectangle.y + scaleLine.yStart;</span><br><span class="line">        yEnd = scaleGlassRectangle.y + scaleLine.yEnd;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (clickPoint.x &gt; xStart &amp;&amp; clickPoint.x &lt; xEnd &amp;&amp; clickPoint.y &lt; yStart &amp;&amp; clickPoint.y &gt; yEnd) &#123;</span><br><span class="line">            scaleLine.color = <span class="string">"#f00"</span>;</span><br><span class="line">            index = scaleLine.index;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; chartLines.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> line = chartLines[i];</span><br><span class="line">        <span class="keyword">if</span> (line.index == index) &#123;</span><br><span class="line">            line.color = <span class="string">"#f00"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            line.color = <span class="string">"#888"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    draw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h4><p>因为线段离得比较近，所以使用鼠标移动很难精确的选中线段，这里使用键盘的<code>w</code>, <code>a</code>, <code>s</code>, <code>d</code> 来进行精确移动<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.onkeyup = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.key == <span class="string">'w'</span>) &#123;</span><br><span class="line">        centerPoint.y = intAdd(centerPoint.y, <span class="number">-0.2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e.key == <span class="string">'a'</span>) &#123;</span><br><span class="line">        centerPoint.x = intAdd(centerPoint.x, <span class="number">-0.2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e.key == <span class="string">'s'</span>) &#123;</span><br><span class="line">        centerPoint.y = intAdd(centerPoint.y, <span class="number">0.2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e.key == <span class="string">'d'</span>) &#123;</span><br><span class="line">        centerPoint.x = intAdd(centerPoint.x, <span class="number">0.2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    draw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p><strong> 参考资料 </strong><br><a href="https://github.com/David-Geary/HTML5-MagnifyingGlass" target="_blank" rel="noopener">HTML5-MagnifyingGlass</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTML5/" rel="tag"># HTML5</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/13/【软件】解决-win8-win10-中Windows-Meida-Player-无法播放ipv6直播-MMS串流/" rel="next" title="【软件】解决 win8/win10 中Windows Media Player 无法播放ipv6直播(MMS串流)">
+                <i class="fa fa-chevron-left"></i> 【软件】解决 win8/win10 中Windows Media Player 无法播放ipv6直播(MMS串流)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/29/【CSS学习笔记】CSS元素和布局/" rel="prev" title="【CSS 学习笔记】CSS元素和布局">
+                【CSS 学习笔记】CSS元素和布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片放大镜"><span class="nav-number">1.</span> <span class="nav-text">图片放大镜</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">1.1.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">1.3.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画背景图片"><span class="nav-number">1.4.</span> <span class="nav-text">画背景图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算图片被放大的区域的范围"><span class="nav-number">1.5.</span> <span class="nav-text">计算图片被放大的区域的范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制放大镜区域"><span class="nav-number">1.6.</span> <span class="nav-text">绘制放大镜区域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#裁剪区域"><span class="nav-number">1.6.1.</span> <span class="nav-text">裁剪区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算放大镜区域"><span class="nav-number">1.6.2.</span> <span class="nav-text">计算放大镜区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绘制图片"><span class="nav-number">1.6.3.</span> <span class="nav-text">绘制图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绘制放大边缘"><span class="nav-number">1.6.4.</span> <span class="nav-text">绘制放大边缘</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加鼠标事件"><span class="nav-number">1.7.</span> <span class="nav-text">添加鼠标事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#转换坐标"><span class="nav-number">1.7.1.</span> <span class="nav-text">转换坐标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改鼠标样式"><span class="nav-number">1.7.2.</span> <span class="nav-text">修改鼠标样式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图表放大镜"><span class="nav-number">2.</span> <span class="nav-text">图表放大镜</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理-1"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制原始线段"><span class="nav-number">2.2.</span> <span class="nav-text">绘制原始线段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算原始区域和放大镜区域"><span class="nav-number">2.3.</span> <span class="nav-text">计算原始区域和放大镜区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算线段在新坐标系统的位置"><span class="nav-number">2.4.</span> <span class="nav-text">计算线段在新坐标系统的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制放大镜中心点"><span class="nav-number">2.5.</span> <span class="nav-text">绘制放大镜中心点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制放大镜"><span class="nav-number">2.6.</span> <span class="nav-text">绘制放大镜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加事件"><span class="nav-number">2.7.</span> <span class="nav-text">添加事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#鼠标拖动"><span class="nav-number">2.7.1.</span> <span class="nav-text">鼠标拖动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#鼠标双击"><span class="nav-number">2.7.2.</span> <span class="nav-text">鼠标双击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键盘事件"><span class="nav-number">2.7.3.</span> <span class="nav-text">键盘事件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2016/10/09/【HTML5】Canvas-放大镜/';
+          this.page.identifier = '2016/10/09/【HTML5】Canvas-放大镜/';
+          this.page.title = '【HTML5】Canvas 实现放大镜效果';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

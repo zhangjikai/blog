@@ -1,0 +1,1053 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Pthreads,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言Pthreads 有几种工作模型，例如 Boss/Workder Model、Pileline Model(Assembly Line)、Background Task Model、Interface/Implementation Model，详细介绍可以参考 pthread Tutorial，这里给出一个流水线模型(Pipeline Model)的简单示例。在该示例中，主线程开启了两个子线程">
+<meta name="keywords" content="Pthreads">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Pthreads】Pipeline Model(Assembly Line)示例">
+<meta property="og:url" content="http://blog.zhangjikai.com/2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="前言Pthreads 有几种工作模型，例如 Boss/Workder Model、Pileline Model(Assembly Line)、Background Task Model、Interface/Implementation Model，详细介绍可以参考 pthread Tutorial，这里给出一个流水线模型(Pipeline Model)的简单示例。在该示例中，主线程开启了两个子线程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Pthreads】Pipeline Model(Assembly Line)示例">
+<meta name="twitter:description" content="前言Pthreads 有几种工作模型，例如 Boss/Workder Model、Pileline Model(Assembly Line)、Background Task Model、Interface/Implementation Model，详细介绍可以参考 pthread Tutorial，这里给出一个流水线模型(Pipeline Model)的简单示例。在该示例中，主线程开启了两个子线程">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/">
+
+
+
+
+
+  <title> 【Pthreads】Pipeline Model(Assembly Line)示例 | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【Pthreads】Pipeline Model(Assembly Line)示例
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-26T20:32:53+08:00">
+                2016-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Pthreads/" itemprop="url" rel="index">
+                    <span itemprop="name">Pthreads</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  2,396
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Pthreads 有几种工作模型，例如 Boss/Workder Model、Pileline Model(Assembly Line)、Background Task Model、Interface/Implementation Model，详细介绍可以参考 <a href="http://homes.di.unimi.it/~boccignone/GiuseppeBoccignone_webpage/MatDidatSOD2009_files/pthread-Tutorial.pdf" target="_blank" rel="noopener">pthread Tutorial</a>，这里给出一个流水线模型(Pipeline Model)的简单示例。在该示例中，主线程开启了两个子线程，一个子线程用来读取文件，一个子线程用于将结果写入文件，而主线程自身用来计算。<br><a id="more"></a></p>
+<h2 id="模型说明"><a href="#模型说明" class="headerlink" title="模型说明"></a>模型说明</h2><p>很多时候，一个程序可以分为几个阶段，比如说读取数据、计算、将结果写入文件，当然我们可以使用每个线程依次执行这些操作，但是一个更好的选择是一个线程处理一个阶段，因为对于文件操作来说，硬盘的读写速率是一定的(IO很多时候会成为性能的瓶颈)，即使多个线程读取文件，其读写速率也不会变快(IO操作无法使用线程并行)。所以我们可以用一个线程来处理IO，另外的线程全部用于计算上，如果计算量较大，IO的耗时是可以掩盖过去的。比如读取一个 2G 的文件，然后进行计算。使用流水线模型，我们可以这样做，用一个线程专门读取文件，我们将其成为IO线程。IO线程一次读取 50M 数据，之后交给计算线程来处理这些数据，在计算线程处理数据的同时，IO线程再去读文件，假设处理 50M 数据的时间大于读取50M数据的时间， 当计算线程处理完上一份数据之后，要处理的下一份数据读取完毕，那么计算线程又可以紧接着处理这部分数据，这样循环操作，除了第一次读取数据的时候计算线程处于空闲状态，其余读取的时候计算线程都在进行计算，这样就掩盖掉了IO的时间</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><p>主线程在程序开始时创建两个子线程，一个用于读，一个用于写，读线程每次只读取一部分文件内容，写线程将这部分数据处理完之后的结果写入文件。创建完线程之后，主线程和写线程就处于等待状态，而读线程就开始读取文件，当读线程读取完第一部分数据之后，读线程进入阻塞状态，主线程开始计算，主线程计算完毕后，写线程开始写入计算结果，同时读线程开始下一部分数据的读取。按照这个流程循环取算存，直到程序结束。</p>
+<h3 id="线程等待和唤醒"><a href="#线程等待和唤醒" class="headerlink" title="线程等待和唤醒"></a>线程等待和唤醒</h3><p>在执行中，3个线程都会进行等待操作，并且处理完自己的任务之后，还要再次进入等待状态。这里使用条件变量来控制线程的挂起和唤醒，使用while循环控制线程的状态的多次切换。下面是示例代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    pthread_mutex_lock(&amp;read_lock);</span><br><span class="line">    <span class="keyword">while</span>(read_count == <span class="number">0</span> ) &#123;</span><br><span class="line">        pthread_cond_wait(&amp;read_cond, &amp;read_lock);</span><br><span class="line">    &#125;</span><br><span class="line">    read_count--;</span><br><span class="line">    pthread_mutex_unlock(&amp;read_lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中，while循环会一直执行，所以我们还要加一个是否可以跳出 while 循环的判断，以便在任务结束后可以终止线程, 如下面的代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    pthread_mutex_lock(&amp;read_lock);</span><br><span class="line">    <span class="keyword">while</span>(read_count == <span class="number">0</span> &amp;&amp; !read_shutdown ) &#123;</span><br><span class="line">        pthread_cond_wait(&amp;read_cond, &amp;read_lock);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(read_shutdown) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    read_flag =  <span class="number">1</span> - read_flag;      </span><br><span class="line">    pthread_mutex_unlock(&amp;read_lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们看到在判断线程是否挂起的 while 循环中也加入了<code>!read_shutdown</code>的判断，即如果马上就要跳出while循环，标明线程已经执行完了它的任务，则无需再进行挂起操作。唤醒该线程的代码如下所示：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pthread_mutex_lock(&amp;read_lock);</span><br><span class="line"><span class="keyword">if</span>(loop_index == loop_nums - <span class="number">1</span>) &#123;</span><br><span class="line">    read_shutdown = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">read_count = <span class="number">1</span>;</span><br><span class="line">pthread_cond_signal(&amp;read_cond);</span><br><span class="line">pthread_mutex_unlock(&amp;read_lock);</span><br></pre></td></tr></table></figure></p>
+<p>下面分析一下条件变量，首先读线程和写线程都要对应一个条件变量，暂称为 <code>read_cond</code> 和 <code>write_cond</code>, 主线程用<code>read_cond</code>来告诉读线程自己已经开始计算，读线程可以继续读取下一部分数据了，用<code>write_cond</code>告诉写线程，计算已经完毕，可以将结果写入文件了 。而主线程需要两个条件变量，暂称为 <code>cal_cond</code> 和 <code>cal_cond2</code> , 读线程使用 <code>cal_cond</code> 告诉主线程自己已经读完这部分数据了，主线程可以开始计算了。而写线程用 <code>cal_cond2</code> 告诉主线程自己已经写完了上次计算结果，可以再次分配写入的任务了。如果读线程没有读完或者写线程没有写完，主线程都要进入等待状态。</p>
+<p>我们知道每个条件变量都会对应一个条件以及一个互斥锁，下面分析一下各个条件的初始值，程序开始时读线程开始工作，主线程要等待读线程读完才能进行计算，所以 <code>read_cond</code> 对应的条件为 true， <code>cal_cond</code> 对应的条件的为 false，写线程必须要等待主线程计算完才可以写，并且在第一次的时候写线程肯定是空闲的， 所以 <code>write_cond</code> 对应的条件为 false，<code>cal_cond2</code> 对应的的条件为 ture。</p>
+<h3 id="数据缓冲区"><a href="#数据缓冲区" class="headerlink" title="数据缓冲区"></a>数据缓冲区</h3><p>当读线程读完数据，将数据存到一个缓冲区中(比如一个数组)，主线程开始计算，此时读线程又去进行读取操作。如果读线程还是将数据读到上一次读取的缓冲区中（这个缓冲区此时正在被主线程使用），那么就会出现数据竞争。为了解决这个情况，我们可以使用两个缓冲区，读线程填满一个之后再去填另外一个，使用一个变量判断当前该使用哪个缓冲区，即如下面的形式：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> read_buffer_a[BUFFER_SIZE], read_buffer_b[BUFFER_SIZE];</span><br><span class="line"><span class="keyword">int</span> read_flag;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(read_flag) &#123;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">        <span class="built_in">fscanf</span>(read_arg-&gt;fp, <span class="string">"%d"</span>, read_buffer_a+i);</span><br><span class="line">    &#125;          </span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">        <span class="built_in">fscanf</span>(read_arg-&gt;fp, <span class="string">"%d"</span>, read_buffer_b + i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">read_flag = <span class="number">1</span> -read_flag;</span><br></pre></td></tr></table></figure></p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>下面是完整的代码, <a href="https://github.com/zhangjikai/Pthreads-Pipeline-Demo" target="_blank" rel="noopener">这里</a>是github地址，可以下载下来运行一下。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE 10</span></span><br><span class="line"><span class="keyword">uint32_t</span> microseconds = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 线程信息</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">thread_info</span>&#123;</span></span><br><span class="line">    <span class="keyword">pthread_t</span> thread_id;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> lock;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> cond;</span><br><span class="line">    <span class="keyword">int</span> run_flag;</span><br><span class="line">    <span class="keyword">int</span> buffer_flag;</span><br><span class="line">    <span class="keyword">int</span> shutdown;</span><br><span class="line">&#125; thread_info;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 线程函数参数</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">thread_arg</span> &#123;</span></span><br><span class="line">    FILE *fp;</span><br><span class="line">&#125; thread_arg;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">thread_info input_info, output_info, cal_input_info, cal_output_info;</span><br><span class="line"><span class="keyword">int</span> read_buffer_a[BUFFER_SIZE], read_buffer_b[BUFFER_SIZE];</span><br><span class="line"><span class="keyword">int</span> write_buffer_a[BUFFER_SIZE], write_buffer_b[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_resources</span><span class="params">(<span class="keyword">int</span> n, ...)</span> </span>&#123;</span><br><span class="line">    va_list arg_ptr ;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    va_start(arg_ptr, n);</span><br><span class="line">    thread_info * tmp_info = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">       tmp_info = va_arg(arg_ptr, thread_info *);</span><br><span class="line">       pthread_mutex_init(&amp;(tmp_info-&gt;lock), <span class="literal">NULL</span>);</span><br><span class="line">       pthread_cond_init(&amp;(tmp_info-&gt;cond), <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    va_end(arg_ptr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_resources</span><span class="params">(<span class="keyword">int</span> n, ...)</span> </span>&#123;</span><br><span class="line">    va_list arg_ptr;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    va_start(arg_ptr, n);</span><br><span class="line">    thread_info * tmp_info = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp_info = va_arg(arg_ptr, thread_info *);</span><br><span class="line">        pthread_mutex_destroy(&amp;(tmp_info-&gt;lock));</span><br><span class="line">        pthread_cond_destroy(&amp;(tmp_info-&gt;cond));</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(arg_ptr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">input_task</span><span class="params">(<span class="keyword">void</span> * args)</span></span>&#123;</span><br><span class="line">    thread_arg * input_arg = (thread_arg *) args;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;(input_info.lock));</span><br><span class="line">        <span class="keyword">while</span>(input_info.run_flag == <span class="number">0</span> &amp;&amp; !input_info.shutdown) &#123;</span><br><span class="line">            pthread_cond_wait(&amp;(input_info.cond), &amp;(input_info.lock));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(input_info.shutdown) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        input_info.run_flag = <span class="number">0</span>;</span><br><span class="line">        input_info.buffer_flag = <span class="number">1</span> - input_info.buffer_flag;</span><br><span class="line">        pthread_mutex_unlock(&amp;(input_info.lock));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(input_info.buffer_flag) &#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">                <span class="built_in">fscanf</span>(input_arg-&gt;fp, <span class="string">"%d"</span>, read_buffer_a + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">                <span class="built_in">fscanf</span>(input_arg-&gt;fp, <span class="string">"%d"</span>, read_buffer_b + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        pthread_mutex_lock(&amp;(cal_input_info.lock));</span><br><span class="line">        cal_input_info.run_flag = <span class="number">1</span>;</span><br><span class="line">        pthread_cond_signal(&amp;(cal_input_info.cond));</span><br><span class="line">        pthread_mutex_unlock(&amp;(cal_input_info.lock));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">output_task</span><span class="params">(<span class="keyword">void</span> * args)</span></span>&#123;</span><br><span class="line">    thread_arg * output_arg = (thread_arg *) args;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;(output_info.lock));</span><br><span class="line">        <span class="keyword">while</span>(output_info.run_flag == <span class="number">0</span> &amp;&amp; !output_info.shutdown) &#123;</span><br><span class="line">            pthread_cond_wait(&amp;(output_info.cond), &amp;(output_info.lock));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(output_info.shutdown) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        output_info.run_flag = <span class="number">0</span>;</span><br><span class="line">        output_info.buffer_flag = <span class="number">1</span> - output_info.buffer_flag;</span><br><span class="line">        pthread_mutex_unlock(&amp;(output_info.lock));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(output_info.buffer_flag) &#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">                <span class="built_in">fprintf</span>(output_arg-&gt;fp, <span class="string">"%d\n"</span>, write_buffer_a[i]);</span><br><span class="line">                usleep(microseconds);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">                <span class="built_in">fprintf</span>(output_arg-&gt;fp, <span class="string">"%d\n"</span>, write_buffer_b[i]);</span><br><span class="line">                usleep(microseconds);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        pthread_mutex_lock(&amp;(cal_output_info.lock));</span><br><span class="line">        cal_output_info.run_flag = <span class="number">1</span>;</span><br><span class="line">        pthread_cond_signal(&amp;(cal_output_info.cond));</span><br><span class="line">        pthread_mutex_unlock(&amp;(cal_output_info.lock));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    FILE *fp_input, *fp_output;</span><br><span class="line">    <span class="keyword">char</span> *input_name = <span class="string">"input.txt"</span>;</span><br><span class="line">    <span class="keyword">char</span> *output_name = <span class="string">"output.txt"</span>;</span><br><span class="line">    <span class="keyword">int</span> total_nums = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">int</span> loop_nums = total_nums / BUFFER_SIZE;</span><br><span class="line">    <span class="keyword">int</span> loop_index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    thread_arg input_arg, output_arg;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((fp_input = fopen(input_name, <span class="string">"r"</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"can't load input file\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((fp_output = fopen(output_name, <span class="string">"w+"</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"can't load output file\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    input_arg.fp = fp_input;</span><br><span class="line">    output_arg.fp = fp_output;</span><br><span class="line"></span><br><span class="line">    init_resources(<span class="number">4</span>, &amp;input_info, &amp;output_info, &amp;cal_input_info, &amp;cal_output_info);</span><br><span class="line">    input_info.buffer_flag = output_info.buffer_flag = cal_input_info.buffer_flag = <span class="number">0</span>;</span><br><span class="line">    input_info.run_flag = cal_output_info.run_flag = <span class="number">1</span>;</span><br><span class="line">    output_info.run_flag = cal_input_info.run_flag = <span class="number">0</span>;</span><br><span class="line">    input_info.shutdown = output_info.shutdown = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    pthread_create(&amp;(input_info.thread_id), <span class="literal">NULL</span>, input_task, &amp;input_arg);</span><br><span class="line">    pthread_create(&amp;(output_info.thread_id), <span class="literal">NULL</span>, output_task, &amp;output_arg);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;(cal_input_info.lock));</span><br><span class="line">        <span class="keyword">while</span>(cal_input_info.run_flag == <span class="number">0</span>) &#123;</span><br><span class="line">            pthread_cond_wait(&amp;(cal_input_info.cond), &amp;(cal_input_info.lock));</span><br><span class="line">        &#125;</span><br><span class="line">        cal_input_info.buffer_flag = <span class="number">1</span> - cal_input_info.buffer_flag;</span><br><span class="line">        cal_input_info.run_flag = <span class="number">0</span>;</span><br><span class="line">        pthread_mutex_unlock(&amp;(cal_input_info.lock));</span><br><span class="line"></span><br><span class="line">        pthread_mutex_lock(&amp;(input_info.lock));</span><br><span class="line">        <span class="keyword">if</span>(loop_index == loop_nums - <span class="number">1</span>) &#123;</span><br><span class="line">            input_info.shutdown = <span class="number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        input_info.run_flag = <span class="number">1</span>;</span><br><span class="line">        pthread_cond_signal(&amp;(input_info.cond));</span><br><span class="line">        pthread_mutex_unlock(&amp;(input_info.lock));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 这里可以使用OpenMp</span></span><br><span class="line">        <span class="keyword">if</span>(cal_input_info.buffer_flag) &#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">                write_buffer_a[i] = read_buffer_a[i] + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; BUFFER_SIZE; i++) &#123;</span><br><span class="line">                write_buffer_b[i] = read_buffer_b[i] + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        pthread_mutex_lock(&amp;(cal_output_info.lock));</span><br><span class="line">        <span class="keyword">while</span>(cal_output_info.run_flag == <span class="number">0</span>) &#123;</span><br><span class="line">            pthread_cond_wait(&amp;(cal_output_info.cond), &amp;(cal_output_info.lock));</span><br><span class="line">        &#125;</span><br><span class="line">        cal_output_info.run_flag = <span class="number">0</span>;</span><br><span class="line">        pthread_mutex_unlock(&amp;(cal_output_info.lock));</span><br><span class="line">        </span><br><span class="line">        pthread_mutex_lock(&amp;(output_info.lock));</span><br><span class="line">        output_info.run_flag = <span class="number">1</span>;</span><br><span class="line">        pthread_cond_signal(&amp;(output_info.cond));</span><br><span class="line">        pthread_mutex_unlock(&amp;(output_info.lock));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(loop_index == loop_nums - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        loop_index++;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    pthread_mutex_lock(&amp;(cal_output_info.lock));</span><br><span class="line">    <span class="keyword">while</span>(cal_output_info.run_flag == <span class="number">0</span>) &#123;</span><br><span class="line">        pthread_cond_wait(&amp;(cal_output_info.cond), &amp;(cal_output_info.lock));</span><br><span class="line">    &#125;</span><br><span class="line">    cal_output_info.run_flag = <span class="number">0</span>;</span><br><span class="line">    pthread_mutex_unlock(&amp;(cal_output_info.lock));</span><br><span class="line"></span><br><span class="line">    pthread_mutex_lock(&amp;(output_info.lock));</span><br><span class="line">    output_info.run_flag = <span class="number">1</span>;</span><br><span class="line">    output_info.shutdown = <span class="number">1</span>;</span><br><span class="line">    pthread_cond_signal(&amp;(output_info.cond));</span><br><span class="line">    pthread_mutex_unlock(&amp;(output_info.lock));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    pthread_join(input_info.thread_id, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_join(output_info.thread_id, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    free_resources(<span class="number">4</span>, &amp;input_info, &amp;output_info, &amp;cal_input_info, &amp;cal_output_info);</span><br><span class="line">    fclose(fp_input);</span><br><span class="line">    fclose(fp_output);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>本文主要参考了这个<a href="https://github.com/mbrossard/threadpool" target="_blank" rel="noopener">Pthreads线程池</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Pthreads/" rel="tag"># Pthreads</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/25/【Pthreads学习笔记】基本使用/" rel="next" title="【Pthreads学习笔记】基本使用">
+                <i class="fa fa-chevron-left"></i> 【Pthreads学习笔记】基本使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/13/【软件】解决-win8-win10-中Windows-Meida-Player-无法播放ipv6直播-MMS串流/" rel="prev" title="【软件】解决 win8/win10 中Windows Media Player 无法播放ipv6直播(MMS串流)">
+                【软件】解决 win8/win10 中Windows Media Player 无法播放ipv6直播(MMS串流) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型说明"><span class="nav-number">2.</span> <span class="nav-text">模型说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行流程"><span class="nav-number">3.1.</span> <span class="nav-text">执行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程等待和唤醒"><span class="nav-number">3.2.</span> <span class="nav-text">线程等待和唤醒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据缓冲区"><span class="nav-number">3.3.</span> <span class="nav-text">数据缓冲区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/';
+          this.page.identifier = '2016/04/26/【Pthreads】Pipeline-Model-Assembly-Line-示例/';
+          this.page.title = '【Pthreads】Pipeline Model(Assembly Line)示例';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

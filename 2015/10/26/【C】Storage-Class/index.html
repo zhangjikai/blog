@@ -1,0 +1,1084 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="C,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jk's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="什么是Storage ClassStorage Class翻译成中文为存储类（总感觉翻译成汉语不太好），用来修饰C中变量和函数。如果没有显式的指定storage class，会使用默认值。它的作用主要以下几点：  决定变量存储的位置。每个变量都需要一定的空间来存储，经常用到的存储单元就是内存，除了内存之外，CPU中的寄存器也可以存储变量，而且一般来说寄存器的访问速度要远远大于内存的访问速度。 决定">
+<meta name="keywords" content="C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C】Storage Class">
+<meta property="og:url" content="http://blog.zhangjikai.com/2015/10/26/【C】Storage-Class/index.html">
+<meta property="og:site_name" content="jk&#39;s Blog">
+<meta property="og:description" content="什么是Storage ClassStorage Class翻译成中文为存储类（总感觉翻译成汉语不太好），用来修饰C中变量和函数。如果没有显式的指定storage class，会使用默认值。它的作用主要以下几点：  决定变量存储的位置。每个变量都需要一定的空间来存储，经常用到的存储单元就是内存，除了内存之外，CPU中的寄存器也可以存储变量，而且一般来说寄存器的访问速度要远远大于内存的访问速度。 决定">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-08T06:53:07.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【C】Storage Class">
+<meta name="twitter:description" content="什么是Storage ClassStorage Class翻译成中文为存储类（总感觉翻译成汉语不太好），用来修饰C中变量和函数。如果没有显式的指定storage class，会使用默认值。它的作用主要以下几点：  决定变量存储的位置。每个变量都需要一定的空间来存储，经常用到的存储单元就是内存，除了内存之外，CPU中的寄存器也可以存储变量，而且一般来说寄存器的访问速度要远远大于内存的访问速度。 决定">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zhangjikai.com/2015/10/26/【C】Storage-Class/">
+
+
+
+
+
+  <title> 【C】Storage Class | jk's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?af860476cab57661f1dbb67fe9e0620f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jk's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">No Start No End</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhangjikai.com/2015/10/26/【C】Storage-Class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Jikai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jk's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【C】Storage Class
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-10-26T11:47:21+08:00">
+                2015-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/10/26/【C】Storage-Class/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/26/【C】Storage-Class/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="字数统计">
+                  2,086
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是Storage-Class"><a href="#什么是Storage-Class" class="headerlink" title="什么是Storage Class"></a>什么是Storage Class</h2><p>Storage Class翻译成中文为<em>存储类</em>（总感觉翻译成汉语不太好），用来修饰C中变量和函数。如果没有显式的指定storage class，会使用默认值。它的作用主要以下几点：</p>
+<ul>
+<li>决定变量存储的位置。每个变量都需要一定的空间来存储，经常用到的存储单元就是内存，除了内存之外，CPU中的寄存器也可以存储变量，而且一般来说寄存器的访问速度要远远大于内存的访问速度。</li>
+<li>决定变量的生命周期。</li>
+<li>决定变量的可见级别。</li>
+<li>决定变量是否初始化。  <a id="more"></a>
+</li>
+</ul>
+<h2 id="Storage-Class-说明符（Specifiers）"><a href="#Storage-Class-说明符（Specifiers）" class="headerlink" title="Storage Class 说明符（Specifiers）"></a>Storage Class 说明符（Specifiers）</h2><p>下面列出了5中Storage Class的说明符，但是只有前四种是真正意义上的说明符，typedef只是为了语义上的方便，才将其称为一个storage class的说明符。</p>
+<ul>
+<li>auto</li>
+<li>register</li>
+<li>static</li>
+<li>extern</li>
+<li>typedef  </li>
+</ul>
+<p>需要注意的是我们在一个声明中，我们至多使用一个storage class的说明符。如果没有显示使用说明符，则会使用以下的默认规则：</p>
+<ol>
+<li>在<strong>函数内部</strong>声明的变量默认使用 auto 说明符</li>
+<li>在<strong>函数内部</strong>声明的函数默认使用 extern 说明符</li>
+<li>在<strong>函数外部</strong>声明的变量和函数默认使用static说明符，并且具有外部链接（external linkage）</li>
+</ol>
+<p>具有外部链接的变量和函数可以作用于程序中的所有文件，单纯使用static的变量和函数具有文件作用域（File Scope），它们只有内部链接（internal linkage），只能作用于当前文件。局部变量没有链接，它们只作用于定义的代码块。</p>
+<h2 id="Storage-Class-类别（Type）"><a href="#Storage-Class-类别（Type）" class="headerlink" title="Storage Class 类别（Type）"></a>Storage Class 类别（Type）</h2><p>根据上面所说，在C中一共有四类storage class：</p>
+<ol>
+<li>Automatic Storage Class</li>
+<li>Register Storage Class</li>
+<li>Static Storage Class</li>
+<li>External Storage Class</li>
+</ol>
+<p>下面是详细介绍</p>
+<h3 id="Auto-Storage-Class"><a href="#Auto-Storage-Class" class="headerlink" title="Auto Storage Class"></a>Auto Storage Class</h3><p>在代码块或者函数中，使用auto声明的变量属于automatic storage class，如果没有显示调用storage class说明符，那么auto就是其默认值。auto storage class的变量属于局部变量，只在其定义的代码块或者函数中起作用，当离开代码块或者函数执行完毕之后就会被销毁（destroyed）。下面是一个示例：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> <span class="keyword">int</span> i = <span class="number">2</span>;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> <span class="keyword">int</span> i = <span class="number">3</span>;</span><br><span class="line">            <span class="built_in">printf</span> ( <span class="string">"\n%d "</span>, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span> ( <span class="string">"%d "</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">"%d\n"</span>, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：3 2 1<br>在上面的代码中我们定义3个相同名称的变量i，并且成功执行。这是因为这三个变量的作用域不同，并且8-11行代码块中的i覆盖了6-13行中对于i的定义（类似于局部变量覆盖全局变量），即程序执行时会先在当前代码块的作用域中查找相应变量，如果找不到再去其属于的更大范围的代码块查找，直至找到或者报错。需要注意的地方是<strong>automatic storage class变量并不会被初始化</strong>，在使用之前要手动为其赋初值，否则程序可能会出现意想不到的结果。</p>
+<h3 id="Register-Storage-Class"><a href="#Register-Storage-Class" class="headerlink" title="Register Storage Class"></a>Register Storage Class</h3><p>使用register声明的变量属于Register Storage Class。Register Storage Class类型的变量可以看作是一种特殊形式的automatic变量，Automatic变量是在内存中分配存储空间的，但是对于大多数的电脑来说，数据的访问速度要小于CPU的计算速度，因此CPU会有一定的空间来缓存少量的数据，以加快访问数据的速度，CPU的这些存储单元就叫做寄存器（Register）。<br>&emsp;&emsp;一般来说编译器会决定何时将数据存储到CPU的寄存器中。不过C同时提供了一种方式<strong>建议</strong>编译器将变量放到寄存器中，这种方式就是register storage class，之所以说<strong>建议</strong>是因为编译器并不一定会将register变量放入到寄存器中，这个和具体的实现以及寄存器的空间大小有关系，但是大多数情况中只要显示调用了register说明符，编译器就会在寄存器上为其分配空间。同时，并不是所有类型的变量都可以放到编译器中，这个也和具体的编译器实现有关。<br>&emsp;&emsp;同时需要注意的是，register变量不能使用取地址符’&amp;’，因为按照标准它是存储在寄存器中的，并没有内存的地址，所以下面的代码是编译不过的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">register</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> *p =  &amp;i; <span class="comment">//error: address of register variable requested</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Value of i: %d\n"</span>, *p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>register变量同样没有初始值。另外需要说明的是并不是使用了register变量就一定会比使用automatic变量快，比如你定义了很多的register的变量，导致寄存器的空间不够使用，那么为了使其他register变量可以正常使用，就不得不将一些寄存器的值交换到内存中，而这个交换过程往往会浪费大量的时间。同时，自定义register变量的使用可能会影响编译器对于寄存器使用的默认行为，例如存储表达式求值的临时值。所以应该慎重使用register变量。</p>
+<h3 id="Static-Storage-Class"><a href="#Static-Storage-Class" class="headerlink" title="Static Storage Class"></a>Static Storage Class</h3><p>static用来声明static storage class的变量。static可以修饰局部变量或者全局变量，当修饰局部变量时，static并不改变该变量的作用域，但是会一直保存该局部变量的值，直至程序结束。当修饰全局变量或者函数时，static会限定该变量的作用域为当前文件（具有内部链接），其他文件并不能使用该变量或者函数。下面是一个示例：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> gInt = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">staticDemo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, i);</span><br><span class="line">    i++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, gInt);</span><br><span class="line">    gInt++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    staticDemo();</span><br><span class="line">    staticDemo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：<br>0 1<br>1 2<br>当第一次调用staticDemo时，会首先初始化static变量，如果手动设置了初始值，那么就将其值设为指定的值，否则初始为0，程序打印出0和1，但是当执行完staticDemo时，变量i并没有别销毁。当第二次调用staticDemo时，即便执行到第5行代码，编译器也不会重新初始化i了，而是使用已经创建的i变量。因此可以总结两点：（1）static变量<strong>初始值为0</strong>（2）在其生命周期中只会被<strong>初始化一次</strong>。</p>
+<h3 id="External-Storage-Class"><a href="#External-Storage-Class" class="headerlink" title="External Storage Class"></a>External Storage Class</h3><p>extern用来声明external storage class的变量，它的作用是：<strong>告诉编译器这个变量或者函数已经在其他地方定义过了，这里无需再定义了，直接使用即可</strong>。下面简单说明一下声明（declaration）和定义（definition）的区别：<strong>声明</strong>是告诉编译器变量或者函数的一些基本信息，而<strong>定义</strong>是为这些变量或者函数分配存储空间（详细的的可以看上一篇文章），同一个名称的变量或者函数可以<strong>声明</strong>很多次，但是<strong>只能</strong>定义一次。<br>&emsp;&emsp;对于全局变量或者函数来说，如果不加static说明符，那么变量或者函数就可以被程序中的所有文件使用，而extern就是实现这一功能的关键。如果想在文件A中使用文件B中的变量i，那么就需要在A中使用extern声明i，下面是一个例子：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A.c</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"the i is %d\n"</span>, i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B.c</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">5</span>;</span><br></pre></td></tr></table></figure></p>
+<p>注意使用extern只是声明一个变量，并没有为其分配存储空间，所以<code>extern int i = 5</code>的写法是错误的，如果不加extern，那么就是对于i的定义。external变量也是会初始化的，其初始值为0。<br>对于函数声明（不是定义）来说，其默认storage class说明符就是extern，即<code>void a();</code>和<code>extern void a();</code>是等同的。<br><br></p>
+<p><strong>参考文章</strong></p>
+<hr>
+<p><a href="http://cs-fundamentals.com/c-programming/storage-classes-in-c-and-storage-class-specifiers.php" target="_blank" rel="noopener">C Storage Classes and Storage Class Specifiers</a><br><a href="http://www-ee.eng.hawaii.edu/~tep/EE160/Book/chap14/chapter2.1.html" target="_blank" rel="noopener">Storage Class and Scope</a>  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/25/【C】变量定义（Definition）与声明（Declaration）/" rel="next" title="【C】变量定义（Definition）与声明（Declaration）">
+                <i class="fa fa-chevron-left"></i> 【C】变量定义（Definition）与声明（Declaration）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/07/【应用】信息短时存储/" rel="prev" title="【应用】信息短时存储">
+                【应用】信息短时存储 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar/avatar.png" alt="Zhang Jikai">
+          <p class="site-author-name" itemprop="name">Zhang Jikai</p>
+           
+              <p class="site-description motion-element" itemprop="description">No Start No End</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangjikai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.throneclay.com/" title="Shuai's Blog" target="_blank">Shuai's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xukai.xyz" title="Xukai" target="_blank">Xukai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leiquan.website/" title="Leiquan" target="_blank">Leiquan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Storage-Class"><span class="nav-number">1.</span> <span class="nav-text">什么是Storage Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storage-Class-说明符（Specifiers）"><span class="nav-number">2.</span> <span class="nav-text">Storage Class 说明符（Specifiers）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storage-Class-类别（Type）"><span class="nav-number">3.</span> <span class="nav-text">Storage Class 类别（Type）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Auto-Storage-Class"><span class="nav-number">3.1.</span> <span class="nav-text">Auto Storage Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Storage-Class"><span class="nav-number">3.2.</span> <span class="nav-text">Register Storage Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Storage-Class"><span class="nav-number">3.3.</span> <span class="nav-text">Static Storage Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-Storage-Class"><span class="nav-number">3.4.</span> <span class="nav-text">External Storage Class</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Jikai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-aclemypgmr.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.zhangjikai.com/2015/10/26/【C】Storage-Class/';
+          this.page.identifier = '2015/10/26/【C】Storage-Class/';
+          this.page.title = '【C】Storage Class';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-aclemypgmr.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
