@@ -4,7 +4,7 @@
   <url>
     <loc>http://blog.zhangjikai.com/2019/09/08/%E3%80%90Java%E3%80%91-JVM-%E5%A6%82%E4%BD%95%E4%BF%9D%E5%AD%98-Java-%E5%AF%B9%E8%B1%A1/</loc>
     
-    <lastmod>2019-09-08T07:04:48.526Z</lastmod>
+    <lastmod>2019-09-08T07:08:55.875Z</lastmod>
     
   </url>
   
@@ -44,7 +44,7 @@
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2016/09/13/%E3%80%90%E8%BD%AF%E4%BB%B6%E3%80%91%E8%A7%A3%E5%86%B3-win8-win10-%E4%B8%ADWindows-Meida-Player-%E6%97%A0%E6%B3%95%E6%92%AD%E6%94%BEipv6%E7%9B%B4%E6%92%AD-MMS%E4%B8%B2%E6%B5%81/</loc>
+    <loc>http://blog.zhangjikai.com/2015/12/26/%E3%80%90%E8%BD%AF%E4%BB%B6%E3%80%91Intellij-IDEA-14-%E5%AF%BC%E5%85%A5maven-web%E9%A1%B9%E7%9B%AE%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0Tomcat/</loc>
     
     <lastmod>2019-09-08T06:53:07.633Z</lastmod>
     
@@ -58,7 +58,7 @@
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2015/12/26/%E3%80%90%E8%BD%AF%E4%BB%B6%E3%80%91Intellij-IDEA-14-%E5%AF%BC%E5%85%A5maven-web%E9%A1%B9%E7%9B%AE%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0Tomcat/</loc>
+    <loc>http://blog.zhangjikai.com/2016/09/13/%E3%80%90%E8%BD%AF%E4%BB%B6%E3%80%91%E8%A7%A3%E5%86%B3-win8-win10-%E4%B8%ADWindows-Meida-Player-%E6%97%A0%E6%B3%95%E6%92%AD%E6%94%BEipv6%E7%9B%B4%E6%92%AD-MMS%E4%B8%B2%E6%B5%81/</loc>
     
     <lastmod>2019-09-08T06:53:07.633Z</lastmod>
     
@@ -86,14 +86,14 @@
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2016/04/25/%E3%80%90Pthreads%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://blog.zhangjikai.com/2017/04/27/%E3%80%90Vue%E3%80%91%E4%BD%BF%E7%94%A8-Vue2-%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA%E5%BA%94%E7%94%A8/</loc>
     
     <lastmod>2019-09-08T06:53:07.631Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2017/04/27/%E3%80%90Vue%E3%80%91%E4%BD%BF%E7%94%A8-Vue2-%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA%E5%BA%94%E7%94%A8/</loc>
+    <loc>http://blog.zhangjikai.com/2016/04/25/%E3%80%90Pthreads%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2019-09-08T06:53:07.631Z</lastmod>
     
@@ -149,13 +149,6 @@
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2015/12/09/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91%E5%85%B1%E4%BA%AB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A8%A1%E5%BC%8F/</loc>
-    
-    <lastmod>2019-09-08T06:53:07.628Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.zhangjikai.com/2015/11/30/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91Offload-Using-a-Pragma/</loc>
     
     <lastmod>2019-09-08T06:53:07.628Z</lastmod>
@@ -163,14 +156,21 @@
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2015/11/29/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91HelloWorld/</loc>
+    <loc>http://blog.zhangjikai.com/2015/12/09/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91%E5%85%B1%E4%BA%AB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2019-09-08T06:53:07.628Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.zhangjikai.com/2015/12/09/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91CPU%E5%92%8CMIC%E5%BC%82%E6%AD%A5%E8%AE%A1%E7%AE%97%E5%8F%8A%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/</loc>
     
     <lastmod>2019-09-08T06:53:07.627Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.zhangjikai.com/2015/12/09/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91CPU%E5%92%8CMIC%E5%BC%82%E6%AD%A5%E8%AE%A1%E7%AE%97%E5%8F%8A%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/</loc>
+    <loc>http://blog.zhangjikai.com/2015/11/29/%E3%80%90MIC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%91HelloWorld/</loc>
     
     <lastmod>2019-09-08T06:53:07.627Z</lastmod>
     
@@ -247,6 +247,13 @@
   </url>
   
   <url>
+    <loc>http://blog.zhangjikai.com/2016/03/04/%E3%80%90C%E3%80%91%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C(%E4%BA%8C)/</loc>
+    
+    <lastmod>2019-09-08T06:53:07.621Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.zhangjikai.com/2015/10/25/%E3%80%90C%E3%80%91%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%EF%BC%88Definition%EF%BC%89%E4%B8%8E%E5%A3%B0%E6%98%8E%EF%BC%88Declaration%EF%BC%89/</loc>
     
     <lastmod>2019-09-08T06:53:07.621Z</lastmod>
@@ -255,13 +262,6 @@
   
   <url>
     <loc>http://blog.zhangjikai.com/2015/12/15/%E3%80%90C%E3%80%91%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
-    
-    <lastmod>2019-09-08T06:53:07.621Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.zhangjikai.com/2016/03/04/%E3%80%90C%E3%80%91%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C(%E4%BA%8C)/</loc>
     
     <lastmod>2019-09-08T06:53:07.621Z</lastmod>
     

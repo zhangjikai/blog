@@ -92,13 +92,13 @@
 
 
 
-<meta name="description" content="前言本文主要讲解一下在 JVM 中如何保存 Java 对象以及 Java 对象指针压缩相关的东西。 JVM 体系结构  图片摘自 https://www.artima.com/insidejvm/ed2/jvm2.html  上图是 JVM 规范中定义的体系结构（这个只是定义的规范，实际的  JVM 实现中可能与这个结构会有差异），这里我们主要看下运行时数据区（runtime data areas">
+<meta name="description" content="前言本文主要讲解一下在 JVM 中如何保存 Java 对象以及 Java 对象指针压缩相关的东西。 JVM 体系结构  图片摘自 https://www.artima.com/insidejvm/ed2/jvm2.html">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Java】 JVM 如何保存 Java 对象">
 <meta property="og:url" content="http://blog.zhangjikai.com/2019/09/08/【Java】-JVM-如何保存-Java-对象/index.html">
 <meta property="og:site_name" content="jk&#39;s Blog">
-<meta property="og:description" content="前言本文主要讲解一下在 JVM 中如何保存 Java 对象以及 Java 对象指针压缩相关的东西。 JVM 体系结构  图片摘自 https://www.artima.com/insidejvm/ed2/jvm2.html  上图是 JVM 规范中定义的体系结构（这个只是定义的规范，实际的  JVM 实现中可能与这个结构会有差异），这里我们主要看下运行时数据区（runtime data areas">
+<meta property="og:description" content="前言本文主要讲解一下在 JVM 中如何保存 Java 对象以及 Java 对象指针压缩相关的东西。 JVM 体系结构  图片摘自 https://www.artima.com/insidejvm/ed2/jvm2.html">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.zhangjikai.com/images/jvm-java/jvm体系.gif">
 <meta property="og:image" content="http://blog.zhangjikai.com/images/jvm-java/对象存储.gif">
@@ -108,10 +108,10 @@
 <meta property="og:image" content="http://blog.zhangjikai.com/images/jvm-java/instance.png">
 <meta property="og:image" content="http://blog.zhangjikai.com/images/jvm-java/compress.jpg">
 <meta property="og:image" content="http://blog.zhangjikai.com/images/jvm-java/compress-demo.jpg">
-<meta property="og:updated_time" content="2019-09-08T07:04:48.526Z">
+<meta property="og:updated_time" content="2019-09-08T07:08:55.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Java】 JVM 如何保存 Java 对象">
-<meta name="twitter:description" content="前言本文主要讲解一下在 JVM 中如何保存 Java 对象以及 Java 对象指针压缩相关的东西。 JVM 体系结构  图片摘自 https://www.artima.com/insidejvm/ed2/jvm2.html  上图是 JVM 规范中定义的体系结构（这个只是定义的规范，实际的  JVM 实现中可能与这个结构会有差异），这里我们主要看下运行时数据区（runtime data areas">
+<meta name="twitter:description" content="前言本文主要讲解一下在 JVM 中如何保存 Java 对象以及 Java 对象指针压缩相关的东西。 JVM 体系结构  图片摘自 https://www.artima.com/insidejvm/ed2/jvm2.html">
 <meta name="twitter:image" content="http://blog.zhangjikai.com/images/jvm-java/jvm体系.gif">
 
 
@@ -460,13 +460,14 @@
 <blockquote>
 <p>图片摘自 <a href="https://www.artima.com/insidejvm/ed2/jvm2.html" target="_blank" rel="noopener">https://www.artima.com/insidejvm/ed2/jvm2.html</a></p>
 </blockquote>
+<a id="more"></a>
 <p>上图是 JVM 规范中定义的体系结构（这个只是定义的规范，实际的  JVM 实现中可能与这个结构会有差异），这里我们主要看下运行时数据区（runtime data areas）的内容，以下摘自 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">The Java® Virtual Machine Specification Java SE 8 Edition</a></p>
 <ul>
 <li>PC register -  If that method is not native , the pc register contains the address of the Java Virtual Machine instruction currently being executed.</li>
 <li>Java stacks - A Java Virtual Machine stack is analogous to the stack of a conventional language such as C: it holds local variables and partial results, and plays a part in method invocation and return.</li>
 <li>Heap - The heap is the run-time data area from which memory for all class instances and arrays is allocated.</li>
 <li>Method area -  The method area is analogous to the storage area for compiled code of a conventional language or analogous to the “text” segment in an operating system process. It stores per-class structures such as the run-time constant pool, field and method data, and the code for methods and constructors, including the special methods used in class and instance initialization and interface<br>initialization.</li>
-<li>Native method stacks - An implementation of the Java Virtual Machine may use conventional stacks, colloquially called “C stacks,” to support native methods (methods written in a language other than the Java programming language). Native method stacks may also be used by the implementation of an interpreter() for the Java Virtual Machine’s<br>instruction set in a language such as C。</li>
+<li>Native method stacks - An implementation of the Java Virtual Machine may use conventional stacks, colloquially called “C stacks,” to support native methods (methods written in a language other than the Java programming language). Native method stacks may also be used by the implementation of an interpreter for the Java Virtual Machine’s instruction set in a language such as C。</li>
 </ul>
 <p>堆和方法区是所有类共享的，其中堆主要存储对象实体，方法区存储的信息比较多，主要包括下面几类：</p>
 <ul>
